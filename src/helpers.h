@@ -36,42 +36,43 @@ int constructMessage(string line, bool &isDelay, bool &isLost, bool &isDuplicate
   string messageContent = line.substr(5);
   string payload = messageContent; // TODO call byte stuffing function here
   double simTime = simTime();
-  string byteStuffing(string message)
-  {
-    char flag = '$';
-    char esc = '/';
-    string stuffedMessage = "";
+}
+string byteStuffing(string message)
+{
+  char flag = '$';
+  char esc = '/';
+  string stuffedMessage = "";
 
-    // Loop over message and insert esc before any data flag or data esc
-    for (int ch = 0; ch < message.size(); ch++)
+  // Loop over message and insert esc before any data flag or data esc
+  for (int ch = 0; ch < message.size(); ch++)
+  {
+    if (message[ch] == flag || message[ch] == esc)
     {
-      if (message[ch] == flag || message[ch] == esc)
-      {
-        stuffedMessage += esc;
-      }
-      stuffedMessage += message[ch];
+      stuffedMessage += esc;
     }
-
-    // Insert flag at the beginning and end
-    stuffedMessage = flag + stuffedMessage + flag;
-
-    // Return the stuffed message
-    return stuffedMessage;
+    stuffedMessage += message[ch];
   }
 
-  string modifyMessage(string message)
-  {
-    // Generate a random number (0 to string size) --> character to modify
-    int charToModify = 1;
-    bitset<8> chbits(message[charToModify]);
+  // Insert flag at the beginning and end
+  stuffedMessage = flag + stuffedMessage + flag;
 
-    // Generate a random number (0 to 7) --> bit to modify
-    int bitToModify = 1;
-    chbits[bitToModify] = !chbits[bitToModify];
+  // Return the stuffed message
+  return stuffedMessage;
+}
 
-    // Convert back to string and alter old message
-    char newChar = (char)chbits.to_ulong();
-    message[charToModify] = newChar;
+string modifyMessage(string message)
+{
+  // Generate a random number (0 to string size) --> character to modify
+  int charToModify = 1;
+  bitset<8> chbits(message[charToModify]);
 
-    return message;
-  }
+  // Generate a random number (0 to 7) --> bit to modify
+  int bitToModify = 1;
+  chbits[bitToModify] = !chbits[bitToModify];
+
+  // Convert back to string and alter old message
+  char newChar = (char)chbits.to_ulong();
+  message[charToModify] = newChar;
+
+  return message;
+}
