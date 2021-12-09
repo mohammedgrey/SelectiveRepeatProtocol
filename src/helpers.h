@@ -7,6 +7,7 @@
 #include <bitset>
 #include <iostream>
 #include <omnetpp.h>
+#include <cstring>
 
 using namespace std;
 using namespace omnetpp;
