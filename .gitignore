@@ -2,3 +2,4 @@ simulations/.qtenvrc
 *.o
 *.o.d
 .last-copts
+.vscode
