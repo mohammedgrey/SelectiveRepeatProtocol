@@ -18,3 +18,23 @@ vector<string> readFile(string path){
   file.close();
   return output;
 }
+
+string byteStuffing(string message) {
+  char flag = '$';
+  char esc = '/';
+  string stuffedMessage = "";
+
+  // Loop over message and insert esc before any data flag or data esc
+  for (int ch = 0; ch < message.size(); ch++) {
+    if (message[ch] == flag || message[ch] == esc) {
+      stuffedMessage += esc;
+    }
+    stuffedMessage += message[ch];
+  }
+  
+  // Insert flag at the beginning and end
+  stuffedMessage = flag + stuffedMessage + flag;
+
+  // Return the stuffed message
+  return stuffedMessage;
+}
