@@ -7,7 +7,7 @@
 
 using namespace std;
 
-string fromDecimalToBinaryString(long long int decimalNumber)
+inline string fromDecimalToBinaryString(long long int decimalNumber)
 {
     string binaryString = "";
     while (decimalNumber)
@@ -21,7 +21,7 @@ string fromDecimalToBinaryString(long long int decimalNumber)
     return binaryString;
 }
 
-long long int fromBinaryStringToDecimal(string binaryString)
+inline long long int fromBinaryStringToDecimal(string binaryString)
 {
     long long int decimalNumber = 0;
     for (int i = 0; i < binaryString.size(); i++)
@@ -42,7 +42,7 @@ string getBinaryStringFromPayload(string payload)
     return binaryString;
 }
 
-long long int remainderOfBinaryLongdivison(long long int dividend, long long gen, int l_gen)
+inline long long int remainderOfBinaryLongdivison(long long int dividend, long long gen, int l_gen)
 {
     // shft specifies the no. of least
     // significant bits not being XORed
@@ -64,7 +64,7 @@ long long int remainderOfBinaryLongdivison(long long int dividend, long long gen
 }
 
 // returns the remainder of the CRC
-long long int getRemainderCRC(string payload)
+inline long long int getRemainderCRC(string payload)
 {
     string generatorBinaryString = "1001";
     int l_gen = generatorBinaryString.length();
@@ -77,7 +77,7 @@ long long int getRemainderCRC(string payload)
 }
 
 // returns true if the check is valid and false if there is an error
-bool validCRC(string possiblyModifiedPayload, long long int remainder)
+inline bool validCRC(string possiblyModifiedPayload, long long int remainder)
 {
     string generatorBinaryString = "1001";
     int l_gen = generatorBinaryString.length();

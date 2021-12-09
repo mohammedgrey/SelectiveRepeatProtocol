@@ -22,26 +22,26 @@ inline vector<string> readFile(string path)
     while (!file.eof())
     {
       getline(file, line);
-      cout << line;
-      output.push_back(line);
+      if (line != "")
+        output.push_back(line);
     }
   }
   file.close();
   return output;
 }
 
-//int constructMessage(string line, bool &isDelay, bool &isLost, bool &isDuplicate)
+// int constructMessage(string line, bool &isDelay, bool &isLost, bool &isDuplicate)
 //{
-//  // modification, loss, Duplication, Delay
-//  string MLDDbits = line.substr(0, 4);
-//  isLost = MLDDbits[1] == '1' ? true : false;
-//  isDuplicate = MLDDbits[2] == '1' ? true : false;
-//  isDelay = MLDDbits[3] == '1' ? true : false;
+//   // modification, loss, Duplication, Delay
+//   string MLDDbits = line.substr(0, 4);
+//   isLost = MLDDbits[1] == '1' ? true : false;
+//   isDuplicate = MLDDbits[2] == '1' ? true : false;
+//   isDelay = MLDDbits[3] == '1' ? true : false;
 //
-//  string messageContent = line.substr(5);
-//  string payload = messageContent; // TODO call byte stuffing function here
-//  double simTime = simTime();
-//}
+//   string messageContent = line.substr(5);
+//   string payload = messageContent; // TODO call byte stuffing function here
+//   double simTime = simTime();
+// }
 inline string byteStuffing(string message)
 {
   char flag = '$';
