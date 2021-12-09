@@ -1,12 +1,17 @@
+#ifndef HELPERS_H_
+#define HELPERS_H_
+
 #include <string>
 #include <fstream>
 #include <vector>
 #include <bitset>
+#include <iostream>
+#include <omnetpp.h>
 
 using namespace std;
 using namespace omnetpp;
 
-vector<string> readFile(string path)
+inline vector<string> readFile(string path)
 {
   ifstream file;
   file.open(path);
@@ -25,19 +30,19 @@ vector<string> readFile(string path)
   return output;
 }
 
-int constructMessage(string line, bool &isDelay, bool &isLost, bool &isDuplicate)
-{
-  // modification, loss, Duplication, Delay
-  string MLDDbits = line.substr(0, 4);
-  isLost = MLDDbits[1] == '1' ? true : false;
-  isDuplicate = MLDDbits[2] == '1' ? true : false;
-  isDelay = MLDDbits[3] == '1' ? true : false;
-
-  string messageContent = line.substr(5);
-  string payload = messageContent; // TODO call byte stuffing function here
-  double simTime = simTime();
-}
-string byteStuffing(string message)
+//int constructMessage(string line, bool &isDelay, bool &isLost, bool &isDuplicate)
+//{
+//  // modification, loss, Duplication, Delay
+//  string MLDDbits = line.substr(0, 4);
+//  isLost = MLDDbits[1] == '1' ? true : false;
+//  isDuplicate = MLDDbits[2] == '1' ? true : false;
+//  isDelay = MLDDbits[3] == '1' ? true : false;
+//
+//  string messageContent = line.substr(5);
+//  string payload = messageContent; // TODO call byte stuffing function here
+//  double simTime = simTime();
+//}
+inline string byteStuffing(string message)
 {
   char flag = '$';
   char esc = '/';
@@ -60,7 +65,7 @@ string byteStuffing(string message)
   return stuffedMessage;
 }
 
-string modifyMessage(string message)
+inline string modifyMessage(string message)
 {
   // Generate a random number (0 to string size) --> character to modify
   int charToModify = 1;
@@ -76,3 +81,5 @@ string modifyMessage(string message)
 
   return message;
 }
+
+#endif
