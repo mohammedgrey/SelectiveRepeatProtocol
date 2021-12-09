@@ -7,6 +7,7 @@
 #include <bitset>
 #include <iostream>
 #include <omnetpp.h>
+#include <cstring>
 
 using namespace std;
 using namespace omnetpp;
@@ -42,6 +43,7 @@ inline vector<string> readFile(string path)
 //  string payload = messageContent; // TODO call byte stuffing function here
 //  double simTime = simTime();
 //}
+
 inline string byteStuffing(string message)
 {
   char flag = '$';
