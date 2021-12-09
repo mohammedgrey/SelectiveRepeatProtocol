@@ -16,10 +16,15 @@
 //
 // TODO generated message class
 //
+cplusplus {{
+#include <bitset>
+typedef  std::bitset<8> bits;
+}}
+class noncobject bits;
 packet MyMessage {
     @customize(true);  // see the generated C++ header for more info
     
-     //header
+      //header
      int id;
      double start_Time;
      
@@ -33,5 +38,5 @@ packet MyMessage {
      //piggybacking
      int p_id;
      string p_ack; 
-     
+    
 }

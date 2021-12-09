@@ -2,7 +2,8 @@
 #define __BITMANUPLATIONS_NODE_H_
 
 #include <omnetpp.h>
-
+#include "helpers.h"
+#include "Logs.h"
 using namespace omnetpp;
 
 /**

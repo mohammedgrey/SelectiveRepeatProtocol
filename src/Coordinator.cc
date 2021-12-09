@@ -1,7 +1,5 @@
 #include "Coordinator.h"
 
-#include "helpers.h"
-
 Define_Module(Coordinator);
 
 void Coordinator::initialize()

@@ -3,6 +3,8 @@
 
 #include <omnetpp.h>
 
+#include "helpers.h"
+
 using namespace omnetpp;
 
 /**
