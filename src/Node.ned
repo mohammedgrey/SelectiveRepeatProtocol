@@ -21,6 +21,7 @@ simple Node
         double timeoutSeconds;
         double delaySeconds;
         int windowSize;
+        volatile double randNum= uniform(0,1);
     gates:
         inout peerLink;
         input coordinatorInput;

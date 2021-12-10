@@ -1,3 +1,0 @@
-node5 sends message with id=0 and content= ''$-$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 2.000000and piggybacking ACK number= 1
-node5 sends message with id=0 and content= ''$-$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 2.000000and piggybacking ACK number= 1
-node5 sends message with id=0 and content= ''$/$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 2.000000and piggybacking ACK number= 1

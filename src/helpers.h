@@ -68,14 +68,14 @@ inline string byteStuffing(string message)
   return stuffedMessage;
 }
 
-inline string modifyMessage(string message)
+inline string modifyMessage(string message, double randModIndex)
 {
   // Generate a random number (0 to string size) --> character to modify
-  int charToModify = 1;
+  int charToModify = (int)(randModIndex*message.size());
   bitset<8> chbits(message[charToModify]);
 
   // Generate a random number (0 to 7) --> bit to modify
-  int bitToModify = 1;
+  int bitToModify = (int)(randModIndex*8);
   chbits[bitToModify] = !chbits[bitToModify];
 
   // Convert back to string and alter old message
@@ -85,14 +85,14 @@ inline string modifyMessage(string message)
   return message;
 }
 
-inline MyMessage_Base *constructMessage(string line, int id, bool isModified)
+inline MyMessage_Base *constructMessage(string line, int id, bool isModified, double randModIndex)
 {
 
   string messageContent = line.substr(5);                  //get the message content without the error bits
   string payload = byteStuffing(messageContent);           //frame the message
   long long int remainderCRC = getRemainderCRC(payload);   //get the remainder when dividing the message (after byte stuffing) by the generator function
 
-  if (isModified) payload = modifyMessage(payload);        //modify the message if it should be
+  if (isModified) payload = modifyMessage(payload, randModIndex);        //modify the message if it should be
 
   MyMessage_Base *messageToSend = new MyMessage_Base();
 
