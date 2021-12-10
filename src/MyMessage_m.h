@@ -99,7 +99,7 @@ class MyMessage_Base : public ::omnetpp::cPacket
     MyMessage_Base(const char *name=nullptr, short kind=0);
     MyMessage_Base(const MyMessage_Base& other);
     virtual ~MyMessage_Base();
-    virtual MyMessage_Base *dup() const override {throw omnetpp::cRuntimeError("You forgot to manually add a dup() function to class MyMessage");}
+    virtual MyMessage_Base *dup() const override {return new MyMessage_Base(*this);}
     virtual void parsimPack(omnetpp::cCommBuffer *b) const override;
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 

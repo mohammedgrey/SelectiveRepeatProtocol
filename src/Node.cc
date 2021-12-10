@@ -90,12 +90,13 @@ void Node::handleMessage(cMessage *msg)
             try
             {
                 MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
-                // 0->ack, 1->nck
-                int ack =
-                    validCRC(mmsg->getM_Payload(), (long long int)mmsg->getCRC()) ? 0 : 1;
-                mmsg->setP_ack(ack);
+                // valid= 1->ack, 0->nck
+                int valid = validCRC(mmsg->getM_Payload(), (long long int)mmsg->getCRC()) ? 0 : 1;
+                L->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+                mmsg->setP_ack(valid);
                 mmsg->setP_id(piggybackingId++);
                 send(mmsg, "peerLink$o");
+
             }
             catch (...)
             {
@@ -149,7 +150,8 @@ void Node::sendMessage()
         else if (isDuplicated && !isDelayed) {
             L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
             send(messageToSend, "peerLink$o");             //send first message now
-            sendDelayed(messageToSend,0.01,"peerLink$o");  //send duplicate with 0.01s delay
+            MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); //construct duplicate
+            sendDelayed(messageToSendDup,0.01,"peerLink$o");  //send duplicate with 0.01s delay
         }
 
         //if message is both duplicated and delayed
@@ -157,7 +159,8 @@ void Node::sendMessage()
             double delay= par("delaySeconds").doubleValue();
             L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl()+delay, isModified, 1, 1);
             sendDelayed(messageToSend,delay,"peerLink$o");        //send first message after delay
-            sendDelayed(messageToSend,delay+0.01,"peerLink$o");  //send duplicate with delay+0.01s
+            MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); //construct duplicate
+            sendDelayed(messageToSendDup,delay+0.01,"peerLink$o");  //send duplicate with delay+0.01s
         }
 
     }

@@ -105,6 +105,7 @@ inline MyMessage_Base *constructMessage(string line, int id, bool isModified, do
 
   // trailer
   messageToSend->setCRC((int)remainderCRC);               //put the CRC in the trailer
+  messageToSend->setP_ack(1);                             //set ack number
 
   return messageToSend;
 }
