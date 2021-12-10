@@ -22,7 +22,7 @@ inline string getBasePath()
 {
   map<string, string> basePath;
   // TODO: add the getenv("HOSTNAME") of your pc and the corresponding base path to the src directory
-  basePath["DESKTOP-LA84EMV"] = "C:/omnetpp-5.7/samples/SelectiveRepeatProtocol/src";
+  basePath["DESKTOP-SP2J27C"] = "C:/Users/fatem/OneDrive/Desktop/omnetpp-5.6.2/samples/SelectiveRepeatProtocol/src";
   return basePath[getenv("HOSTNAME")];
 }
 
@@ -93,18 +93,22 @@ inline MyMessage_Base *constructMessage(string line, int id, bool &isDelay, bool
   isDuplicate = MLDDbits[2] == '1' ? true : false;
   isDelay = MLDDbits[3] == '1' ? true : false;
 
-  string messageContent = line.substr(5);
-  string payload = byteStuffing(messageContent);
-  long long int remainderCRC = getRemainderCRC(payload);
+  string messageContent = line.substr(5);                  //get the message content without the error bits
+  string payload = byteStuffing(messageContent);           //frame the message
+  long long int remainderCRC = getRemainderCRC(payload);   //get the remainder when dividing the message (after byte stuffing) by the generator function
   payload = modifyMessage(payload);
+
   MyMessage_Base *messageToSend = new MyMessage_Base();
+
   // header
-  messageToSend->setId(id);
-  messageToSend->setStart_Time(simTime().dbl());
+  messageToSend->setId(id);                                //message id
+  messageToSend->setStart_Time(simTime().dbl());           //sending time
+
   // payload
-  messageToSend->setM_Payload(payload.c_str());
+  messageToSend->setM_Payload(payload.c_str());            //message itself as a string
+
   // trailer
-  messageToSend->setCRC((int)remainderCRC);
+  messageToSend->setCRC((int)remainderCRC);               //put the CRC in the trailer
 
   return messageToSend;
 }

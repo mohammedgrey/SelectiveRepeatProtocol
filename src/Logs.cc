@@ -9,14 +9,14 @@
 
 Logs::Logs(std::string file) {
     // TODO Auto-generated constructor stub
-    fileName= file;
+    filePath= getBasePath() + "/outputs/"+file;
     nodesReachingEOF=0;
     totalTransTime=0;
     totalTransNum=0;
 }
 
 //events: 0-> sends, 1-> received, 2-> drops, 3->timeout
-void Logs::addLog(int node, int event, int id, std::string content, float time, bool modified, bool ack, int ackNum) {
+void Logs::addLog(int node, int event, int id, std::string content, double time, bool modified, bool ack, int ackNum) {
 
     //constructing log
     std::string log="";
@@ -47,7 +47,7 @@ void Logs::addLog(int node, int event, int id, std::string content, float time, 
 
     //adding log to output file
     ofstream myfile;
-    myfile.open(fileName, std::ios_base::app);
+    myfile.open(filePath, std::ios_base::app);
     myfile<< log<<endl;
     myfile.close();
 }
@@ -58,7 +58,7 @@ void Logs::addEOF(int node) {
     cout<< "node"<< node << " end of input file" << endl;
 
     ofstream myfile;
-    myfile.open(fileName, std::ios_base::app);
+    myfile.open(filePath, std::ios_base::app);
     myfile<< "node"<< node << " end of input file" << endl;
 
     //if the pair finished their input files

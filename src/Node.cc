@@ -4,19 +4,31 @@ Define_Module(Node);
 
 void Node::initialize()
 {
-    // set the node id
-    if (strcmp("node0", getName()) == 0)
+    // set the node id and initialize logs pointer
+    if (strcmp("node0", getName()) == 0) {
         id = 0;
-    else if (strcmp("node1", getName()) == 0)
+        L= new Logs("pair01.txt");
+    }
+    else if (strcmp("node1", getName()) == 0) {
         id = 1;
-    else if (strcmp("node2", getName()) == 0)
+        L= new Logs("pair01.txt");
+    }
+    else if (strcmp("node2", getName()) == 0) {
         id = 2;
-    else if (strcmp("node3", getName()) == 0)
+        L= new Logs("pair23.txt");
+    }
+    else if (strcmp("node3", getName()) == 0) {
         id = 3;
-    else if (strcmp("node4", getName()) == 0)
+        L= new Logs("pair23.txt");
+    }
+    else if (strcmp("node4", getName()) == 0) {
         id = 4;
-    else if (strcmp("node5", getName()) == 0)
+        L= new Logs("pair45.txt");
+    }
+    else if (strcmp("node5", getName()) == 0){
         id = 5;
+        L= new Logs("pair45.txt");
+    }
 
     // initialize firstMessage with true
     firstMessage = true;
@@ -29,6 +41,7 @@ void Node::initialize()
 
     // initialize piggybackingId with 0
     piggybackingId = 0;
+
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -38,15 +51,16 @@ void Node::handleMessage(cMessage *msg)
     {
         // get the 0->node id, 1->text file name, 2->whether it's the starting node, 3->starting time
         vector<string> lineReceived = split(msg->getName(), ' ');
+
         // store file lines
         events = readFile(getBasePath() + "/inputs/" + lineReceived[1]);
-        cout << "Events length: " << events.size() << endl;
+        //cout << "Events length: " << events.size() << endl;
 
         // check if I am the start node
-        cout<<"line received length "<<lineReceived.size()<<endl;
+        //cout<<"line received length "<<lineReceived.size()<<endl;
         if (lineReceived.size() > 2)
         {
-            cout<<"I have a start time"<<endl;
+            //cout<<"I have a start time"<<endl;
             startTime = stod(lineReceived[3]);
             // schedule a time to start
             scheduleAt(startTime, new cMessage(""));
@@ -55,19 +69,24 @@ void Node::handleMessage(cMessage *msg)
         firstMessage = false;
         cancelAndDelete(msg);
     }
+
+
     // if the message is from myself (either because I scheduled a time to start or I set a timeout)
     else if (msg->isSelfMessage())
     {
-        cout<<"Schduled self messsage"<<endl;
+        //cout<<"Scheduled self messsage"<<endl;
         sendMessage(); // implemented down below as a class method
 
     }
+
+
     // if the message is from the other pair
     else
     {
-        if (startTime == -1) // I am the receiver in phase 1 and should only send ack or nck
+        //I am the receiver in phase 1 and should only send ack or nack
+        if (startTime == -1)
         {
-            cout<<"I am the receiver"<<endl;
+            //cout<<"I am the receiver"<<endl;
             try
             {
                 MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
@@ -83,24 +102,37 @@ void Node::handleMessage(cMessage *msg)
                 cout << "Casting error" << endl;
             }
         }
-        else // I am the sender in phase 1
+
+        // I am the sender in phase 1
+        else
         {
-            cout<<"I am the sender"<<endl;
+            //cout<<"I am the sender"<<endl;
             sendMessage(); // implemented down below as a class method
         }
     }
+
 }
 
 void Node::sendMessage()
 {
-    cout<<"node "<<id<<" is now sending message number "<<eventsIndex<<endl;
+    //cout<<"node "<<id<<" is now sending message number "<<eventsIndex<<endl;
     EV<<"node "<<id<<" is now sending message number "<<eventsIndex<<endl;
-    if (eventsIndex >= events.size())
-        // terminating condition for phase 1 (sender has no other message to send)
+
+    // terminating condition for phase 1 (sender has no other message to send)
+    if (eventsIndex >= events.size()) {
+        L->addEOF(id);                 //add a log that the node reached the end of its input file
         return;
-    bool isDelay, isLost, isDuplicate;
+    }
+
+    //constructing next message to be sent
+    bool isModified, isDelay, isLost, isDuplicate;
+    isModified=true;
     MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isDelay, isLost, isDuplicate);
-    eventsIndex++;
+
+    //TODO: make sure parameters are correct -> how to choose ack number?
+    L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log
+    eventsIndex++;                  //increment events index to the next message
+
     // TODO: use isDelay, isLost, isDuplicate to simulate imperfect conditions
     send(messageToSend, "peerLink$o"); // send to my peer
 }

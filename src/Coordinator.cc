@@ -5,6 +5,7 @@ Define_Module(Coordinator);
 
 void Coordinator::initialize()
 {
+    //reading coordinator's text file and passing data to nodes
     vector<string> lines = readFile(getBasePath() + "/inputs/coordinator.txt");
     for (int i = 0; i < lines.size(); i++)
     {

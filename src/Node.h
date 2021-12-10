@@ -19,6 +19,7 @@ private:
   int eventsIndex;       // to keep track which line I am currently sending
   double startTime;      // for starting nodes only
   int piggybackingId;    // id to identify acks
+  Logs* L;               // pointer to logs class
 
 protected:
   virtual void initialize();
