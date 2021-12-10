@@ -109,25 +109,7 @@ inline MyMessage_Base *constructMessage(string line, int id, bool isModified, do
   return messageToSend;
 }
 
-// inline vector<string> split(string str, char seperator)
-// {
-//   vector<string> strings;
-//   int i = 0;
-//   int startIndex = 0, endIndex = 0;
-//   while (i <= str.size())
-//   {
-//     if (str[i] == seperator || i == str.size())
-//     {
-//       endIndex = i;
-//       string subStr = "";
-//       subStr.append(str, startIndex, endIndex - startIndex);
-//       strings.push_back(subStr);
-//       startIndex = endIndex + 1;
-//     }
-//     i++;
-//   }
-//   return strings;
-// }
+
 inline std::vector<std::string> split(std::string const &str, const char delim)
 {
   std::vector<std::string> out;

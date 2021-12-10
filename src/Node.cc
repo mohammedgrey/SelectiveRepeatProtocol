@@ -126,15 +126,15 @@ void Node::sendMessage()
 
     //getting errors to be applied to message
     bool isModified= events[eventsIndex].substr(0,1) == "1"? true: false;
-    bool isDelay= events[eventsIndex].substr(1,2) == "1"? true: false;
-    bool isLost= events[eventsIndex].substr(2,3) == "1"? true: false;
-    bool isDuplicate= events[eventsIndex].substr(3,4) == "1"? true: false;
+    bool isLost= events[eventsIndex].substr(1,2) == "1"? true: false;
+    bool isDuplicated= events[eventsIndex].substr(2,3) == "1"? true: false;
+    bool isDelayed= events[eventsIndex].substr(3,4) == "1"? true: false;
 
     //constructing next message to be sent
     double randModIndex= par("randNum").doubleValue();    //generate a random number 0-1 to be used for the modification
     MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex);
 
-    //TODO: make sure parameters are correct -> how to choose ack number?
+    //TODO: change ack number in phase 2
     L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log
 
 
