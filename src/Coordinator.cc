@@ -1,16 +1,11 @@
 #include "Coordinator.h"
 
 Define_Module(Coordinator);
-#include <map>
 
 
 void Coordinator::initialize()
 {
-    map<string, string> coordinatorFilePath;
-    //TODO: add the getenv("HOSTNAME") of your pc and the corresponding full file path
-    coordinatorFilePath["DESKTOP-LA84EMV"]="C:/omnetpp-5.7/samples/SelectiveRepeatProtocol/src/inputs/coordinator.txt";
-
-    vector<string> lines = readFile(coordinatorFilePath[getenv("HOSTNAME")]);
+    vector<string> lines = readFile(getBasePath() + "/inputs/coordinator.txt");
     for (int i = 0; i < lines.size(); i++)
     {
         string nodeNumber = lines[i].substr(0, 1);

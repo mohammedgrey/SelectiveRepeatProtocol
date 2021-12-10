@@ -184,6 +184,7 @@ MyMessage_Base::MyMessage_Base(const char *name, short kind) : ::omnetpp::cPacke
     this->M_Type = 0;
     this->CRC = 0;
     this->p_id = 0;
+    this->p_ack = 0;
 }
 
 MyMessage_Base::MyMessage_Base(const MyMessage_Base& other) : ::omnetpp::cPacket(other)
@@ -298,12 +299,12 @@ void MyMessage_Base::setP_id(int p_id)
     this->p_id = p_id;
 }
 
-const char * MyMessage_Base::getP_ack() const
+int MyMessage_Base::getP_ack() const
 {
-    return this->p_ack.c_str();
+    return this->p_ack;
 }
 
-void MyMessage_Base::setP_ack(const char * p_ack)
+void MyMessage_Base::setP_ack(int p_ack)
 {
     this->p_ack = p_ack;
 }
@@ -446,7 +447,7 @@ const char *MyMessageDescriptor::getFieldTypeString(int field) const
         "int",
         "int",
         "int",
-        "string",
+        "int",
     };
     return (field>=0 && field<7) ? fieldTypeStrings[field] : nullptr;
 }
@@ -521,7 +522,7 @@ std::string MyMessageDescriptor::getFieldValueAsString(void *object, int field, 
         case 3: return long2string(pp->getM_Type());
         case 4: return long2string(pp->getCRC());
         case 5: return long2string(pp->getP_id());
-        case 6: return oppstring2string(pp->getP_ack());
+        case 6: return long2string(pp->getP_ack());
         default: return "";
     }
 }
@@ -542,7 +543,7 @@ bool MyMessageDescriptor::setFieldValueAsString(void *object, int field, int i, 
         case 3: pp->setM_Type(string2long(value)); return true;
         case 4: pp->setCRC(string2long(value)); return true;
         case 5: pp->setP_id(string2long(value)); return true;
-        case 6: pp->setP_ack((value)); return true;
+        case 6: pp->setP_ack(string2long(value)); return true;
         default: return false;
     }
 }

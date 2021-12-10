@@ -12,14 +12,18 @@ using namespace omnetpp;
  */
 class Node : public cSimpleModule
 {
-    private:
-        int id;                   //id of the current node
-        bool firstMessage;        //flag to check if the received message is from the coordinator
-        vector<string> events;    //vector of lines from the node's input file
-        int startTime;            //for starting nodes only
-    protected:
-      virtual void initialize();
-      virtual void handleMessage(cMessage *msg);
+private:
+  int id;                // id of the current node
+  bool firstMessage;     // flag to check if the received message is from the coordinator
+  vector<string> events; // vector of lines from the node's input file
+  int eventsIndex;       // to keep track which line I am currently sending
+  double startTime;      // for starting nodes only
+  int piggybackingId;    // id to identify acks
+
+protected:
+  virtual void initialize();
+  virtual void handleMessage(cMessage *msg);
+  void sendMessage();
 };
 
 #endif

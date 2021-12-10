@@ -43,7 +43,7 @@ typedef  std::bitset<8> bits;
  * 
  *     //piggybacking
  *     int p_id;
- *     string p_ack;
+ *     int p_ack;
  * 
  * }
  * </pre>
@@ -81,7 +81,7 @@ class MyMessage_Base : public ::omnetpp::cPacket
     int M_Type;
     int CRC;
     int p_id;
-    ::omnetpp::opp_string p_ack;
+    int p_ack;
 
   private:
     void copy(const MyMessage_Base& other);
@@ -90,14 +90,14 @@ class MyMessage_Base : public ::omnetpp::cPacket
     // protected and unimplemented operator==(), to prevent accidental usage
     bool operator==(const MyMessage_Base&);
     // make constructors protected to avoid instantiation
-    MyMessage_Base(const char *name=nullptr, short kind=0);
     MyMessage_Base(const MyMessage_Base& other);
     // make assignment operator protected to force the user override it
     MyMessage_Base& operator=(const MyMessage_Base& other);
 
   public:
+    MyMessage_Base(const char *name=nullptr, short kind=0);
     virtual ~MyMessage_Base();
-    virtual MyMessage_Base *dup() const override {throw omnetpp::cRuntimeError("You forgot to manually add a dup() function to class MyMessage");}
+    virtual MyMessage_Base *dup() const override {return new MyMessage_Base(*this);}
     virtual void parsimPack(omnetpp::cCommBuffer *b) const override;
     virtual void parsimUnpack(omnetpp::cCommBuffer *b) override;
 
@@ -114,8 +114,8 @@ class MyMessage_Base : public ::omnetpp::cPacket
     virtual void setCRC(int CRC);
     virtual int getP_id() const;
     virtual void setP_id(int p_id);
-    virtual const char * getP_ack() const;
-    virtual void setP_ack(const char * p_ack);
+    virtual int getP_ack() const;
+    virtual void setP_ack(int p_ack);
 };
 
 

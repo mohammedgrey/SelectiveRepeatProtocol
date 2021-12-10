@@ -37,6 +37,6 @@ packet MyMessage {
      
      //piggybacking
      int p_id;
-     string p_ack; 
+     int p_ack; 
     
 }

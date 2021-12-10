@@ -30,7 +30,7 @@ inline long long int fromBinaryStringToDecimal(string binaryString)
     return decimalNumber;
 }
 
-string getBinaryStringFromPayload(string payload)
+inline string getBinaryStringFromPayload(string payload)
 {
     string binaryString = ""; // initial value to append to
     // loop through each char
