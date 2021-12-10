@@ -13,7 +13,7 @@ void Coordinator::initialize()
     }
 
     string msg;
-    msg = byteStuffing("H$E/Y");
+    msg = modifyMessage("HEY");
     for (int i = 0; i < msg.size(); i++) {
         cout << msg[i] << endl;
     }

@@ -1,6 +1,7 @@
 #include <string>
 #include <fstream>
 #include <vector>
+#include <bitset>
 using namespace std;
 
 vector<string> readFile(string path){
@@ -37,4 +38,20 @@ string byteStuffing(string message) {
 
   // Return the stuffed message
   return stuffedMessage;
+}
+
+string modifyMessage(string message) {
+  // Generate a random number (0 to string size) --> character to modify
+  int charToModify = 1;
+  bitset<8> chbits(message[charToModify]);
+
+  // Generate a random number (0 to 7) --> bit to modify
+  int bitToModify = 1;
+  chbits[bitToModify] = !chbits[bitToModify];
+
+  // Convert back to string and alter old message
+  char newChar = (char)chbits.to_ulong();
+  message[charToModify] = newChar;
+
+  return message;
 }
