@@ -132,7 +132,7 @@ void Node::sendMessage()
     bool isDuplicate= events[eventsIndex].substr(3,4) == "1"? true: false;
 
     //constructing next message to be sent
-    MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isDelay, isLost, isDuplicate);
+    MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isModified);
 
     //TODO: make sure parameters are correct -> how to choose ack number?
     L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log

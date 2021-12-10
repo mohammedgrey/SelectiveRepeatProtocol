@@ -85,18 +85,14 @@ inline string modifyMessage(string message)
   return message;
 }
 
-inline MyMessage_Base *constructMessage(string line, int id, bool &isDelay, bool &isLost, bool &isDuplicate)
+inline MyMessage_Base *constructMessage(string line, int id, bool isModified)
 {
-  // modification, loss, Duplication, Delay
-  string MLDDbits = line.substr(0, 4);
-  isLost = MLDDbits[1] == '1' ? true : false;
-  isDuplicate = MLDDbits[2] == '1' ? true : false;
-  isDelay = MLDDbits[3] == '1' ? true : false;
 
   string messageContent = line.substr(5);                  //get the message content without the error bits
   string payload = byteStuffing(messageContent);           //frame the message
   long long int remainderCRC = getRemainderCRC(payload);   //get the remainder when dividing the message (after byte stuffing) by the generator function
-  payload = modifyMessage(payload);
+
+  if (isModified) payload = modifyMessage(payload);        //modify the message if it should be
 
   MyMessage_Base *messageToSend = new MyMessage_Base();
 
