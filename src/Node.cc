@@ -125,21 +125,44 @@ void Node::sendMessage()
     }
 
     //getting errors to be applied to message
-    bool isModified= events[eventsIndex].substr(0,1) == "1"? true: false;
-    bool isLost= events[eventsIndex].substr(1,2) == "1"? true: false;
-    bool isDuplicated= events[eventsIndex].substr(2,3) == "1"? true: false;
-    bool isDelayed= events[eventsIndex].substr(3,4) == "1"? true: false;
+    string MLDD= events[eventsIndex].substr(0,4);
+    bool isModified= MLDD[0] == '1'? true: false;
+    bool isLost= MLDD[1] == '1'? true: false;
+    bool isDuplicated= MLDD[2] == '1'? true: false;
+    bool isDelayed= MLDD[3] == '1'? true: false;
 
-    //constructing next message to be sent
+    //MODIFICATION
     double randModIndex= par("randNum").doubleValue();    //generate a random number 0-1 to be used for the modification
-    MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex);
+    MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); //constructing message
 
-    //TODO: change ack number in phase 2
-    L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log
+    //send only if not LOST
+    if (!isLost) {
+
+        //if not duplicated or delayed
+        if(!isDuplicated && !isDelayed) {
+            //TODO: change ack number in phase 2
+            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log
+            send(messageToSend, "peerLink$o"); // send to my peer
+        }
+
+        //if message is duplicated but not delayed
+        else if (isDuplicated && !isDelayed) {
+            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+            send(messageToSend, "peerLink$o");             //send first message now
+            sendDelayed(messageToSend,0.01,"peerLink$o");  //send duplicate with 0.01s delay
+        }
+
+        //if message is both duplicated and delayed
+        else if (isDuplicated && isDelayed) {
+            double delay= par("delaySeconds").doubleValue();
+            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl()+delay, isModified, 1, 1);
+            sendDelayed(messageToSend,delay,"peerLink$o");        //send first message after delay
+            sendDelayed(messageToSend,delay+0.01,"peerLink$o");  //send duplicate with delay+0.01s
+        }
+
+    }
 
 
-    // TODO: use isDelay, isLost, isDuplicate to simulate imperfect conditions
-    send(messageToSend, "peerLink$o"); // send to my peer
-
-    eventsIndex++;                  //increment events index to the next message
+    //increment events index to the next message
+    eventsIndex++;
 }
