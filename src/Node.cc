@@ -39,9 +39,8 @@ void Node::initialize()
     // initialize the events index to the first event
     eventsIndex = 0;
 
-    // initialize piggybackingId with 0
-    piggybackingId = 0;
-
+    //initialize expected fram id
+    expectedFrameId=0;
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -92,9 +91,26 @@ void Node::handleMessage(cMessage *msg)
                 MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
                 // valid= 1->ack, 0->nck
                 int valid = validCRC(mmsg->getM_Payload(), (long long int)mmsg->getCRC()) ? 0 : 1;
+
+                //received message log
                 L->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+
                 mmsg->setP_ack(valid);
-                mmsg->setP_id(piggybackingId++);
+                if (valid) {
+                    expectedFrameId++;                         //if ack, request next frame
+                }
+                mmsg->setP_id(expectedFrameId);
+
+                //check for duplicate frame
+                if(mmsg->getId()<expectedFrameId) {
+                    //drop message
+                    L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+                }
+
+                //sent message log TODO: change the sent message id and ack number in phase 2
+                L->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid,expectedFrameId);
+
+                //sending message
                 send(mmsg, "peerLink$o");
 
             }
@@ -163,6 +179,18 @@ void Node::sendMessage()
             sendDelayed(messageToSendDup,delay+0.01,"peerLink$o");  //send duplicate with delay+0.01s
         }
 
+        //if message is not duplicated and delayed
+        else {
+            double delay= par("delaySeconds").doubleValue();
+            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl()+delay, isModified, 1, 1);
+            sendDelayed(messageToSend,delay,"peerLink$o");        //send first message after delay
+        }
+
+    }
+
+    //if message is lost, just log it without sending
+    else {
+        L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
     }
 
 

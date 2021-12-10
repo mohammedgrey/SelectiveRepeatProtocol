@@ -18,7 +18,7 @@ private:
   vector<string> events; // vector of lines from the node's input file
   int eventsIndex;       // to keep track which line I am currently sending
   double startTime;      // for starting nodes only
-  int piggybackingId;    // id to identify acks
+  int expectedFrameId;   // used to check for duplicates
   Logs* L;               // pointer to logs class
 
 protected:
