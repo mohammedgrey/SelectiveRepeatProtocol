@@ -124,15 +124,22 @@ void Node::sendMessage()
         return;
     }
 
+
+    //getting errors to be applied to message
+    bool isModified= events[eventsIndex].substr(0,1) == "1"? true: false;
+    bool isDelay= events[eventsIndex].substr(1,2) == "1"? true: false;
+    bool isLost= events[eventsIndex].substr(2,3) == "1"? true: false;
+    bool isDuplicate= events[eventsIndex].substr(3,4) == "1"? true: false;
+
     //constructing next message to be sent
-    bool isModified, isDelay, isLost, isDuplicate;
-    isModified=true;
     MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isDelay, isLost, isDuplicate);
 
     //TODO: make sure parameters are correct -> how to choose ack number?
     L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log
-    eventsIndex++;                  //increment events index to the next message
+
 
     // TODO: use isDelay, isLost, isDuplicate to simulate imperfect conditions
     send(messageToSend, "peerLink$o"); // send to my peer
+
+    eventsIndex++;                  //increment events index to the next message
 }
