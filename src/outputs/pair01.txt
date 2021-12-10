@@ -1,0 +1,26 @@
+node0 sends message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 1
+node1 received message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 3.000000 with modification, and NACK number= 0
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.000000and piggybacking ACK number= 1
+node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.000000 and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 3.000000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.000000and piggybacking ACK number= 1
+node1 received message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.010000 with modification, and piggybacking ACK number= 1
+node1 drops message with id=0
+node1 sends message with id=-1 and content= '''' at 3.010000 with modification, and NACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.010000and piggybacking ACK number= 1
+node1 received message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.010000 and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 3.010000and piggybacking ACK number= 2
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 5.010000and piggybacking ACK number= 1
+node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 5.010000 and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 5.010000and piggybacking ACK number= 3
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 5.010000and piggybacking ACK number= 1
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 5.010000 and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 5.010000and piggybacking ACK number= 4
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 5.010000and piggybacking ACK number= 1
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 5.010000 with modification, and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 5.010000 with modification, and NACK number= 4
+node0 end of input file
+Total transmission time= 5.01
+Total number of transmissions= 8
+The network throughput= 1.54751e+008

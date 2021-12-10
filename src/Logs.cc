@@ -13,6 +13,7 @@ Logs::Logs(std::string file) {
     nodesReachingEOF=0;
     totalTransTime=0;
     totalTransNum=0;
+    totalCorrectMessages=0;
 }
 
 //events: 0-> sends, 1-> received, 2-> drops, 3->timeout
@@ -26,7 +27,7 @@ void Logs::addLog(int node, int event, int id, std::string content, double time,
             if(modified) log+=" with modification, ";
             if(ack) log+="and piggybacking ACK number= "+std::to_string(ackNum);
             else log+="and NACK number= "+std::to_string(ackNum);
-            totalTransNum++;    //increment number of transmissions on every sent message
+            //totalTransNum++;    //increment number of transmissions on every sent message
             break;
         case 1:
             log="node"+std::to_string(node)+" received message with id="+std::to_string(id)+" and content= ''"+content+"'' at "+std::to_string(time);
@@ -61,10 +62,10 @@ void Logs::addEOF(int node) {
     myfile.open(filePath, std::ios_base::app);
     myfile<< "node"<< node << " end of input file" << endl;
 
-    //if the pair finished their input files
-    if(nodesReachingEOF==2){
+    //if the pair finished their input files (change this to 2 in phase 2)
+    if(nodesReachingEOF==1){
 
-        float throughput= totalCorrectMessages/totalTransTime;
+        double throughput= totalCorrectMessages/totalTransTime;
 
         //printing to console
         cout<< "Total transmission time= "<< totalTransTime<<endl;
@@ -78,6 +79,18 @@ void Logs::addEOF(int node) {
         myfile<< "The network throughput= "<< throughput<<endl;
     }
     myfile.close();
+}
+
+void Logs::incrementTransNum(int n) {
+    totalTransNum+= n;
+}
+
+void Logs::incrementCorrectMessages(int n) {
+    totalCorrectMessages+= n;
+}
+
+void Logs::setTransTime(double t) {
+    totalTransTime= t;
 }
 
 Logs::~Logs() {

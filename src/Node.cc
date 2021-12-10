@@ -112,6 +112,8 @@ void Node::handleMessage(cMessage *msg)
 
                 //sending message
                 send(mmsg, "peerLink$o");
+                L->incrementTransNum(1);
+
 
             }
             catch (...)
@@ -137,7 +139,8 @@ void Node::sendMessage()
 
     // terminating condition for phase 1 (sender has no other message to send)
     if (eventsIndex >= events.size()) {
-        L->addEOF(id);                 //add a log that the node reached the end of its input file
+        if (id==0) L->setTransTime(simTime().dbl());   //TODO: change in phase 2
+        L->addEOF(id);                                 //add a log that the node reached the end of its input file
         return;
     }
 
@@ -160,6 +163,7 @@ void Node::sendMessage()
             //TODO: change ack number in phase 2
             L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);    //add a log
             send(messageToSend, "peerLink$o"); // send to my peer
+            L->incrementTransNum(1);
         }
 
         //if message is duplicated but not delayed
@@ -168,6 +172,7 @@ void Node::sendMessage()
             send(messageToSend, "peerLink$o");             //send first message now
             MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); //construct duplicate
             sendDelayed(messageToSendDup,0.01,"peerLink$o");  //send duplicate with 0.01s delay
+            L->incrementTransNum(2);
         }
 
         //if message is both duplicated and delayed
@@ -177,6 +182,7 @@ void Node::sendMessage()
             sendDelayed(messageToSend,delay,"peerLink$o");        //send first message after delay
             MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); //construct duplicate
             sendDelayed(messageToSendDup,delay+0.01,"peerLink$o");  //send duplicate with delay+0.01s
+            L->incrementTransNum(2);
         }
 
         //if message is not duplicated and delayed
@@ -184,6 +190,7 @@ void Node::sendMessage()
             double delay= par("delaySeconds").doubleValue();
             L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl()+delay, isModified, 1, 1);
             sendDelayed(messageToSend,delay,"peerLink$o");        //send first message after delay
+            L->incrementTransNum(1);
         }
 
     }
@@ -191,6 +198,7 @@ void Node::sendMessage()
     //if message is lost, just log it without sending
     else {
         L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+        L->incrementTransNum(1);
     }
 
 
