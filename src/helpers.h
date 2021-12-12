@@ -21,8 +21,10 @@ using namespace omnetpp;
 inline string getBasePath()
 {
   map<string, string> basePath;
-  // TODO: add the getenv("HOSTNAME") of your pc and the corresponding base path to the src directory
+  // TODO: add the hostname of your pc and the corresponding base path to the src directory to the basePath map
+  // Note: to know your host name open the cmd and type hostname
   basePath["DESKTOP-SP2J27C"] = "C:/Users/fatem/OneDrive/Desktop/omnetpp-5.6.2/samples/SelectiveRepeatProtocol/src";
+  basePath["DESKTOP-LA84EMV"] = "C:/omnetpp-5.7/samples/SelectiveRepeatProtocol/src";
   return basePath[getenv("HOSTNAME")];
 }
 
@@ -71,11 +73,11 @@ inline string byteStuffing(string message)
 inline string modifyMessage(string message, double randModIndex)
 {
   // Generate a random number (0 to string size) --> character to modify
-  int charToModify = (int)(randModIndex*message.size());
+  int charToModify = (int)(randModIndex * message.size());
   bitset<8> chbits(message[charToModify]);
 
   // Generate a random number (0 to 7) --> bit to modify
-  int bitToModify = (int)(randModIndex*8);
+  int bitToModify = (int)(randModIndex * 8);
   chbits[bitToModify] = !chbits[bitToModify];
 
   // Convert back to string and alter old message
@@ -88,28 +90,28 @@ inline string modifyMessage(string message, double randModIndex)
 inline MyMessage_Base *constructMessage(string line, int id, bool isModified, double randModIndex)
 {
 
-  string messageContent = line.substr(5);                  //get the message content without the error bits
-  string payload = byteStuffing(messageContent);           //frame the message
-  long long int remainderCRC = getRemainderCRC(payload);   //get the remainder when dividing the message (after byte stuffing) by the generator function
+  string messageContent = line.substr(5);         // get the message content without the error bits
+  string payload = byteStuffing(messageContent);  // frame the message
+  string remainderCRC = getRemainderCRC(payload); // get the remainder when dividing the message (after byte stuffing) by the generator function
 
-  if (isModified) payload = modifyMessage(payload, randModIndex);        //modify the message if it should be
+  if (isModified)
+    payload = modifyMessage(payload, randModIndex); // modify the message if it should be
 
   MyMessage_Base *messageToSend = new MyMessage_Base();
 
   // header
-  messageToSend->setId(id);                                //message id
-  messageToSend->setStart_Time(simTime().dbl());           //sending time
+  messageToSend->setId(id);                      // message id
+  messageToSend->setStart_Time(simTime().dbl()); // sending time
 
   // payload
-  messageToSend->setM_Payload(payload.c_str());            //message itself as a string
+  messageToSend->setM_Payload(payload.c_str()); // message itself as a string
 
   // trailer
-  messageToSend->setCRC((int)remainderCRC);               //put the CRC in the trailer
-  messageToSend->setP_ack(1);                             //set ack number
+  messageToSend->setCRC(remainderCRC.c_str()); // put the CRC in the trailer
+  messageToSend->setP_ack(1);                  // set ack number
 
   return messageToSend;
 }
-
 
 inline std::vector<std::string> split(std::string const &str, const char delim)
 {

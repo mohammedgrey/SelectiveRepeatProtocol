@@ -1,5 +1,5 @@
 //
-// Generated file, do not edit! Created by nedtool 5.6 from MyMessage.msg.
+// Generated file, do not edit! Created by nedtool 5.7 from MyMessage.msg.
 //
 
 // Disable warnings about unused variables, empty switch stmts, etc:
@@ -182,7 +182,6 @@ MyMessage_Base::MyMessage_Base(const char *name, short kind) : ::omnetpp::cPacke
     this->id = 0;
     this->start_Time = 0;
     this->M_Type = 0;
-    this->CRC = 0;
     this->p_id = 0;
     this->p_ack = 0;
 }
@@ -279,12 +278,12 @@ void MyMessage_Base::setM_Type(int M_Type)
     this->M_Type = M_Type;
 }
 
-int MyMessage_Base::getCRC() const
+const char * MyMessage_Base::getCRC() const
 {
-    return this->CRC;
+    return this->CRC.c_str();
 }
 
-void MyMessage_Base::setCRC(int CRC)
+void MyMessage_Base::setCRC(const char * CRC)
 {
     this->CRC = CRC;
 }
@@ -445,7 +444,7 @@ const char *MyMessageDescriptor::getFieldTypeString(int field) const
         "double",
         "string",
         "int",
-        "int",
+        "string",
         "int",
         "int",
     };
@@ -520,7 +519,7 @@ std::string MyMessageDescriptor::getFieldValueAsString(void *object, int field, 
         case 1: return double2string(pp->getStart_Time());
         case 2: return oppstring2string(pp->getM_Payload());
         case 3: return long2string(pp->getM_Type());
-        case 4: return long2string(pp->getCRC());
+        case 4: return oppstring2string(pp->getCRC());
         case 5: return long2string(pp->getP_id());
         case 6: return long2string(pp->getP_ack());
         default: return "";
@@ -541,7 +540,7 @@ bool MyMessageDescriptor::setFieldValueAsString(void *object, int field, int i, 
         case 1: pp->setStart_Time(string2double(value)); return true;
         case 2: pp->setM_Payload((value)); return true;
         case 3: pp->setM_Type(string2long(value)); return true;
-        case 4: pp->setCRC(string2long(value)); return true;
+        case 4: pp->setCRC((value)); return true;
         case 5: pp->setP_id(string2long(value)); return true;
         case 6: pp->setP_ack(string2long(value)); return true;
         default: return false;

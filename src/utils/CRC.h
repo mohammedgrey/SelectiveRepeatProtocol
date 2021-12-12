@@ -6,34 +6,9 @@
 #include <bitset>
 
 using namespace std;
-
-inline string fromDecimalToBinaryString(long long int decimalNumber)
-{
-    string binaryString = "";
-    while (decimalNumber)
-    {
-        if (decimalNumber & 1)
-            binaryString = "1" + binaryString;
-        else
-            binaryString = "0" + binaryString;
-        decimalNumber = decimalNumber >> 1;
-    }
-    return binaryString;
-}
-
-inline long long int fromBinaryStringToDecimal(string binaryString)
-{
-    long long int decimalNumber = 0;
-    for (int i = 0; i < binaryString.size(); i++)
-        if (binaryString[i] == '1')
-            decimalNumber += 1 << (binaryString.length() - i - 1);
-    return decimalNumber;
-}
-
 inline string getBinaryStringFromPayload(string payload)
 {
-    string binaryString = ""; // initial value to append to
-    // loop through each char
+    string binaryString = "";
     for (int i = 0; i < payload.size(); i++)
     {
         bitset<8> charBits(payload[i]);
@@ -42,51 +17,49 @@ inline string getBinaryStringFromPayload(string payload)
     return binaryString;
 }
 
-inline long long int remainderOfBinaryLongdivison(long long int dividend, long long gen, int l_gen)
+inline string xorTwoBinaryStrings(string s1, string s2)
 {
-    // shft specifies the no. of least
-    // significant bits not being XORed
-    int shft = (int)ceill(log2l(dividend + 1)) - l_gen;
-    long long int rem;
+    string xored = "";
+    for (int i = 1; i < s2.size(); i++)
+        xored += s1[i] == s2[i] ? "0" : "1";
+    return xored;
+}
+inline string longBinaryDivision(string divident, string divisor)
+{
+    int NumBitsToXOR = divisor.length();
+    string dividentXORedPart = divident.substr(0, NumBitsToXOR);
 
-    while ((dividend >= gen) || (shft >= 0))
+    while (NumBitsToXOR < divident.size())
     {
-        // bitwise XOR the MSBs of dividend with generator
-        // replace the operated MSBs from the dividend with
-        // remainder generated
-        rem = (dividend >> shft) ^ gen;
-        dividend = (dividend & ((1 << shft) - 1)) | (rem << shft);
-
-        // change shft variable
-        shft = (int)ceill(log2l(dividend + 1)) - l_gen;
+        dividentXORedPart = dividentXORedPart[0] == '1' ? xorTwoBinaryStrings(divisor, dividentXORedPart) + divident[NumBitsToXOR] : xorTwoBinaryStrings(string(NumBitsToXOR, '0'), dividentXORedPart) + divident[NumBitsToXOR];
+        NumBitsToXOR++;
     }
-    return dividend;
+    dividentXORedPart = dividentXORedPart[0] == '1' ? xorTwoBinaryStrings(divisor, dividentXORedPart) : xorTwoBinaryStrings(string(NumBitsToXOR, '0'), dividentXORedPart);
+    return dividentXORedPart;
 }
 
-// returns the remainder of the CRC
-inline long long int getRemainderCRC(string payload)
+inline string getRemainderCRC(string payload)
 {
-    string generatorBinaryString = "1001";
-    int l_gen = generatorBinaryString.length();
-    long long int gen = fromBinaryStringToDecimal(generatorBinaryString);
-    string payloadBinaryString = getBinaryStringFromPayload(payload);
-    long long int dword = fromBinaryStringToDecimal(payloadBinaryString);
-    // append 0s to dividend by shifting
-    long long int dividend = dword << (l_gen - 1);
-    return remainderOfBinaryLongdivison(dividend, gen, l_gen);
+    string generator = "1001";
+    string binaryStringPayload = getBinaryStringFromPayload(payload);
+    string shiftedPayload = (binaryStringPayload + string(generator.size() - 1, '0'));
+    string remainder = longBinaryDivision(shiftedPayload, generator);
+    return remainder;
 }
 
-// returns true if the check is valid and false if there is an error
-inline bool validCRC(string possiblyModifiedPayload, long long int remainder)
+inline bool validCRC(string payload, string remainder)
 {
-    string generatorBinaryString = "1001";
-    int l_gen = generatorBinaryString.length();
-    long long int gen = fromBinaryStringToDecimal(generatorBinaryString);
-    long long int dword = fromBinaryStringToDecimal(getBinaryStringFromPayload(possiblyModifiedPayload));
-    // shifting the message
-    long long int dividend = dword << (l_gen - 1);
-    // appending the remainder
-    dividend += remainder;
-    return remainderOfBinaryLongdivison(dividend, gen, l_gen) == 0;
+    string generator = "1001";
+    string remainderBinaryString = remainder;
+    string binaryStringPayload = getBinaryStringFromPayload(payload);
+    while (remainderBinaryString.size() < generator.size() - 1)
+        remainderBinaryString = "0" + remainderBinaryString;
+    string messageAddedWithRemainder = binaryStringPayload + remainderBinaryString;
+    string returnedRemainder = longBinaryDivision(messageAddedWithRemainder, generator);
+    cout << returnedRemainder << endl;
+    for (int i = 0; i < returnedRemainder.size(); i++)
+        if (returnedRemainder[i] == '1')
+            return false;
+    return true;
 }
 #endif

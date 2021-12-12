@@ -33,7 +33,7 @@ packet MyMessage {
      int M_Type;
      
      //trailer
-     int CRC;
+     string CRC;
      
      //piggybacking
      int p_id;

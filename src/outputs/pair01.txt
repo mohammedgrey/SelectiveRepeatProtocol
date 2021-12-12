@@ -18,9 +18,9 @@ node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing
 node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 5.010000 and piggybacking ACK number= 1
 node1 sends message with id=-1 and content= '''' at 5.010000and piggybacking ACK number= 4
 node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 5.010000and piggybacking ACK number= 1
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 5.010000 with modification, and piggybacking ACK number= 1
-node1 sends message with id=-1 and content= '''' at 5.010000 with modification, and NACK number= 4
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 5.010000 and piggybacking ACK number= 1
+node1 sends message with id=-1 and content= '''' at 5.010000and piggybacking ACK number= 5
 node0 end of input file
 Total transmission time= 5.01
 Total number of transmissions= 8
-The network throughput= 1.54751e+008
+The network throughput= 0
