@@ -28,7 +28,6 @@ inline string longBinaryDivision(string divident, string divisor)
 {
     int NumBitsToXOR = divisor.length();
     string dividentXORedPart = divident.substr(0, NumBitsToXOR);
-
     while (NumBitsToXOR < divident.size())
     {
         dividentXORedPart = dividentXORedPart[0] == '1' ? xorTwoBinaryStrings(divisor, dividentXORedPart) + divident[NumBitsToXOR] : xorTwoBinaryStrings(string(NumBitsToXOR, '0'), dividentXORedPart) + divident[NumBitsToXOR];
