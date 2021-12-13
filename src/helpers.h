@@ -25,6 +25,7 @@ inline string getBasePath()
   // Note: to know your host name open the cmd and type hostname
   basePath["DESKTOP-SP2J27C"] = "C:/Users/fatem/OneDrive/Desktop/omnetpp-5.6.2/samples/SelectiveRepeatProtocol/src";
   basePath["DESKTOP-LA84EMV"] = "C:/omnetpp-5.7/samples/SelectiveRepeatProtocol/src";
+  basePath["Baz"] = "E:/Uni Stuff/Senior II Standing/Computer Networks I/Project/Project-2021-Student/SelectiveRepeatProtocol/src";
   return basePath[getenv("HOSTNAME")];
 }
 
