@@ -18,7 +18,8 @@ private:
   vector<string> events; // vector of lines from the node's input file
   int eventsIndex;       // to keep track which line I am currently sending
   double startTime;      // for starting nodes only
-  int expectedFrameId;   // used to check for duplicates
+  int expectedFrameId;   // used to check for duplicates (should make sense in phase 2)
+  int prevFrameId;       // used to check for duplicates (for phase 1 only)
   Logs *L;               // pointer to logs class
 
 protected:
@@ -27,6 +28,7 @@ protected:
   void sendMessage();
   void receiveMessage(cMessage *msg);
   void initializeMessages(cMessage *msg);
+  virtual ~Node();
 };
 
 #endif

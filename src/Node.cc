@@ -47,6 +47,9 @@ void Node::initialize()
 
     // initialize expected fram id
     expectedFrameId = 0;
+
+    // initialize prev frame id with no prev (-1)
+    prevFrameId = -1;
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -140,7 +143,6 @@ void Node::sendMessage()
             sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o");                                                       // send duplicate with delay+0.01s
             L->incrementTransNum(2);
         }
-
         // if message is not duplicated and delayed
         else
         {
@@ -154,6 +156,10 @@ void Node::sendMessage()
     // if message is lost, just log it without sending
     else
     {
+        cout << "--------------------------------------------------" << endl;
+        cout << "I am lost " << endl;
+        cout << "--------------------------------------------------" << endl;
+
         L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
         L->incrementTransNum(1);
     }
@@ -182,10 +188,19 @@ void Node::receiveMessage(cMessage *msg)
         mmsg->setP_id(expectedFrameId);
 
         // check for duplicate frame
-        if (mmsg->getId() < expectedFrameId)
+        // if (mmsg->getId() < expectedFrameId) // TODO: use this in phase 2
+        // {
+        //     // drop message
+        //     L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+        // }
+        if (mmsg->getId() == prevFrameId) // TODO: add condition if id=0
         {
             // drop message
             L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+        }
+        else
+        {
+            prevFrameId = mmsg->getId();
         }
 
         // sent message log TODO: change the sent message id and ack number in phase 2
@@ -194,6 +209,7 @@ void Node::receiveMessage(cMessage *msg)
         // sending message
         double delay = 0.2;
         sendDelayed(mmsg, delay, "peerLink$o");
+        // send(mmsg, "peerLink$o");
         L->incrementTransNum(1);
     }
     catch (...)
@@ -223,4 +239,9 @@ void Node::initializeMessages(cMessage *msg)
     // change the flag to false
     firstMessage = false;
     cancelAndDelete(msg);
+}
+
+Node::~Node()
+{
+    delete L;
 }
