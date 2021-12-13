@@ -26,7 +26,7 @@ protected:
   static Logs *L;               // pointer to logs class
   virtual void initialize();
   virtual void handleMessage(cMessage *msg);
-  void sendMessage();
+  void sendMessage(cMessage *msg);
   void receiveMessage(cMessage *msg);
   void initializeMessages(cMessage *msg);
   virtual ~Node();

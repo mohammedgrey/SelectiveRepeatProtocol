@@ -66,7 +66,7 @@ void Node::handleMessage(cMessage *msg)
     else if (msg->isSelfMessage())
     {
         cout << "Scheduled self messsage" << endl;
-        sendMessage(); // implemented down below as a class method
+        sendMessage(msg); // implemented down below as a class method
     }
 
     // if the message is from the other pair
@@ -82,13 +82,16 @@ void Node::handleMessage(cMessage *msg)
         else
         {
             cout << "I am the sender, sending id= " << eventsIndex << endl;
-            sendMessage(); // implemented down below as a class method
+            sendMessage(msg); // implemented down below as a class method
         }
     }
 }
 
-void Node::sendMessage()
+void Node::sendMessage(cMessage *msg)
 {
+    //Phase 1: we don't use the received message to check anything (ack and nack don't affect sent messages)
+    cancelAndDelete(msg);   //delete right away for now
+
     // cout<<"node "<<id<<" is now sending message number "<<eventsIndex<<endl;
     EV << "node " << id << " is now sending message number " << eventsIndex << endl;
 
