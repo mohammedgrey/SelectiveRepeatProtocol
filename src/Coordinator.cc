@@ -14,12 +14,6 @@ void Coordinator::initialize()
         cMessage *msg = new cMessage(lines[i].c_str());
         send(msg, outputGate.c_str());
     }
-
-    // string msg;
-    // msg = modifyMessage("HEY");
-    // for (int i = 0; i < msg.size(); i++) {
-    //     cout << msg[i] << endl;
-    // }
 }
 
 void Coordinator::handleMessage(cMessage *msg)
