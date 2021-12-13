@@ -54,31 +54,13 @@ void Node::handleMessage(cMessage *msg)
     // check if the received message is from the coordinator
     if (firstMessage)
     {
-        // get the 0->node id, 1->text file name, 2->whether it's the starting node, 3->starting time
-        vector<string> lineReceived = split(msg->getName(), ' ');
-
-        // store file lines
-        events = readFile(getBasePath() + "/inputs/" + lineReceived[1]);
-        // cout << "Events length: " << events.size() << endl;
-
-        // check if I am the start node
-        // cout<<"line received length "<<lineReceived.size()<<endl;
-        if (lineReceived.size() > 2)
-        {
-            // cout<<"I have a start time"<<endl;
-            startTime = stod(lineReceived[3]);
-            // schedule a time to start
-            scheduleAt(startTime, new cMessage(""));
-        }
-        // change the flag to false
-        firstMessage = false;
-        cancelAndDelete(msg);
+        initializeMessages(msg);
     }
 
     // if the message is from myself (either because I scheduled a time to start or I set a timeout)
     else if (msg->isSelfMessage())
     {
-        // cout<<"Scheduled self messsage"<<endl;
+        cout << "Scheduled self messsage" << endl;
         sendMessage(); // implemented down below as a class method
     }
 
@@ -88,47 +70,13 @@ void Node::handleMessage(cMessage *msg)
         // I am the receiver in phase 1 and should only send ack or nack
         if (startTime == -1)
         {
-            // cout<<"I am the receiver"<<endl;
-            try
-            {
-                MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
-                // valid= 1->ack, 0->nck
-                int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
-
-                // received message log
-                L->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
-
-                mmsg->setP_ack(valid);
-                if (valid)
-                {
-                    expectedFrameId++; // if ack, request next frame
-                }
-                mmsg->setP_id(expectedFrameId);
-
-                // check for duplicate frame
-                if (mmsg->getId() < expectedFrameId)
-                {
-                    // drop message
-                    L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
-                }
-
-                // sent message log TODO: change the sent message id and ack number in phase 2
-                L->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
-
-                // sending message
-                send(mmsg, "peerLink$o");
-                L->incrementTransNum(1);
-            }
-            catch (...)
-            {
-                cout << "Casting error" << endl;
-            }
+            receiveMessage(msg);
         }
 
         // I am the sender in phase 1
         else
         {
-            // cout<<"I am the sender"<<endl;
+            cout << "I am the sender, sending id= " << eventsIndex << endl;
             sendMessage(); // implemented down below as a class method
         }
     }
@@ -212,4 +160,67 @@ void Node::sendMessage()
 
     // increment events index to the next message
     eventsIndex++;
+}
+
+void Node::receiveMessage(cMessage *msg)
+{
+    // cout<<"I am the receiver"<<endl;
+    try
+    {
+        MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
+        // valid= 1->ack, 0->nck
+        int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
+
+        // received message log
+        L->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+
+        mmsg->setP_ack(valid);
+        if (valid)
+        {
+            expectedFrameId++; // if ack, request next frame
+        }
+        mmsg->setP_id(expectedFrameId);
+
+        // check for duplicate frame
+        if (mmsg->getId() < expectedFrameId)
+        {
+            // drop message
+            L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+        }
+
+        // sent message log TODO: change the sent message id and ack number in phase 2
+        L->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
+
+        // sending message
+        double delay = 0.2;
+        sendDelayed(mmsg, delay, "peerLink$o");
+        L->incrementTransNum(1);
+    }
+    catch (...)
+    {
+        cout << "Casting error" << endl;
+    }
+}
+
+void Node::initializeMessages(cMessage *msg)
+{
+    // get the 0->node id, 1->text file name, 2->whether it's the starting node, 3->starting time
+    vector<string> lineReceived = split(msg->getName(), ' ');
+
+    // store file lines
+    events = readFile(getBasePath() + "/inputs/" + lineReceived[1]);
+    // cout << "Events length: " << events.size() << endl;
+
+    // check if I am the start node
+    // cout<<"line received length "<<lineReceived.size()<<endl;
+    if (lineReceived.size() > 2)
+    {
+        // cout<<"I have a start time"<<endl;
+        startTime = stod(lineReceived[3]);
+        // schedule a time to start
+        scheduleAt(startTime, new cMessage(""));
+    }
+    // change the flag to false
+    firstMessage = false;
+    cancelAndDelete(msg);
 }

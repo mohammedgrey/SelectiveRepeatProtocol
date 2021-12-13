@@ -19,12 +19,14 @@ private:
   int eventsIndex;       // to keep track which line I am currently sending
   double startTime;      // for starting nodes only
   int expectedFrameId;   // used to check for duplicates
-  Logs* L;               // pointer to logs class
+  Logs *L;               // pointer to logs class
 
 protected:
   virtual void initialize();
   virtual void handleMessage(cMessage *msg);
   void sendMessage();
+  void receiveMessage(cMessage *msg);
+  void initializeMessages(cMessage *msg);
 };
 
 #endif
