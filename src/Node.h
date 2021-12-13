@@ -13,17 +13,17 @@ using namespace omnetpp;
 class Node : public cSimpleModule
 {
 private:
-  int id;                // id of the current node
-  bool firstMessage;     // flag to check if the received message is from the coordinator
-  vector<string> events; // vector of lines from the node's input file
-  int eventsIndex;       // to keep track which line I am currently sending
-  double startTime;      // for starting nodes only
-  int expectedFrameId;   // used to check for duplicates (should make sense in phase 2)
-  int prevFrameId;       // used to check for duplicates (for phase 1 only)
-
+  int id;                   // id of the current node
+  bool firstMessage;        // flag to check if the received message is from the coordinator
+  vector<string> events;    // vector of lines from the node's input file
+  int eventsIndex;          // to keep track which line I am currently sending
+  double startTime;         // for starting nodes only
+  int expectedFrameId;      // used to check for duplicates (should make sense in phase 2)
+  int prevFrameId;          // used to check for duplicates (for phase 1 only)
+  cMessage *timeoutMessage; // used to handle timeouts
 
 protected:
-  static Logs *L;               // pointer to logs class
+  static Logs *L; // pointer to logs class
   virtual void initialize();
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);

@@ -2,20 +2,22 @@
 #include <iostream>
 Define_Module(Node);
 
-Logs* Node::L;
+Logs *Node::L;
 
 void Node::initialize()
 {
     // set the node id and initialize logs pointer
-    if (strcmp("node0", getName()) == 0 )
+    if (strcmp("node0", getName()) == 0)
     {
         id = 0;
-        if (L == NULL) L = new Logs("pair01.txt");
+        if (L == NULL)
+            L = new Logs("pair01.txt");
     }
     else if (strcmp("node1", getName()) == 0)
     {
         id = 1;
-        if (L == NULL) L = new Logs("pair01.txt");
+        if (L == NULL)
+            L = new Logs("pair01.txt");
     }
     else if (strcmp("node2", getName()) == 0)
     {
@@ -52,6 +54,9 @@ void Node::initialize()
 
     // initialize prev frame id with no prev (-1)
     prevFrameId = -1;
+
+    // initialize timeout message
+    timeoutMessage = new cMessage("timeoutMessage");
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -65,7 +70,7 @@ void Node::handleMessage(cMessage *msg)
     // if the message is from myself (either because I scheduled a time to start or I set a timeout)
     else if (msg->isSelfMessage())
     {
-        cout << "Scheduled self messsage" << endl;
+        cout << "Scheduled self messsage or timeout" << endl;
         sendMessage(msg); // implemented down below as a class method
     }
 
@@ -89,8 +94,17 @@ void Node::handleMessage(cMessage *msg)
 
 void Node::sendMessage(cMessage *msg)
 {
-    //Phase 1: we don't use the received message to check anything (ack and nack don't affect sent messages)
-    cancelAndDelete(msg);   //delete right away for now
+    if (!(msg == timeoutMessage))
+    {
+        // if the msg received is not scheduled that means it received a response before the
+        // timeout --> in that case we cancel the scheduled timeout event and we set another one
+        // down below at the end of the function.
+        // we also cancel and delete the received message since we are not gonna use it to check
+        //  for ack or nck in phase 1
+        cancelEvent(timeoutMessage);
+        // Phase 1: we don't use the received message to check anything (ack and nack don't affect sent messages)
+        cancelAndDelete(msg); // delete right away for now
+    }
 
     // cout<<"node "<<id<<" is now sending message number "<<eventsIndex<<endl;
     EV << "node " << id << " is now sending message number " << eventsIndex << endl;
@@ -98,7 +112,7 @@ void Node::sendMessage(cMessage *msg)
     // terminating condition for phase 1 (sender has no other message to send)
     if (eventsIndex >= events.size())
     {
-        //phase 1: if node 0 (the sender) finished its input file, stop the simulation
+        // phase 1: if node 0 (the sender) finished its input file, stop the simulation
         if (id == 0)
             L->setTransTime(simTime().dbl()); // TODO: change in phase 2
         L->addEOF(id);                        // add a log that the node reached the end of its input file
@@ -119,8 +133,9 @@ void Node::sendMessage(cMessage *msg)
     // send only if not LOST
     if (!isLost)
     {
-        //if message is not lost or modified, increment the number of correct messages
-        if (!isModified) L->incrementCorrectMessages(1);
+        // if message is not lost or modified, increment the number of correct messages
+        if (!isModified)
+            L->incrementCorrectMessages(1);
 
         // if not duplicated or delayed
         if (!isDuplicated && !isDelayed)
@@ -172,6 +187,9 @@ void Node::sendMessage(cMessage *msg)
         L->incrementTransNum(1);
     }
 
+    // set timeout in case the receiver send no response
+    scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessage);
+
     // increment events index to the next message
     eventsIndex++;
 }
@@ -218,7 +236,7 @@ void Node::receiveMessage(cMessage *msg)
         double delay = 0.2;
         sendDelayed(mmsg, delay, "peerLink$o");
         // send(mmsg, "peerLink$o");
-        //L->incrementTransNum(1);
+        // L->incrementTransNum(1);
     }
     catch (...)
     {
@@ -252,4 +270,5 @@ void Node::initializeMessages(cMessage *msg)
 Node::~Node()
 {
     delete L;
+    delete timeoutMessage;
 }
