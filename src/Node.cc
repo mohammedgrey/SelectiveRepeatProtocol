@@ -2,18 +2,20 @@
 #include <iostream>
 Define_Module(Node);
 
+Logs* Node::L;
+
 void Node::initialize()
 {
     // set the node id and initialize logs pointer
-    if (strcmp("node0", getName()) == 0)
+    if (strcmp("node0", getName()) == 0 )
     {
         id = 0;
-        L = new Logs("pair01.txt");
+        if (L == NULL) L = new Logs("pair01.txt");
     }
     else if (strcmp("node1", getName()) == 0)
     {
         id = 1;
-        L = new Logs("pair01.txt");
+        if (L == NULL) L = new Logs("pair01.txt");
     }
     else if (strcmp("node2", getName()) == 0)
     {
@@ -210,7 +212,7 @@ void Node::receiveMessage(cMessage *msg)
         double delay = 0.2;
         sendDelayed(mmsg, delay, "peerLink$o");
         // send(mmsg, "peerLink$o");
-        L->incrementTransNum(1);
+        //L->incrementTransNum(1);
     }
     catch (...)
     {

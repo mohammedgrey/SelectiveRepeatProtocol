@@ -10,6 +10,7 @@
 Logs::Logs(std::string file) {
     // TODO Auto-generated constructor stub
     filePath= getBasePath() + "/outputs/"+file;
+    ofstream myfile(filePath);
     nodesReachingEOF=0;
     totalTransTime=0;
     totalTransNum=0;
