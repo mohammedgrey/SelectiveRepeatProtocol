@@ -21,6 +21,7 @@ private:
   int expectedFrameId;      // used to check for duplicates (should make sense in phase 2)
   int prevFrameId;          // used to check for duplicates (for phase 1 only)
   cMessage *timeoutMessage; // used to handle timeouts
+  cMessage *startMessage;   // used to send the start message
 
 protected:
   static Logs *L; // pointer to logs class

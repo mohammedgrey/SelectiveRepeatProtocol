@@ -57,6 +57,9 @@ void Node::initialize()
 
     // initialize timeout message
     timeoutMessage = new cMessage("timeoutMessage");
+
+    // initialize the start message
+    startMessage = new cMessage("startMessage");
 }
 
 void Node::handleMessage(cMessage *msg)
@@ -219,7 +222,7 @@ void Node::receiveMessage(cMessage *msg)
         //     // drop message
         //     L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
         // }
-        if (mmsg->getId() == prevFrameId) // TODO: add condition if id=0
+        if (mmsg->getId() == prevFrameId) // duplicate
         {
             // drop message
             L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
@@ -227,16 +230,15 @@ void Node::receiveMessage(cMessage *msg)
         else
         {
             prevFrameId = mmsg->getId();
+            // sent message log TODO: change the sent message id and ack number in phase 2
+            L->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
+
+            // sending message
+            double delay = 0.2;
+            sendDelayed(mmsg, delay, "peerLink$o");
+            // send(mmsg, "peerLink$o");
+            // L->incrementTransNum(1);
         }
-
-        // sent message log TODO: change the sent message id and ack number in phase 2
-        L->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
-
-        // sending message
-        double delay = 0.2;
-        sendDelayed(mmsg, delay, "peerLink$o");
-        // send(mmsg, "peerLink$o");
-        // L->incrementTransNum(1);
     }
     catch (...)
     {
@@ -260,7 +262,7 @@ void Node::initializeMessages(cMessage *msg)
         // cout<<"I have a start time"<<endl;
         startTime = stod(lineReceived[3]);
         // schedule a time to start
-        scheduleAt(startTime, new cMessage(""));
+        scheduleAt(startTime, startMessage);
     }
     // change the flag to false
     firstMessage = false;
@@ -271,4 +273,5 @@ Node::~Node()
 {
     delete L;
     delete timeoutMessage;
+    delete startMessage;
 }

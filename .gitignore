@@ -3,3 +3,5 @@ simulations/.qtenvrc
 *.o.d
 .last-copts
 .vscode
+/src/MyMessage_m.h
+/src/MyMessage_m.cc
