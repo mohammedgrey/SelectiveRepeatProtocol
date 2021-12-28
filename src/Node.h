@@ -24,7 +24,9 @@ private:
   cMessage *startMessage;   // used to send the start message
 
 protected:
-  static Logs *L; // pointer to logs class
+  static Logs *L01; // pointer to logs class of pair01
+  static Logs *L23; // pointer to logs class of pair23
+  static Logs *L45; // pointer to logs class of pair45
   virtual void initialize();
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);

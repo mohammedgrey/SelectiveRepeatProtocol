@@ -2,7 +2,9 @@
 #include <iostream>
 Define_Module(Node);
 
-Logs *Node::L;
+Logs *Node::L01;
+Logs *Node::L23;
+Logs *Node::L45;
 
 void Node::initialize()
 {
@@ -10,34 +12,32 @@ void Node::initialize()
     if (strcmp("node0", getName()) == 0)
     {
         id = 0;
-        if (L == NULL)
-            L = new Logs("pair01.txt");
+        if (L01 == NULL) L01 = new Logs("pair01.txt");
     }
     else if (strcmp("node1", getName()) == 0)
     {
         id = 1;
-        if (L == NULL)
-            L = new Logs("pair01.txt");
+        if (L01 == NULL) L01 = new Logs("pair01.txt");
     }
     else if (strcmp("node2", getName()) == 0)
     {
         id = 2;
-        L = new Logs("pair23.txt");
+        if (L23 == NULL) L23 = new Logs("pair23.txt");
     }
     else if (strcmp("node3", getName()) == 0)
     {
         id = 3;
-        L = new Logs("pair23.txt");
+        if(L23 == NULL) L23 = new Logs("pair23.txt");
     }
     else if (strcmp("node4", getName()) == 0)
     {
         id = 4;
-        L = new Logs("pair45.txt");
+        if(L45 == NULL) L45 = new Logs("pair45.txt");
     }
     else if (strcmp("node5", getName()) == 0)
     {
         id = 5;
-        L = new Logs("pair45.txt");
+        if (L45 == NULL) L45 = new Logs("pair45.txt");
     }
 
     // initialize firstMessage with true
@@ -117,8 +117,8 @@ void Node::sendMessage(cMessage *msg)
     {
         // phase 1: if node 0 (the sender) finished its input file, stop the simulation
         if (id == 0)
-            L->setTransTime(simTime().dbl()-startTime); // TODO: change in phase 2
-        L->addEOF(id);                        // add a log that the node reached the end of its input file
+            L01->setTransTime(simTime().dbl()-startTime); // TODO: change in phase 2
+        L01->addEOF(id);                        // add a log that the node reached the end of its input file
         return;
     }
 
@@ -138,56 +138,52 @@ void Node::sendMessage(cMessage *msg)
     {
         // if message is not lost or modified, increment the number of correct messages
         if (!isModified)
-            L->incrementCorrectMessages(1);
+            L01->incrementCorrectMessages(1);
 
         // if not duplicated or delayed
         if (!isDuplicated && !isDelayed)
         {
             // TODO: change ack number in phase 2
-            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
+            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
             send(messageToSend, "peerLink$o");                                                               // send to my peer
-            L->incrementTransNum(1);
+            L01->incrementTransNum(1);
         }
 
         // if message is duplicated but not delayed
         else if (isDuplicated && !isDelayed)
         {
-            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
             send(messageToSend, "peerLink$o");                                                                               // send first message now
             MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); // construct duplicate
             sendDelayed(messageToSendDup, 0.01, "peerLink$o");                                                               // send duplicate with 0.01s delay
-            L->incrementTransNum(2);
+            L01->incrementTransNum(2);
         }
 
         // if message is both duplicated and delayed
         else if (isDuplicated && isDelayed)
         {
             double delay = par("delaySeconds").doubleValue();
-            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
+            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
             sendDelayed(messageToSend, delay, "peerLink$o");                                                                 // send first message after delay
             MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); // construct duplicate
             sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o");                                                       // send duplicate with delay+0.01s
-            L->incrementTransNum(2);
+            L01->incrementTransNum(2);
         }
         // if message is not duplicated and delayed
         else if (!isDuplicated && isDelayed)
         {
             double delay = par("delaySeconds").doubleValue();
-            L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
+            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
             sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
-            L->incrementTransNum(1);
+            L01->incrementTransNum(1);
         }
     }
 
     // if message is lost, just log it without sending
     else
     {
-        cout << "--------------------------------------------------" << endl;
-        cout << "I am lost " << endl;
-        cout << "--------------------------------------------------" << endl;
-
-        L->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
-        L->incrementTransNum(1);
+        L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+        L01->incrementTransNum(1);
     }
 
     // set timeout in case the receiver send no response
@@ -207,7 +203,7 @@ void Node::receiveMessage(cMessage *msg)
         int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
 
         // received message log
-        L->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+        L01->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
 
         mmsg->setP_ack(valid);
         if (valid)
@@ -225,13 +221,13 @@ void Node::receiveMessage(cMessage *msg)
         if (mmsg->getId() == prevFrameId) // duplicate
         {
             // drop message
-            L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+            L01->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
         }
         else
         {
             prevFrameId = mmsg->getId();
             // sent message log TODO: change the sent message id and ack number in phase 2
-            L->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
+            L01->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
 
             // sending message
             double delay = 0.2;
@@ -271,7 +267,9 @@ void Node::initializeMessages(cMessage *msg)
 
 Node::~Node()
 {
-    delete L;
+    delete L01;
+    delete L23;
+    delete L45;
     delete timeoutMessage;
     delete startMessage;
 }
