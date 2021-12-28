@@ -117,7 +117,7 @@ void Node::sendMessage(cMessage *msg)
     {
         // phase 1: if node 0 (the sender) finished its input file, stop the simulation
         if (id == 0)
-            L->setTransTime(simTime().dbl()); // TODO: change in phase 2
+            L->setTransTime(simTime().dbl()-startTime); // TODO: change in phase 2
         L->addEOF(id);                        // add a log that the node reached the end of its input file
         return;
     }

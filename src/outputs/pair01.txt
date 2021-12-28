@@ -20,6 +20,6 @@ node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from dif
 node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 9.100000 and piggybacking ACK number= 1
 node1 sends message with id=-1 and content= '''' at 9.100000and piggybacking ACK number= 5
 node0 end of input file
-Total transmission time= 9.3
+Total transmission time= 6.3
 Total number of transmissions= 8
-The network throughput= 0.537634
+The network throughput= 0.793651
