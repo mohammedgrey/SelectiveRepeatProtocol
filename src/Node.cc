@@ -104,6 +104,21 @@ messageType Node::getMessageType(cMessage *msg)
 
 }
 
+void Node::handleReadyToSend(cMessage *msg)
+{
+
+}
+
+void Node::handleFrameArrival(cMessage *msg)
+{
+
+}
+
+void Node::handleTimeout(cMessage *msg)
+{
+
+}
+
 void Node::handleMessage(cMessage *msg)
 {
     messageType Type= getMessageType(msg);
@@ -114,30 +129,54 @@ void Node::handleMessage(cMessage *msg)
         initializeMessages(msg);
     }
 
-    // if the message is from myself (either because I scheduled a time to start or I set a timeout)
-    else if (msg->isSelfMessage())
-    {
-        cout << "Scheduled self messsage or timeout" << endl;
-        sendMessage(msg); // implemented down below as a class method
+    switch (Type){
+        case READY_TO_SEND:
+            handleReadyToSend(msg);
+            break;
+        case FRAME_ARRIVAL:
+            handleFrameArrival(msg);
+            break;
+        case TIMEOUT:
+            handleTimeout(msg);
+            break;
     }
 
-    // if the message is from the other pair
-    else
-    {
-        // I am the receiver in phase 1 and should only send ack or nack
-        if (startTime == -1)
-        {
-            receiveMessage(msg);
-        }
-
-        // I am the sender in phase 1
-        else
-        {
-            cout << "I am the sender, sending id= " << eventsIndex << endl;
-            sendMessage(msg); // implemented down below as a class method
-        }
-    }
 }
+
+//void Node::handleMessage(cMessage *msg)
+//{
+//    messageType Type= getMessageType(msg);
+//
+//    // check if the received message is from the coordinator
+//    if (firstMessage)
+//    {
+//        initializeMessages(msg);
+//    }
+//
+//    // if the message is from myself (either because I scheduled a time to start or I set a timeout)
+//    else if (msg->isSelfMessage())
+//    {
+//        cout << "Scheduled self messsage or timeout" << endl;
+//        sendMessage(msg); // implemented down below as a class method
+//    }
+//
+//    // if the message is from the other pair
+//    else
+//    {
+//        // I am the receiver in phase 1 and should only send ack or nack
+//        if (startTime == -1)
+//        {
+//            receiveMessage(msg);
+//        }
+//
+//        // I am the sender in phase 1
+//        else
+//        {
+//            cout << "I am the sender, sending id= " << eventsIndex << endl;
+//            sendMessage(msg); // implemented down below as a class method
+//        }
+//    }
+//}
 
 void Node::sendMessage(cMessage *msg)
 {

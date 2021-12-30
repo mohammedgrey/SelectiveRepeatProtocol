@@ -52,7 +52,12 @@ protected:
   //functions
   virtual void initialize();                        // initialized data members
   void initializeMessages(cMessage *msg);           //fills events vector with messages from input file
-  messageType getMessageType(cMessage *msg);       //returns the type of the given message
+  messageType getMessageType(cMessage *msg);        //returns the type of the given message
+
+  void handleReadyToSend(cMessage *msg);            //called when a message is ready to be sent
+  void handleFrameArrival(cMessage *msg);           //called when a frame is received-> checks messages and acks/nacks
+  void handleTimeout(cMessage *msg);                //called when a timeout message is received
+
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);
   void receiveMessage(cMessage *msg);
