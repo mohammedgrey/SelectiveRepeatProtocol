@@ -372,6 +372,7 @@ void Node::formulateAndSendMessage(int eventIndex)
 
 Node::~Node()
 {
+    // TODO: delete everything :)
     delete L01;
     delete L23;
     delete L45;
