@@ -100,10 +100,6 @@ messageType Node::getMessageType(cMessage *msg)
         else return READY_TO_SEND;
     }
 
-    if ( (id==0 || id ==1) && eventsIndex >= events.size() ) {
-        return FINISH;
-    }
-
     return FRAME_ARRIVAL;
 
 }
@@ -295,6 +291,14 @@ void Node::formulateAndSendMessage()
 
     // increment events index to the next message
     eventsIndex++;
+
+    //check if a node finished all its messages
+    //TODO: put this logic where we check that the all messages in the last window are acknowledged
+    if (eventsIndex >= events.size()) {
+        if (id==0 or id==1) finishedNodesCount01++;
+        else if (id==2 or id==3) finishedNodesCount23++;
+        else if (id==4 or id==5) finishedNodesCount45++;
+    }
 }
 
 Node::~Node()
