@@ -3,3 +3,47 @@ node0 sends message with id=1 and content= ''$is the reproductive/$ structure fo
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.400000and piggybacking ACK number= 1
 node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.600000and piggybacking ACK number= 1
 node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometiies known as a bloom or blossom$'' at 8.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 8.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 8.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 8.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 8.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossïm$'' at 13.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 13.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 13.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 13.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 13.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometiies known as a bloom or blossom$'' at 18.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 18.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 18.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 18.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 18.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom o2 blossom$'' at 23.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 23.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 23.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 23.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 23.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossoí$'' at 28.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 28.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 28.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 28.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 28.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower,"sometimes known as a bloom or blossom$'' at 33.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 33.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 33.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 33.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 33.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom¤'' at 38.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 38.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 38.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 38.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 38.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or b,ossom$'' at 43.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 43.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 43.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 43.600000and piggybacking ACK number= 1
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 43.900000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom o2 blossom$'' at 48.000000 with modification, and piggybacking ACK number= 1
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 48.200000and piggybacking ACK number= 1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 48.400000and piggybacking ACK number= 1
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 48.600000and piggybacking ACK number= 1

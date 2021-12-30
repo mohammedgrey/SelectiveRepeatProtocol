@@ -5,8 +5,8 @@ Define_Module(Node);
 Logs *Node::L01;
 Logs *Node::L23;
 Logs *Node::L45;
-int Node::finishedNodesCount01; // if it equals 2, then the pair has finished
-int Node::finishedNodesCount23; // if it equals 2, then the pair has finished
+int Node::finishedNodesCount01;
+int Node::finishedNodesCount23;
 int Node::finishedNodesCount45;
 
 void Node::initialize()
@@ -140,6 +140,15 @@ void Node::handleFrameArrival(cMessage *msg)
 
 void Node::handleTimeout(cMessage *msg)
 {
+    // check which frame in the window timedout
+    for (int i = 0; i < windowSize; i++)
+    {
+        if (msg == timeoutMessages[i])
+        {
+            formulateAndSendMessage(sendingWindowStartIndex + i);
+            return;
+        }
+    }
 }
 
 void Node::handleMessage(cMessage *msg)
