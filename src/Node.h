@@ -23,9 +23,8 @@ private:
   // window parameters
   // sending buffer
   vector<string> events;       // vector of lines from the node's input file
-  int eventsIndex;             // sequence number. to keep track which line I am currently sending
   int sendingWindowStartIndex; // index of events where window starts: 0 <= windowStart < length(events)-windowSize
-  int sendingWindowRelIndex;   // index of next frame to send from window: 0 <= index < length(window)
+  int nextFrameSeqNum;         // index of next frame to send from window: 0 <= index < length(window)
   // expectedAck= windowStartIndex=expectedFrameId
 
   // receiving buffer
@@ -36,6 +35,7 @@ private:
   // messages
   vector<cMessage *> timeoutMessages; // used to handle timeouts
   cMessage *startMessage;             // used to send the start message
+  cMessage *sendNextFrameMessage;     // self message for sending next available frame in window
 
 protected:
   // logs
@@ -60,7 +60,7 @@ protected:
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);
   void receiveMessage(cMessage *msg);
-  void formulateAndSendMessage(); // frames the message to be sent and applies errors
+  void formulateAndSendMessage(int eventIndex); // frames the message to be sent and applies errors
   virtual ~Node();
 };
 

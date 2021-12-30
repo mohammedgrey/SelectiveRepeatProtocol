@@ -20,6 +20,7 @@ simple Node
     parameters:
         double timeoutSeconds;
         double delaySeconds;
+        double consecutiveDelay;
         int windowSize;
         volatile double randNum= uniform(0,1);
     gates:

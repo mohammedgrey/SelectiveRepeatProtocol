@@ -68,9 +68,8 @@ void Node::initialize()
     windowSize = par("windowSize").intValue(); // taken from ini file
 
     // initializing sender buffer parameters
-    eventsIndex = 0;
     sendingWindowStartIndex = 0;
-    sendingWindowRelIndex = 0;
+    nextFrameSeqNum = 0;
 
     // initializing receiving buffer parameters
     for (int i = 0; i < windowSize; i++)
@@ -81,6 +80,7 @@ void Node::initialize()
     for (int i = 0; i < windowSize; i++)
         timeoutMessages.push_back(new cMessage("timeoutMessage")); // initialize timeout message
     startMessage = new cMessage("startMessage");                   // initialize the start message
+    sendNextFrameMessage = new cMessage("sendNextFrameMessage");   // initialize sendNextFrame message
 }
 
 void Node::initializeMessages(cMessage *msg)
@@ -124,6 +124,14 @@ messageType Node::getMessageType(cMessage *msg)
 
 void Node::handleReadyToSend(cMessage *msg)
 {
+    // if next frame to send is within window
+    // TODO: check the window shifting condition for the last window in the sender (window size decreases)
+    if (nextFrameSeqNum - sendingWindowStartIndex < windowSize)
+    {
+        formulateAndSendMessage(nextFrameSeqNum);                                            // send next message
+        nextFrameSeqNum++;                                                                   // move index to message after
+        scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), sendNextFrameMessage); // schedule a self message of type READY_TO_SEND for next frame
+    }
 }
 
 void Node::handleFrameArrival(cMessage *msg)
@@ -185,41 +193,41 @@ void Node::handleMessage(cMessage *msg)
 //         // I am the sender in phase 1
 //         else
 //         {
-//             cout << "I am the sender, sending id= " << eventsIndex << endl;
+//             cout << "I am the sender, sending id= " << nextFrameSeqNum << endl;
 //             sendMessage(msg); // implemented down below as a class method
 //         }
 //     }
 // }
 
-void Node::sendMessage(cMessage *msg)
-{
-    if (!(msg == timeoutMessages[0]))
-    {
-        // if the msg received is not scheduled that means it received a response before the
-        // timeout --> in that case we cancel the scheduled timeout event and we set another one
-        // down below at the end of the function.
-        // we also cancel and delete the received message since we are not gonna use it to check
-        //  for ack or nck in phase 1
-        cancelEvent(timeoutMessages[0]);
-        // Phase 1: we don't use the received message to check anything (ack and nack don't affect sent messages)
-        cancelAndDelete(msg); // delete right away for now
-    }
+// void Node::sendMessage(cMessage *msg)
+// {
+//     if (!(msg == timeoutMessages[0]))
+//     {
+//         // if the msg received is not scheduled that means it received a response before the
+//         // timeout --> in that case we cancel the scheduled timeout event and we set another one
+//         // down below at the end of the function.
+//         // we also cancel and delete the received message since we are not gonna use it to check
+//         //  for ack or nck in phase 1
+//         cancelEvent(timeoutMessages[0]);
+//         // Phase 1: we don't use the received message to check anything (ack and nack don't affect sent messages)
+//         cancelAndDelete(msg); // delete right away for now
+//     }
 
-    // cout<<"node "<<id<<" is now sending message number "<<eventsIndex<<endl;
-    EV << "node " << id << " is now sending message number " << eventsIndex << endl;
+//     // cout<<"node "<<id<<" is now sending message number "<<nextFrameSeqNum<<endl;
+//     EV << "node " << id << " is now sending message number " << nextFrameSeqNum << endl;
 
-    // terminating condition for phase 1 (sender has no other message to send)
-    if (eventsIndex >= events.size())
-    {
-        // phase 1: if node 0 (the sender) finished its input file, stop the simulation
-        if (id == 0)
-            L01->setTransTime(simTime().dbl() - startTime); // TODO: change in phase 2
-        L01->addEOF(id);                                    // add a log that the node reached the end of its input file
-        return;
-    }
+//     // terminating condition for phase 1 (sender has no other message to send)
+//     if (nextFrameSeqNum >= events.size())
+//     {
+//         // phase 1: if node 0 (the sender) finished its input file, stop the simulation
+//         if (id == 0)
+//             L01->setTransTime(simTime().dbl() - startTime); // TODO: change in phase 2
+//         L01->addEOF(id);                                    // add a log that the node reached the end of its input file
+//         return;
+//     }
 
-    formulateAndSendMessage();
-}
+//     formulateAndSendMessage();
+// }
 
 void Node::receiveMessage(cMessage *msg)
 {
@@ -271,18 +279,18 @@ void Node::receiveMessage(cMessage *msg)
 }
 
 // takes next message to be sent from events vector, frames it, applies errors, sends frame, triggers timeout, and increments index to next message
-void Node::formulateAndSendMessage()
+void Node::formulateAndSendMessage(int eventIndex)
 {
     // getting errors to be applied to message
-    string MLDD = events[eventsIndex].substr(0, 4);
+    string MLDD = events[eventIndex].substr(0, 4);
     bool isModified = MLDD[0] == '1' ? true : false;
     bool isLost = MLDD[1] == '1' ? true : false;
     bool isDuplicated = MLDD[2] == '1' ? true : false;
     bool isDelayed = MLDD[3] == '1' ? true : false;
 
     // MODIFICATION
-    double randModIndex = par("randNum").doubleValue();                                                           // generate a random number 0-1 to be used for the modification
-    MyMessage_Base *messageToSend = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); // constructing message
+    double randModIndex = par("randNum").doubleValue();                                                         // generate a random number 0-1 to be used for the modification
+    MyMessage_Base *messageToSend = constructMessage(events[eventIndex], eventIndex, isModified, randModIndex); // constructing message
 
     // send only if not LOST
     if (!isLost)
@@ -295,18 +303,18 @@ void Node::formulateAndSendMessage()
         if (!isDuplicated && !isDelayed)
         {
             // TODO: change ack number in phase 2
-            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
-            send(messageToSend, "peerLink$o");                                                                 // send to my peer
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
+            send(messageToSend, "peerLink$o");                                                                // send to my peer
             L01->incrementTransNum(1);
         }
 
         // if message is duplicated but not delayed
         else if (isDuplicated && !isDelayed)
         {
-            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
-            send(messageToSend, "peerLink$o");                                                                               // send first message now
-            MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); // construct duplicate
-            sendDelayed(messageToSendDup, 0.01, "peerLink$o");                                                               // send duplicate with 0.01s delay
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+            send(messageToSend, "peerLink$o");                                                                             // send first message now
+            MyMessage_Base *messageToSendDup = constructMessage(events[eventIndex], eventIndex, isModified, randModIndex); // construct duplicate
+            sendDelayed(messageToSendDup, 0.01, "peerLink$o");                                                             // send duplicate with 0.01s delay
             L01->incrementTransNum(2);
         }
 
@@ -314,17 +322,17 @@ void Node::formulateAndSendMessage()
         else if (isDuplicated && isDelayed)
         {
             double delay = par("delaySeconds").doubleValue();
-            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
-            sendDelayed(messageToSend, delay, "peerLink$o");                                                                 // send first message after delay
-            MyMessage_Base *messageToSendDup = constructMessage(events[eventsIndex], eventsIndex, isModified, randModIndex); // construct duplicate
-            sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o");                                                       // send duplicate with delay+0.01s
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
+            sendDelayed(messageToSend, delay, "peerLink$o");                                                               // send first message after delay
+            MyMessage_Base *messageToSendDup = constructMessage(events[eventIndex], eventIndex, isModified, randModIndex); // construct duplicate
+            sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o");                                                     // send duplicate with delay+0.01s
             L01->incrementTransNum(2);
         }
         // if message is not duplicated and delayed
         else if (!isDuplicated && isDelayed)
         {
             double delay = par("delaySeconds").doubleValue();
-            L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
             sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
             L01->incrementTransNum(1);
         }
@@ -333,19 +341,16 @@ void Node::formulateAndSendMessage()
     // if message is lost, just log it without sending
     else
     {
-        L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+        L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
         L01->incrementTransNum(1);
     }
 
     // set timeout in case the receiver send no response
-    scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[0]);
-
-    // increment events index to the next message
-    eventsIndex++;
+    scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[eventIndex - sendingWindowStartIndex]);
 
     // check if a node finished all its messages
     // TODO: put this logic where we check that the all messages in the last window are acknowledged
-    if (eventsIndex >= events.size())
+    if (eventIndex >= events.size())
     {
         if (id == 0 or id == 1)
             finishedNodesCount01++;
