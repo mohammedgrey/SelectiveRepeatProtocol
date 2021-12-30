@@ -18,7 +18,7 @@
 using namespace std;
 using namespace omnetpp;
 
-enum messageType {READY_TO_SEND,FRAME_ARRIVAL,TIMEOUT};
+enum messageType {COORDINATOR_MESSAGE,READY_TO_SEND,FRAME_ARRIVAL,TIMEOUT};
 
 inline string getBasePath()
 {

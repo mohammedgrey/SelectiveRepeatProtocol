@@ -5,8 +5,8 @@ Define_Module(Node);
 Logs *Node::L01;
 Logs *Node::L23;
 Logs *Node::L45;
-int Node::finishedNodesCount01;                  //if it equals 2, then the pair has finished
-int Node::finishedNodesCount23;                  //if it equals 2, then the pair has finished
+int Node::finishedNodesCount01; // if it equals 2, then the pair has finished
+int Node::finishedNodesCount23; // if it equals 2, then the pair has finished
 int Node::finishedNodesCount45;
 
 void Node::initialize()
@@ -15,59 +15,72 @@ void Node::initialize()
     if (strcmp("node0", getName()) == 0)
     {
         id = 0;
-        if (L01 == NULL) L01 = new Logs("pair01.txt");
+        if (L01 == NULL)
+            L01 = new Logs("pair01.txt");
+        finishedNodesCount01 = 0;
     }
+
     else if (strcmp("node1", getName()) == 0)
     {
         id = 1;
-        if (L01 == NULL) L01 = new Logs("pair01.txt");
+        if (L01 == NULL)
+            L01 = new Logs("pair01.txt");
+        finishedNodesCount01 = 0;
     }
+
     else if (strcmp("node2", getName()) == 0)
     {
         id = 2;
-        if (L23 == NULL) L23 = new Logs("pair23.txt");
+        if (L23 == NULL)
+            L23 = new Logs("pair23.txt");
+        finishedNodesCount23 = 0;
     }
+
     else if (strcmp("node3", getName()) == 0)
     {
         id = 3;
-        if(L23 == NULL) L23 = new Logs("pair23.txt");
+        if (L23 == NULL)
+            L23 = new Logs("pair23.txt");
+        finishedNodesCount23 = 0;
     }
+
     else if (strcmp("node4", getName()) == 0)
     {
         id = 4;
-        if(L45 == NULL) L45 = new Logs("pair45.txt");
+        if (L45 == NULL)
+            L45 = new Logs("pair45.txt");
+        finishedNodesCount45 = 0;
     }
+
     else if (strcmp("node5", getName()) == 0)
     {
         id = 5;
-        if (L45 == NULL) L45 = new Logs("pair45.txt");
+        if (L45 == NULL)
+            L45 = new Logs("pair45.txt");
+        finishedNodesCount45 = 0;
     }
 
-    //initializing finishing variables
-    finishedNodesCount01= 0;
-    finishedNodesCount23= 0;
-    finishedNodesCount45= 0;
+    // initializing general parameters
+    coordinatorMessage = true;                 // initialize coordinatorMessage with true
+    startTime = -1;                            // initialize startTime with -1 and change it only if the node is a starting one
+    expectedFrameId = 0;                       // initialize expected fram id
+    prevFrameId = -1;                          // initialize prev frame id with no prev (-1)
+    windowSize = par("windowSize").intValue(); // taken from ini file
 
-    // initialize firstMessage with true
-    firstMessage = true;
-
-    // initialize startTime with -1 and change it only if the node is a starting one
-    startTime = -1;
-
-    // initialize the events index to the first event
+    // initializing sender buffer parameters
     eventsIndex = 0;
+    sendingWindowStartIndex = 0;
+    sendingWindowRelIndex = 0;
 
-    // initialize expected fram id
-    expectedFrameId = 0;
+    // initializing receiving buffer parameters
+    for (int i = 0; i < windowSize; i++)
+        receivingWindow.push_back(false); // taken from ini file
+    receivingWindowStartIndex = 0;
 
-    // initialize prev frame id with no prev (-1)
-    prevFrameId = -1;
-
-    // initialize timeout message
-    timeoutMessage = new cMessage("timeoutMessage");
-
-    // initialize the start message
-    startMessage = new cMessage("startMessage");
+    // initializing message parameters
+    for (int i = 0; i < windowSize; i++)
+        timeoutMessages.push_back(new cMessage("timeoutMessage")); // initialize timeout message
+    startMessage = new cMessage("startMessage");                   // initialize the start message
 }
 
 void Node::initializeMessages(cMessage *msg)
@@ -77,117 +90,117 @@ void Node::initializeMessages(cMessage *msg)
 
     // store file lines
     events = readFile(getBasePath() + "/inputs/" + lineReceived[1]);
-    // cout << "Events length: " << events.size() << endl;
 
     // check if I am the start node
-    // cout<<"line received length "<<lineReceived.size()<<endl;
     if (lineReceived.size() > 2)
     {
-        // cout<<"I have a start time"<<endl;
         startTime = stod(lineReceived[3]);
         // schedule a time to start
         scheduleAt(startTime, startMessage);
     }
     // change the flag to false
-    firstMessage = false;
+    coordinatorMessage = false;
     cancelAndDelete(msg);
 }
 
 messageType Node::getMessageType(cMessage *msg)
 {
-    if (msg->isSelfMessage()) {
-        if (msg == timeoutMessage) return TIMEOUT;
-        else return READY_TO_SEND;
+    if (coordinatorMessage)
+        return COORDINATOR_MESSAGE;
+    if (msg->isSelfMessage())
+    {
+        for (int i = 0; i < windowSize; i++)
+        {
+            if (msg == timeoutMessages[i])
+            {
+                return TIMEOUT;
+            }
+        }
+        return READY_TO_SEND;
     }
 
     return FRAME_ARRIVAL;
-
 }
 
 void Node::handleReadyToSend(cMessage *msg)
 {
-
 }
 
 void Node::handleFrameArrival(cMessage *msg)
 {
-
 }
 
 void Node::handleTimeout(cMessage *msg)
 {
-
 }
 
 void Node::handleMessage(cMessage *msg)
 {
-    messageType Type= getMessageType(msg);
+    messageType Type = getMessageType(msg);
 
-    // check if the received message is from the coordinator
-    if (firstMessage)
+    switch (Type)
     {
+    // check if the received message is from the coordinator
+    case COORDINATOR_MESSAGE:
         initializeMessages(msg);
+        break;
+    case READY_TO_SEND:
+        handleReadyToSend(msg);
+        break;
+    case FRAME_ARRIVAL:
+        handleFrameArrival(msg);
+        break;
+    case TIMEOUT:
+        handleTimeout(msg);
+        break;
     }
-
-    switch (Type){
-        case READY_TO_SEND:
-            handleReadyToSend(msg);
-            break;
-        case FRAME_ARRIVAL:
-            handleFrameArrival(msg);
-            break;
-        case TIMEOUT:
-            handleTimeout(msg);
-            break;
-    }
-
 }
 
-//void Node::handleMessage(cMessage *msg)
+// void Node::handleMessage(cMessage *msg)
 //{
-//    messageType Type= getMessageType(msg);
+//     messageType Type= getMessageType(msg);
 //
-//    // check if the received message is from the coordinator
-//    if (firstMessage)
-//    {
-//        initializeMessages(msg);
-//    }
+//     // check if the received message is from the coordinator
+//     if (coordinatorMessage)
+//     {
+//         initializeMessages(msg);
+//     }
 //
-//    // if the message is from myself (either because I scheduled a time to start or I set a timeout)
-//    else if (msg->isSelfMessage())
-//    {
-//        cout << "Scheduled self messsage or timeout" << endl;
-//        sendMessage(msg); // implemented down below as a class method
-//    }
+//     // if the message is from myself (either because I scheduled a time to start or I set a timeout)
+//     else if (msg->isSelfMessage())
+//     {
+//         cout << "Scheduled self messsage or timeout" << endl;
+//         sendMessage(msg); // implemented down below as a class method
+//     }
 //
-//    // if the message is from the other pair
-//    else
-//    {
-//        // I am the receiver in phase 1 and should only send ack or nack
-//        if (startTime == -1)
-//        {
-//            receiveMessage(msg);
-//        }
+//     // if the message is from the other pair
+//     else
+//     {
+//         // I am the receiver in phase 1 and should only send ack or nack
+//         if (startTime == -1)
+//         {
+//             receiveMessage(msg);
+//         }
 //
-//        // I am the sender in phase 1
-//        else
-//        {
-//            cout << "I am the sender, sending id= " << eventsIndex << endl;
-//            sendMessage(msg); // implemented down below as a class method
-//        }
-//    }
-//}
+//         // I am the sender in phase 1
+//         else
+//         {
+//             cout << "I am the sender, sending id= " << eventsIndex << endl;
+//             sendMessage(msg); // implemented down below as a class method
+//         }
+//     }
+// }
 
 void Node::sendMessage(cMessage *msg)
 {
-    if (!(msg == timeoutMessage))
+    if (!(msg == timeoutMessages[0]))
     {
         // if the msg received is not scheduled that means it received a response before the
         // timeout --> in that case we cancel the scheduled timeout event and we set another one
         // down below at the end of the function.
         // we also cancel and delete the received message since we are not gonna use it to check
         //  for ack or nck in phase 1
-        cancelEvent(timeoutMessage);
+        cancelEvent(timeoutMessages[0]);
         // Phase 1: we don't use the received message to check anything (ack and nack don't affect sent messages)
         cancelAndDelete(msg); // delete right away for now
     }
@@ -200,13 +213,12 @@ void Node::sendMessage(cMessage *msg)
     {
         // phase 1: if node 0 (the sender) finished its input file, stop the simulation
         if (id == 0)
-            L01->setTransTime(simTime().dbl()-startTime); // TODO: change in phase 2
-        L01->addEOF(id);                        // add a log that the node reached the end of its input file
+            L01->setTransTime(simTime().dbl() - startTime); // TODO: change in phase 2
+        L01->addEOF(id);                                    // add a log that the node reached the end of its input file
         return;
     }
 
     formulateAndSendMessage();
-
 }
 
 void Node::receiveMessage(cMessage *msg)
@@ -258,7 +270,7 @@ void Node::receiveMessage(cMessage *msg)
     }
 }
 
-//takes next message to be sent from events vector, frames it, applies errors, sends frame, triggers timeout, and increments index to next message
+// takes next message to be sent from events vector, frames it, applies errors, sends frame, triggers timeout, and increments index to next message
 void Node::formulateAndSendMessage()
 {
     // getting errors to be applied to message
@@ -284,7 +296,7 @@ void Node::formulateAndSendMessage()
         {
             // TODO: change ack number in phase 2
             L01->addLog(id, 0, eventsIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
-            send(messageToSend, "peerLink$o");                                                               // send to my peer
+            send(messageToSend, "peerLink$o");                                                                 // send to my peer
             L01->incrementTransNum(1);
         }
 
@@ -326,17 +338,21 @@ void Node::formulateAndSendMessage()
     }
 
     // set timeout in case the receiver send no response
-    scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessage);
+    scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[0]);
 
     // increment events index to the next message
     eventsIndex++;
 
-    //check if a node finished all its messages
-    //TODO: put this logic where we check that the all messages in the last window are acknowledged
-    if (eventsIndex >= events.size()) {
-        if (id==0 or id==1) finishedNodesCount01++;
-        else if (id==2 or id==3) finishedNodesCount23++;
-        else if (id==4 or id==5) finishedNodesCount45++;
+    // check if a node finished all its messages
+    // TODO: put this logic where we check that the all messages in the last window are acknowledged
+    if (eventsIndex >= events.size())
+    {
+        if (id == 0 or id == 1)
+            finishedNodesCount01++;
+        else if (id == 2 or id == 3)
+            finishedNodesCount23++;
+        else if (id == 4 or id == 5)
+            finishedNodesCount45++;
     }
 }
 
@@ -345,6 +361,7 @@ Node::~Node()
     delete L01;
     delete L23;
     delete L45;
-    delete timeoutMessage;
+    for (int i = 0; i < windowSize; i++)
+        delete timeoutMessages[i];
     delete startMessage;
 }
