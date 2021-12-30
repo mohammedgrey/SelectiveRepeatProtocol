@@ -18,6 +18,8 @@
 using namespace std;
 using namespace omnetpp;
 
+enum messageType {READY_TO_SEND,FRAME_ARRIVAL,TIMEOUT,FINISH};
+
 inline string getBasePath()
 {
   map<string, string> basePath;
