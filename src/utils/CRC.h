@@ -55,7 +55,6 @@ inline bool validCRC(string payload, string remainder)
         remainderBinaryString = "0" + remainderBinaryString;
     string messageAddedWithRemainder = binaryStringPayload + remainderBinaryString;
     string returnedRemainder = longBinaryDivision(messageAddedWithRemainder, generator);
-    cout << returnedRemainder << endl;
     for (int i = 0; i < returnedRemainder.size(); i++)
         if (returnedRemainder[i] == '1')
             return false;

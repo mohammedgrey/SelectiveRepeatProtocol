@@ -36,7 +36,7 @@ packet MyMessage {
      string CRC;
      
      //piggybacking
-     int p_id;
-     int p_ack; 
+     int p_id; //id of the frame we want
+     int p_ack; // 0->ack, 1-->nck
     
 }

@@ -18,7 +18,13 @@
 using namespace std;
 using namespace omnetpp;
 
-enum messageType {COORDINATOR_MESSAGE,READY_TO_SEND,FRAME_ARRIVAL,TIMEOUT};
+enum messageType
+{
+  COORDINATOR_MESSAGE,
+  READY_TO_SEND,
+  FRAME_ARRIVAL,
+  TIMEOUT
+};
 
 inline string getBasePath()
 {
@@ -90,7 +96,7 @@ inline string modifyMessage(string message, double randModIndex)
   return message;
 }
 
-inline MyMessage_Base *constructMessage(string line, int id, bool isModified, double randModIndex)
+inline void constructMessage(string line, int id, bool isModified, double randModIndex, MyMessage_Base *messageToSend)
 {
 
   string messageContent = line.substr(5);         // get the message content without the error bits
@@ -100,7 +106,19 @@ inline MyMessage_Base *constructMessage(string line, int id, bool isModified, do
   if (isModified)
     payload = modifyMessage(payload, randModIndex); // modify the message if it should be
 
-  MyMessage_Base *messageToSend = new MyMessage_Base();
+  // MyMessage_Base *messageToSendBack = messageToSend;
+  // if (messageToSendBack == nullptr)
+  // {
+  //   EV << "messageToSendBack == nullptr" << endl;
+  //   cout << "messageToSendBack == nullptr" << endl;
+  //   messageToSendBack = new MyMessage_Base();
+  // }
+
+  // if (messageToSendBack == nullptr)
+  // {
+  //   EV << "I am null again" << endl;
+  //   cout << "I am null again" << endl;
+  // }
 
   // header
   messageToSend->setId(id);                      // message id
@@ -112,8 +130,6 @@ inline MyMessage_Base *constructMessage(string line, int id, bool isModified, do
   // trailer
   messageToSend->setCRC(remainderCRC.c_str()); // put the CRC in the trailer
   messageToSend->setP_ack(1);                  // set ack number
-
-  return messageToSend;
 }
 
 inline std::vector<std::string> split(std::string const &str, const char delim)

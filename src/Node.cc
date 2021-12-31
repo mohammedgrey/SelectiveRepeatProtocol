@@ -86,7 +86,8 @@ void Node::initialize()
 void Node::initializeMessages(cMessage *msg)
 {
     // get the 0->node id, 1->text file name, 2->whether it's the starting node, 3->starting time
-    vector<string> lineReceived = split(msg->getName(), ' ');
+    vector<string>
+        lineReceived = split(msg->getName(), ' ');
 
     // store file lines
     events = readFile(getBasePath() + "/inputs/" + lineReceived[1]);
@@ -118,17 +119,130 @@ messageType Node::getMessageType(cMessage *msg)
         }
         return READY_TO_SEND;
     }
-
     return FRAME_ARRIVAL;
 }
 
-void Node::handleReadyToSend(cMessage *msg)
+bool Node::checkEndingCondition(int indexToCheck)
 {
+    if (indexToCheck >= events.size())
+    {
+        if (id == 0 or id == 1)
+            finishedNodesCount01++;
+        else if (id == 2 or id == 3)
+            finishedNodesCount23++;
+        else if (id == 4 or id == 5)
+            finishedNodesCount45++;
+        return true;
+    }
+    return false;
+}
+void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack)
+{
+    try
+    {
+
+        MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
+        // valid= 1->ack, 0->nck
+        int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
+        int receivedSeqNum = mmsg->getId();
+
+        if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
+        {
+            if (valid) // message is correct send ack
+            {
+                receivingWindow[0] = true;
+                while (receivingWindow[0])
+                {
+                    receivingWindow.erase(receivingWindow.begin()); // pop
+                    receivingWindow.push_back(false);               // push
+                    receivingWindowStartIndex++;
+                }
+                messageToSendBack->setP_ack(0); // ack
+                messageToSendBack->setP_id(receivingWindowStartIndex);
+            }
+            else // message is modified send nck
+            {
+                messageToSendBack->setP_ack(0); // ack
+                // TODO: the right thing is to send nck
+                //  messageToSendBack->setP_ack(1); // nck
+                messageToSendBack->setP_id(receivingWindowStartIndex);
+            }
+        }
+        else // send nck either way
+        {
+            // if (valid)
+            receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
+            messageToSendBack->setP_ack(1); // nck
+            messageToSendBack->setP_id(receivingWindowStartIndex);
+        }
+
+        // TODO:delete those
+        //  nck 1) message modified 2) wrong seq number
+
+        //[true,false,false,false,false]
+        //[0   ,1    ,2      ,3   ,4    ]
+
+        //[true,true,true,true,false]
+
+        //[true,true,false,true,false]
+
+        //[,false,true,true,false,false]
+
+        //        [false,false]
+        //        start=1
+        //[0   |,1    ,2 |     ,3   ,4    ]
+    }
+    catch (...)
+    {
+        cout << "Casting error handleReceivingMessage" << endl;
+    }
+}
+void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
+{
+    try
+    {
+        if (msg == nullptr)
+            cout << "I am null handleReceivingAck" << endl;
+        MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
+        int receivedNck = mmsg->getP_ack();
+        int receivedAckId = mmsg->getP_id();
+
+        if (receivedNck) // received nck, resend the frame we received nack for
+        {
+            MyMessage_Base *messageToSendBack = new MyMessage_Base();
+            formulateAndSendMessage(receivedAckId, messageToSendBack);
+        }
+        else
+        { // recieved ack,possible to advance the window
+            int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
+            sendingWindowStartIndex = receivedAckId; // shift the sending window
+            // for (int i = 0; i < cancelTimeoutCount; i++)
+            // {
+            //     cancelEvent(timeoutMessages[i]);
+            // }
+            if (checkEndingCondition(sendingWindowStartIndex)) // end condition
+                return;                                        // do nothing
+            // schedule
+            handleReadyToSend(msg, messageToSendBack);
+        }
+        //[0,1,2,3,4,5,|6,7,8,9,10|] 11
+        // start=2
+        // current=4
+    }
+    catch (...)
+    {
+        cout << "Casting error handleReceivingAck" << endl;
+    }
+}
+
+void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
+{
+
     // if next frame to send is within window
     // TODO: check the window shifting condition for the last window in the sender (window size decreases)
     if (nextFrameSeqNum - sendingWindowStartIndex < windowSize)
     {
-        formulateAndSendMessage(nextFrameSeqNum);                                            // send next message
+        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);                         // send next message
         nextFrameSeqNum++;                                                                   // move index to message after
         scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), sendNextFrameMessage); // schedule a self message of type READY_TO_SEND for next frame
     }
@@ -136,16 +250,38 @@ void Node::handleReadyToSend(cMessage *msg)
 
 void Node::handleFrameArrival(cMessage *msg)
 {
+
+    MyMessage_Base *messageToSendBack = new MyMessage_Base();
+
+    if (startTime != -1) // sender
+    {
+        handleReceivingAck(msg, messageToSendBack);
+    }
+    else // Receiver
+    {
+        handleReceivingMessage(msg, messageToSendBack);
+        double delay = 0.2;
+        sendDelayed(messageToSendBack, delay, "peerLink$o");
+    }
+
+    // node0
+    //  [ data1,data2, data3....datan]
+
+    // node1
+    //[false,false,true,true,false]
+    //[0   ,1    ,2      ,3   ,4    ]
 }
 
 void Node::handleTimeout(cMessage *msg)
 {
+
     // check which frame in the window timedout
     for (int i = 0; i < windowSize; i++)
     {
         if (msg == timeoutMessages[i])
         {
-            formulateAndSendMessage(sendingWindowStartIndex + i);
+            MyMessage_Base *messageToSendBack = new MyMessage_Base();
+            formulateAndSendMessage(sendingWindowStartIndex + i, messageToSendBack);
             return;
         }
     }
@@ -153,7 +289,9 @@ void Node::handleTimeout(cMessage *msg)
 
 void Node::handleMessage(cMessage *msg)
 {
+
     messageType Type = getMessageType(msg);
+    MyMessage_Base *messageToSendBack;
 
     switch (Type)
     {
@@ -162,12 +300,19 @@ void Node::handleMessage(cMessage *msg)
         initializeMessages(msg);
         break;
     case READY_TO_SEND:
-        handleReadyToSend(msg);
+        EV << "READY_TO_SEND" << endl;
+
+        messageToSendBack = new MyMessage_Base();
+        handleReadyToSend(msg, messageToSendBack);
         break;
     case FRAME_ARRIVAL:
+        EV << "FRAME_ARRIVAL" << endl;
+
         handleFrameArrival(msg);
         break;
     case TIMEOUT:
+        EV << "TIMEOUT" << endl;
+
         handleTimeout(msg);
         break;
     }
@@ -238,58 +383,59 @@ void Node::handleMessage(cMessage *msg)
 //     formulateAndSendMessage();
 // }
 
-void Node::receiveMessage(cMessage *msg)
-{
-    // cout<<"I am the receiver"<<endl;
-    try
-    {
-        MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
-        // valid= 1->ack, 0->nck
-        int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
+// void Node::receiveMessage(cMessage *msg)
+// {
+//     // cout<<"I am the receiver"<<endl;
+//     try
+//     {
+//         MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
+//         // valid= 1->ack, 0->nck
+//         int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
 
-        // received message log
-        L01->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+//         // received message log
+//         L01->addLog(id, 1, mmsg->getId(), mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
 
-        mmsg->setP_ack(valid);
-        if (valid)
-        {
-            expectedFrameId++; // if ack, request next frame
-        }
-        mmsg->setP_id(expectedFrameId);
+//         mmsg->setP_ack(valid);
+//         if (valid)
+//         {
+//             expectedFrameId++; // if ack, request next frame
+//         }
+//         mmsg->setP_id(expectedFrameId);
 
-        // check for duplicate frame
-        // if (mmsg->getId() < expectedFrameId) // TODO: use this in phase 2
-        // {
-        //     // drop message
-        //     L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
-        // }
-        if (mmsg->getId() == prevFrameId) // duplicate
-        {
-            // drop message
-            L01->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
-        }
-        else
-        {
-            prevFrameId = mmsg->getId();
-            // sent message log TODO: change the sent message id and ack number in phase 2
-            L01->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
+//         // check for duplicate frame
+//         // if (mmsg->getId() < expectedFrameId) // TODO: use this in phase 2
+//         // {
+//         //     // drop message
+//         //     L->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+//         // }
+//         if (mmsg->getId() == prevFrameId) // duplicate
+//         {
+//             // drop message
+//             L01->addLog(id, 2, mmsg->getId(), "", simTime().dbl(), 0, 0, 0);
+//         }
+//         else
+//         {
+//             prevFrameId = mmsg->getId();
+//             // sent message log TODO: change the sent message id and ack number in phase 2
+//             L01->addLog(id, 0, -1, "", simTime().dbl(), !valid, valid, expectedFrameId);
 
-            // sending message
-            double delay = 0.2;
-            sendDelayed(mmsg, delay, "peerLink$o");
-            // send(mmsg, "peerLink$o");
-            // L->incrementTransNum(1);
-        }
-    }
-    catch (...)
-    {
-        cout << "Casting error" << endl;
-    }
-}
+//             // sending message
+//             double delay = 0.2;
+//             sendDelayed(mmsg, delay, "peerLink$o");
+//             // send(mmsg, "peerLink$o");
+//             // L->incrementTransNum(1);
+//         }
+//     }
+//     catch (...)
+//     {
+//         cout << "Casting error" << endl;
+//     }
+// }
 
 // takes next message to be sent from events vector, frames it, applies errors, sends frame, triggers timeout, and increments index to next message
-void Node::formulateAndSendMessage(int eventIndex)
+void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend)
 {
+
     // getting errors to be applied to message
     string MLDD = events[eventIndex].substr(0, 4);
     bool isModified = MLDD[0] == '1' ? true : false;
@@ -298,8 +444,8 @@ void Node::formulateAndSendMessage(int eventIndex)
     bool isDelayed = MLDD[3] == '1' ? true : false;
 
     // MODIFICATION
-    double randModIndex = par("randNum").doubleValue();                                                         // generate a random number 0-1 to be used for the modification
-    MyMessage_Base *messageToSend = constructMessage(events[eventIndex], eventIndex, isModified, randModIndex); // constructing message
+    double randModIndex = par("randNum").doubleValue();                                        // generate a random number 0-1 to be used for the modification
+    constructMessage(events[eventIndex], eventIndex, isModified, randModIndex, messageToSend); // constructing message
 
     // send only if not LOST
     if (!isLost)
@@ -320,10 +466,14 @@ void Node::formulateAndSendMessage(int eventIndex)
         // if message is duplicated but not delayed
         else if (isDuplicated && !isDelayed)
         {
+
             L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
-            send(messageToSend, "peerLink$o");                                                                             // send first message now
-            MyMessage_Base *messageToSendDup = constructMessage(events[eventIndex], eventIndex, isModified, randModIndex); // construct duplicate
-            sendDelayed(messageToSendDup, 0.01, "peerLink$o");                                                             // send duplicate with 0.01s delay
+
+            send(messageToSend, "peerLink$o"); // send first message now
+
+            MyMessage_Base *messageToSendDup = messageToSend->dup();
+
+            sendDelayed(messageToSendDup, 0.01, "peerLink$o"); // send duplicate with 0.01s delay
             L01->incrementTransNum(2);
         }
 
@@ -332,9 +482,9 @@ void Node::formulateAndSendMessage(int eventIndex)
         {
             double delay = par("delaySeconds").doubleValue();
             L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
-            sendDelayed(messageToSend, delay, "peerLink$o");                                                               // send first message after delay
-            MyMessage_Base *messageToSendDup = constructMessage(events[eventIndex], eventIndex, isModified, randModIndex); // construct duplicate
-            sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o");                                                     // send duplicate with delay+0.01s
+            sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
+            MyMessage_Base *messageToSendDup = messageToSend->dup();
+            sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o"); // send duplicate with delay+0.01s
             L01->incrementTransNum(2);
         }
         // if message is not duplicated and delayed
@@ -355,23 +505,15 @@ void Node::formulateAndSendMessage(int eventIndex)
     }
 
     // set timeout in case the receiver send no response
-    scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[eventIndex - sendingWindowStartIndex]);
+    // scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[eventIndex - sendingWindowStartIndex]);
 
     // check if a node finished all its messages
     // TODO: put this logic where we check that the all messages in the last window are acknowledged
-    if (eventIndex >= events.size())
-    {
-        if (id == 0 or id == 1)
-            finishedNodesCount01++;
-        else if (id == 2 or id == 3)
-            finishedNodesCount23++;
-        else if (id == 4 or id == 5)
-            finishedNodesCount45++;
-    }
 }
 
 Node::~Node()
 {
+
     // TODO: delete everything :)
     delete L01;
     delete L23;

@@ -50,18 +50,20 @@ protected:
   static int finishedNodesCount45; // if it equals 2, then the pair has finished
 
   // functions
-  virtual void initialize();                 // initialized data members
-  void initializeMessages(cMessage *msg);    // fills events vector with messages from input file
-  messageType getMessageType(cMessage *msg); // returns the type of the given message
-
-  void handleReadyToSend(cMessage *msg);  // called when a message is ready to be sent
-  void handleFrameArrival(cMessage *msg); // called when a frame is received-> checks messages and acks/nacks
-  void handleTimeout(cMessage *msg);      // called when a timeout message is received
+  virtual void initialize();                                                     // initialized data members
+  void initializeMessages(cMessage *msg);                                        // fills events vector with messages from input file
+  messageType getMessageType(cMessage *msg);                                     // returns the type of the given message
+  void handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack); // For handling receiving the frame
+  void handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack);     // For handling receiving ack or nck
+  bool checkEndingCondition(int indexToCheck);
+  void handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack); // called when a message is ready to be sent
+  void handleFrameArrival(cMessage *msg);                                   // called when a frame is received-> checks messages and acks/nacks
+  void handleTimeout(cMessage *msg);                                        // called when a timeout message is received
 
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);
   void receiveMessage(cMessage *msg);
-  void formulateAndSendMessage(int eventIndex); // frames the message to be sent and applies errors
+  void formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend); // frames the message to be sent and applies errors
   virtual ~Node();
 };
 
