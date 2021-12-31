@@ -132,19 +132,36 @@ bool Node::checkEndingCondition(int indexToCheck)
             finishedNodesCount23++;
         else if (id == 4 or id == 5)
             finishedNodesCount45++;
-        return true;
+        if (id == 0)
+            return true;
     }
     return false;
 }
+
 void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
     try
     {
-
         MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
         // valid= 1->ack, 0->nck
         int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
         int receivedSeqNum = mmsg->getId();
+
+        // received message log
+        L01->addLog(id, 1, receivedSeqNum, mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+
+        // cout << "receivingWindowStartIndex= " << receivingWindowStartIndex << endl;
+        // for (int i = 0; i < receivingWindow.size(); i++)
+        //     cout
+        //         << receivingWindow[i] << " ";
+        // cout << endl;
+
+        // check for duplicate messages
+        if (receivedSeqNum < receivingWindowStartIndex || receivingWindow[receivedSeqNum - receivingWindowStartIndex])
+        {
+            // drop message
+            L01->addLog(id, 2, receivedSeqNum, "", simTime().dbl(), 0, 0, 0);
+        }
 
         if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
         {
@@ -197,12 +214,12 @@ void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBa
         cout << "Casting error handleReceivingMessage" << endl;
     }
 }
+
 void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
     try
     {
-        if (msg == nullptr)
-            cout << "I am null handleReceivingAck" << endl;
+
         MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
         int receivedNck = mmsg->getP_ack();
         int receivedAckId = mmsg->getP_id();
@@ -214,6 +231,7 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
         }
         else
         { // recieved ack,possible to advance the window
+
             int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
             sendingWindowStartIndex = receivedAckId; // shift the sending window
             // for (int i = 0; i < cancelTimeoutCount; i++)
@@ -240,7 +258,7 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
 
     // if next frame to send is within window
     // TODO: check the window shifting condition for the last window in the sender (window size decreases)
-    if (nextFrameSeqNum - sendingWindowStartIndex < windowSize)
+    if (nextFrameSeqNum < events.size() && nextFrameSeqNum - sendingWindowStartIndex < windowSize)
     {
         formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);                         // send next message
         nextFrameSeqNum++;                                                                   // move index to message after
@@ -253,15 +271,15 @@ void Node::handleFrameArrival(cMessage *msg)
 
     MyMessage_Base *messageToSendBack = new MyMessage_Base();
 
-    if (startTime != -1) // sender
-    {
-        handleReceivingAck(msg, messageToSendBack);
-    }
-    else // Receiver
+    if (startTime == -1) // sender
     {
         handleReceivingMessage(msg, messageToSendBack);
         double delay = 0.2;
         sendDelayed(messageToSendBack, delay, "peerLink$o");
+    }
+    else // Receiver
+    {
+        handleReceivingAck(msg, messageToSendBack);
     }
 
     // node0
@@ -289,7 +307,6 @@ void Node::handleTimeout(cMessage *msg)
 
 void Node::handleMessage(cMessage *msg)
 {
-
     messageType Type = getMessageType(msg);
     MyMessage_Base *messageToSendBack;
 
