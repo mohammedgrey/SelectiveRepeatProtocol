@@ -24,13 +24,14 @@ private:
   // sending buffer
   vector<string> events;       // vector of lines from the node's input file
   int sendingWindowStartIndex; // index of events where window starts: 0 <= windowStart < length(events)-windowSize
-  int nextFrameSeqNum;         // index of next frame to send from window: 0 <= index < length(window)
+  int nextFrameSeqNum;         // index of next frame to send from window: 0 <= index < length(events)
   // expectedAck= windowStartIndex=expectedFrameId
 
   // receiving buffer
   vector<bool> receivingWindow;  // keep track of which frames are receiving in the window
   int receivingWindowStartIndex; // start index of receiving window
-  // expectedFrame=receivingWindowStartIndex  //sequence number of expected frame (if not received, send NACK)
+  // NOTE: no need to create a vector to store received messages as we only log them. Instead, keep the starting index only
+  //  expectedFrame=receivingWindowStartIndex  //sequence number of expected frame (if not received, send NACK)
 
   // messages
   vector<cMessage *> timeoutMessages; // used to handle timeouts
