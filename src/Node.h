@@ -36,7 +36,6 @@ private:
   // messages
   vector<cMessage *> timeoutMessages; // used to handle timeouts
   cMessage *startMessage;             // used to send the start message
-  cMessage *sendNextFrameMessage;     // self message for sending next available frame in window
 
 protected:
   // logs

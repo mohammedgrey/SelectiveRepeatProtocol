@@ -78,9 +78,10 @@ void Node::initialize()
 
     // initializing message parameters
     for (int i = 0; i < windowSize; i++)
+    {
         timeoutMessages.push_back(new cMessage("timeoutMessage")); // initialize timeout message
-    startMessage = new cMessage("startMessage");                   // initialize the start message
-    sendNextFrameMessage = new cMessage("sendNextFrameMessage");   // initialize sendNextFrame message
+    }
+    startMessage = new cMessage("startMessage"); // initialize the start message
 }
 
 void Node::initializeMessages(cMessage *msg)
@@ -140,117 +141,118 @@ bool Node::checkEndingCondition(int indexToCheck)
 
 void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
+    MyMessage_Base *mmsg;
     try
     {
-        MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
+        mmsg = check_and_cast<MyMessage_Base *>(msg);
         // valid= 1->ack, 0->nck
-        int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
-        int receivedSeqNum = mmsg->getId();
-
-        // received message log
-        L01->addLog(id, 1, receivedSeqNum, mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
-
-        // cout << "receivingWindowStartIndex= " << receivingWindowStartIndex << endl;
-        // for (int i = 0; i < receivingWindow.size(); i++)
-        //     cout
-        //         << receivingWindow[i] << " ";
-        // cout << endl;
-
-        // check for duplicate messages
-        if (receivedSeqNum < receivingWindowStartIndex || receivingWindow[receivedSeqNum - receivingWindowStartIndex])
-        {
-            // drop message
-            L01->addLog(id, 2, receivedSeqNum, "", simTime().dbl(), 0, 0, 0);
-        }
-
-        if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
-        {
-            if (valid) // message is correct send ack
-            {
-                receivingWindow[0] = true;
-                while (receivingWindow[0])
-                {
-                    receivingWindow.erase(receivingWindow.begin()); // pop
-                    receivingWindow.push_back(false);               // push
-                    receivingWindowStartIndex++;
-                }
-                messageToSendBack->setP_ack(0); // ack
-                messageToSendBack->setP_id(receivingWindowStartIndex);
-            }
-            else // message is modified send nck
-            {
-                messageToSendBack->setP_ack(0); // ack
-                // TODO: the right thing is to send nck
-                //  messageToSendBack->setP_ack(1); // nck
-                messageToSendBack->setP_id(receivingWindowStartIndex);
-            }
-        }
-        else // send nck either way
-        {
-            // if (valid)
-            receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
-            messageToSendBack->setP_ack(1); // nck
-            messageToSendBack->setP_id(receivingWindowStartIndex);
-        }
-
-        // TODO:delete those
-        //  nck 1) message modified 2) wrong seq number
-
-        //[true,false,false,false,false]
-        //[0   ,1    ,2      ,3   ,4    ]
-
-        //[true,true,true,true,false]
-
-        //[true,true,false,true,false]
-
-        //[,false,true,true,false,false]
-
-        //        [false,false]
-        //        start=1
-        //[0   |,1    ,2 |     ,3   ,4    ]
     }
     catch (...)
     {
         cout << "Casting error handleReceivingMessage" << endl;
     }
+    int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
+    int receivedSeqNum = mmsg->getId();
+
+    // received message log
+    L01->addLog(id, 1, receivedSeqNum, mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
+
+    // cout << "receivingWindowStartIndex= " << receivingWindowStartIndex << endl;
+    // for (int i = 0; i < receivingWindow.size(); i++)
+    //     cout
+    //         << receivingWindow[i] << " ";
+    // cout << endl;
+
+    // check for duplicate messages
+    if (receivedSeqNum < receivingWindowStartIndex || receivingWindow[receivedSeqNum - receivingWindowStartIndex])
+    {
+        // drop message
+        L01->addLog(id, 2, receivedSeqNum, "", simTime().dbl(), 0, 0, 0);
+    }
+
+    if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
+    {
+        if (valid) // message is correct send ack
+        {
+            receivingWindow[0] = true;
+            while (receivingWindow[0])
+            {
+                receivingWindow.erase(receivingWindow.begin()); // pop
+                receivingWindow.push_back(false);               // push
+                receivingWindowStartIndex++;
+            }
+            messageToSendBack->setP_ack(0); // ack
+            messageToSendBack->setP_id(receivingWindowStartIndex);
+        }
+        else // message is modified send nck
+        {
+            messageToSendBack->setP_ack(0); // ack
+            // TODO: the right thing is to send nck
+            //  messageToSendBack->setP_ack(1); // nck
+            messageToSendBack->setP_id(receivingWindowStartIndex);
+        }
+    }
+    else // send nck either way
+    {
+        // if (valid)
+        receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
+        messageToSendBack->setP_ack(1); // nck
+        messageToSendBack->setP_id(receivingWindowStartIndex);
+    }
+
+    // TODO:delete those
+    //  nck 1) message modified 2) wrong seq number
+
+    //[true,false,false,false,false]
+    //[0   ,1    ,2      ,3   ,4    ]
+
+    //[true,true,true,true,false]
+
+    //[true,true,false,true,false]
+
+    //[,false,true,true,false,false]
+
+    //        [false,false]
+    //        start=1
+    //[0   |,1    ,2 |     ,3   ,4    ]
 }
 
 void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
+    MyMessage_Base *mmsg;
     try
     {
-
-        MyMessage_Base *mmsg = check_and_cast<MyMessage_Base *>(msg);
-        int receivedNck = mmsg->getP_ack();
-        int receivedAckId = mmsg->getP_id();
-
-        if (receivedNck) // received nck, resend the frame we received nack for
-        {
-            MyMessage_Base *messageToSendBack = new MyMessage_Base();
-            formulateAndSendMessage(receivedAckId, messageToSendBack);
-        }
-        else
-        { // recieved ack,possible to advance the window
-
-            int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
-            sendingWindowStartIndex = receivedAckId; // shift the sending window
-            // for (int i = 0; i < cancelTimeoutCount; i++)
-            // {
-            //     cancelEvent(timeoutMessages[i]);
-            // }
-            if (checkEndingCondition(sendingWindowStartIndex)) // end condition
-                return;                                        // do nothing
-            // schedule
-            handleReadyToSend(msg, messageToSendBack);
-        }
-        //[0,1,2,3,4,5,|6,7,8,9,10|] 11
-        // start=2
-        // current=4
+        mmsg = check_and_cast<MyMessage_Base *>(msg);
     }
     catch (...)
     {
         cout << "Casting error handleReceivingAck" << endl;
     }
+    int receivedNck = mmsg->getP_ack();
+    int receivedAckId = mmsg->getP_id();
+
+    if (receivedNck) // received nck, resend the frame we received nack for
+    {
+        MyMessage_Base *messageToSendBack = new MyMessage_Base();
+        formulateAndSendMessage(receivedAckId, messageToSendBack);
+    }
+    else
+    { // recieved ack,possible to advance the window
+
+        int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
+        sendingWindowStartIndex = receivedAckId; // shift the sending window
+        // for (int i = 0; i < cancelTimeoutCount; i++)
+        // {
+        //     cancelEvent(timeoutMessages[i]);
+        // }
+        if (checkEndingCondition(sendingWindowStartIndex)) // end condition
+            return;                                        // do nothing
+        // schedule
+        handleReadyToSend(msg, messageToSendBack);
+    }
+    //[0,1,2,3,4,5,|6,7,8,9,10|] 11
+    // start=2
+    // current=4
 }
 
 void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
@@ -258,11 +260,12 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
 
     // if next frame to send is within window
     // TODO: check the window shifting condition for the last window in the sender (window size decreases)
-    if (nextFrameSeqNum < events.size() && nextFrameSeqNum - sendingWindowStartIndex < windowSize)
+    int relativeInd = nextFrameSeqNum - sendingWindowStartIndex;
+    if (nextFrameSeqNum < events.size() && relativeInd < windowSize)
     {
-        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);                         // send next message
-        nextFrameSeqNum++;                                                                   // move index to message after
-        scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), sendNextFrameMessage); // schedule a self message of type READY_TO_SEND for next frame
+        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);                                    // send next message
+        nextFrameSeqNum++;                                                                              // move index to message after
+        scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), new cMessage("nextFrameToSend")); // schedule a self message of type READY_TO_SEND for next frame
     }
 }
 
