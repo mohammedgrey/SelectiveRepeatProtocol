@@ -157,23 +157,30 @@ void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBa
     // received message log
     L01->addLog(id, 1, receivedSeqNum, mmsg->getM_Payload(), simTime().dbl(), !valid, 1, mmsg->getP_ack());
 
-    // cout << "receivingWindowStartIndex= " << receivingWindowStartIndex << endl;
-    // for (int i = 0; i < receivingWindow.size(); i++)
-    //     cout
-    //         << receivingWindow[i] << " ";
-    // cout << endl;
+    cout << "receivingWindowStartIndex= " << receivingWindowStartIndex << endl;
+    for (int i = 0; i < receivingWindow.size(); i++)
+        cout
+            << receivingWindow[i] << " ";
+    cout << endl;
+
+    cout << "receivedSeqNum= " << receivedSeqNum << endl;
 
     // check for duplicate messages
     if (receivedSeqNum < receivingWindowStartIndex || receivingWindow[receivedSeqNum - receivingWindowStartIndex])
     {
         // drop message
         L01->addLog(id, 2, receivedSeqNum, "", simTime().dbl(), 0, 0, 0);
+        // send NACK on the first message in the receiving window
+        messageToSendBack->setP_ack(1);
     }
 
-    if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
+    // if I received the expected frame
+    else if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
     {
+        cout << "receivedSeqNum == receivingWindowStartIndex" << endl;
         if (valid) // message is correct send ack
         {
+            cout << "valid" << endl;
             receivingWindow[0] = true;
             while (receivingWindow[0])
             {
@@ -182,23 +189,28 @@ void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBa
                 receivingWindowStartIndex++;
             }
             messageToSendBack->setP_ack(0); // ack
-            messageToSendBack->setP_id(receivingWindowStartIndex);
         }
         else // message is modified send nck
         {
-            messageToSendBack->setP_ack(0); // ack
-            // TODO: the right thing is to send nck
-            //  messageToSendBack->setP_ack(1); // nck
-            messageToSendBack->setP_id(receivingWindowStartIndex);
+            messageToSendBack->setP_ack(1); // nck
         }
     }
-    else // send nck either way
+
+    // if I received a frame within the window
+    else
     {
-        // if (valid)
-        receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
-        messageToSendBack->setP_ack(1); // nck
-        messageToSendBack->setP_id(receivingWindowStartIndex);
+        cout << "else2" << endl;
+        // check if received frame is valid
+        if (valid)
+        {
+            cout << "valid in else" << endl;
+            cout << "ind= " << receivedSeqNum - receivingWindowStartIndex << endl;
+            receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
+        }
+        // send NACK on the first frame in window (still not received)
+        messageToSendBack->setP_ack(1);
     }
+    messageToSendBack->setP_id(receivingWindowStartIndex);
 
     // TODO:delete those
     //  nck 1) message modified 2) wrong seq number
@@ -231,10 +243,11 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
     int receivedNck = mmsg->getP_ack();
     int receivedAckId = mmsg->getP_id();
 
-    if (receivedNck) // received nck, resend the frame we received nack for
+    // received nck, resend the frame we received nack for
+    if (receivedNck && receivedAckId >= receivingWindowStartIndex)
     {
         MyMessage_Base *messageToSendBack = new MyMessage_Base();
-        formulateAndSendMessage(receivedAckId, messageToSendBack);
+        formulateAndSendMessage(receivedAckId, messageToSendBack, false);
     }
     else
     { // recieved ack,possible to advance the window
@@ -259,7 +272,6 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
 
     // if next frame to send is within window
-    // TODO: check the window shifting condition for the last window in the sender (window size decreases)
     int relativeInd = nextFrameSeqNum - sendingWindowStartIndex;
     if (nextFrameSeqNum < events.size() && relativeInd < windowSize)
     {
@@ -336,6 +348,101 @@ void Node::handleMessage(cMessage *msg)
         handleTimeout(msg);
         break;
     }
+}
+
+// takes next message to be sent from events vector, frames it, applies errors, sends frame, triggers timeout, and increments index to next message
+void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend, bool applyErrors)
+{
+    bool isModified = false, isLost = false, isDuplicated = false, isDelayed = false;
+
+    // getting errors to be applied to message
+    if (applyErrors)
+    {
+        string MLDD = events[eventIndex].substr(0, 4);
+        isModified = MLDD[0] == '1' ? true : false;
+        isLost = MLDD[1] == '1' ? true : false;
+        isDuplicated = MLDD[2] == '1' ? true : false;
+        isDelayed = MLDD[3] == '1' ? true : false;
+    }
+
+    // MODIFICATION
+    double randModIndex = par("randNum").doubleValue();                                        // generate a random number 0-1 to be used for the modification
+    constructMessage(events[eventIndex], eventIndex, isModified, randModIndex, messageToSend); // constructing message
+
+    // send only if not LOST
+    if (!isLost)
+    {
+        // if message is not lost or modified, increment the number of correct messages
+        if (!isModified)
+            L01->incrementCorrectMessages(1);
+
+        // if not duplicated or delayed
+        if (!isDuplicated && !isDelayed)
+        {
+            // TODO: change ack number in phase 2
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
+            send(messageToSend, "peerLink$o");                                                                // send to my peer
+            L01->incrementTransNum(1);
+        }
+
+        // if message is duplicated but not delayed
+        else if (isDuplicated && !isDelayed)
+        {
+
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+
+            send(messageToSend, "peerLink$o"); // send first message now
+
+            MyMessage_Base *messageToSendDup = messageToSend->dup();
+
+            sendDelayed(messageToSendDup, 0.01, "peerLink$o"); // send duplicate with 0.01s delay
+            L01->incrementTransNum(2);
+        }
+
+        // if message is both duplicated and delayed
+        else if (isDuplicated && isDelayed)
+        {
+            double delay = par("delaySeconds").doubleValue();
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
+            sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
+            MyMessage_Base *messageToSendDup = messageToSend->dup();
+            sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o"); // send duplicate with delay+0.01s
+            L01->incrementTransNum(2);
+        }
+        // if message is not duplicated and delayed
+        else if (!isDuplicated && isDelayed)
+        {
+            double delay = par("delaySeconds").doubleValue();
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
+            sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
+            L01->incrementTransNum(1);
+        }
+    }
+
+    // if message is lost, just log it without sending
+    else
+    {
+        L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
+        L01->incrementTransNum(1);
+    }
+
+    // set timeout in case the receiver send no response
+    // scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[eventIndex - sendingWindowStartIndex]);
+
+    // check if a node finished all its messages
+    // TODO: put this logic where we check that the all messages in the last window are acknowledged
+}
+
+Node::~Node()
+{
+
+    // TODO: delete everything :)
+    delete L01;
+    delete L23;
+    delete L45;
+    for (int i = 0; i < windowSize; i++)
+        delete timeoutMessages[i];
+    delete startMessage;
 }
 
 // void Node::handleMessage(cMessage *msg)
@@ -451,94 +558,3 @@ void Node::handleMessage(cMessage *msg)
 //         cout << "Casting error" << endl;
 //     }
 // }
-
-// takes next message to be sent from events vector, frames it, applies errors, sends frame, triggers timeout, and increments index to next message
-void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend)
-{
-
-    // getting errors to be applied to message
-    string MLDD = events[eventIndex].substr(0, 4);
-    bool isModified = MLDD[0] == '1' ? true : false;
-    bool isLost = MLDD[1] == '1' ? true : false;
-    bool isDuplicated = MLDD[2] == '1' ? true : false;
-    bool isDelayed = MLDD[3] == '1' ? true : false;
-
-    // MODIFICATION
-    double randModIndex = par("randNum").doubleValue();                                        // generate a random number 0-1 to be used for the modification
-    constructMessage(events[eventIndex], eventIndex, isModified, randModIndex, messageToSend); // constructing message
-
-    // send only if not LOST
-    if (!isLost)
-    {
-        // if message is not lost or modified, increment the number of correct messages
-        if (!isModified)
-            L01->incrementCorrectMessages(1);
-
-        // if not duplicated or delayed
-        if (!isDuplicated && !isDelayed)
-        {
-            // TODO: change ack number in phase 2
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1); // add a log
-            send(messageToSend, "peerLink$o");                                                                // send to my peer
-            L01->incrementTransNum(1);
-        }
-
-        // if message is duplicated but not delayed
-        else if (isDuplicated && !isDelayed)
-        {
-
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
-
-            send(messageToSend, "peerLink$o"); // send first message now
-
-            MyMessage_Base *messageToSendDup = messageToSend->dup();
-
-            sendDelayed(messageToSendDup, 0.01, "peerLink$o"); // send duplicate with 0.01s delay
-            L01->incrementTransNum(2);
-        }
-
-        // if message is both duplicated and delayed
-        else if (isDuplicated && isDelayed)
-        {
-            double delay = par("delaySeconds").doubleValue();
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
-            sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
-            MyMessage_Base *messageToSendDup = messageToSend->dup();
-            sendDelayed(messageToSendDup, delay + 0.01, "peerLink$o"); // send duplicate with delay+0.01s
-            L01->incrementTransNum(2);
-        }
-        // if message is not duplicated and delayed
-        else if (!isDuplicated && isDelayed)
-        {
-            double delay = par("delaySeconds").doubleValue();
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, 1, 1);
-            sendDelayed(messageToSend, delay, "peerLink$o"); // send first message after delay
-            L01->incrementTransNum(1);
-        }
-    }
-
-    // if message is lost, just log it without sending
-    else
-    {
-        L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, 1, 1);
-        L01->incrementTransNum(1);
-    }
-
-    // set timeout in case the receiver send no response
-    // scheduleAt(simTime().dbl() + par("timeoutSeconds").doubleValue(), timeoutMessages[eventIndex - sendingWindowStartIndex]);
-
-    // check if a node finished all its messages
-    // TODO: put this logic where we check that the all messages in the last window are acknowledged
-}
-
-Node::~Node()
-{
-
-    // TODO: delete everything :)
-    delete L01;
-    delete L23;
-    delete L45;
-    for (int i = 0; i < windowSize; i++)
-        delete timeoutMessages[i];
-    delete startMessage;
-}

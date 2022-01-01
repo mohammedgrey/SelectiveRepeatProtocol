@@ -7,9 +7,6 @@
 
 using namespace omnetpp;
 
-/**
- * TODO - Generated class
- */
 class Node : public cSimpleModule
 {
 private:
@@ -62,7 +59,7 @@ protected:
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);
   void receiveMessage(cMessage *msg);
-  void formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend); // frames the message to be sent and applies errors
+  void formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend, bool applyErrors = true); // frames the message to be sent and applies errors
   virtual ~Node();
 };
 
