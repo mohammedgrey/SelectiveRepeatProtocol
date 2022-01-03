@@ -98,7 +98,10 @@ void Node::initializeMessages(cMessage *msg)
     // check if I am the start node
     if (lineReceived.size() > 2)
     {
+        // TODO: add conditions for all pairs
         startTime = stod(lineReceived[3]);
+        if (id == 1 || id == 0)
+            L01->setStartTime(startTime);
         // schedule a time to start
         scheduleAt(startTime, startMessage);
     }
@@ -127,19 +130,19 @@ messageType Node::getMessageType(cMessage *msg)
 
 bool Node::checkEndingCondition(int indexToCheck)
 {
-    if (indexToCheck >= events.size())
+    if (indexToCheck >= events.size() && !finished)
     {
         if (id == 0 || id == 1)
         {
             finishedNodesCount01++;
-            cout << "node 0 or 1 finished" << endl;
+            L01->addEOF(id);
         }
         else if (id == 2 || id == 3)
             finishedNodesCount23++;
         else if (id == 4 || id == 5)
             finishedNodesCount45++;
-        // TODO: uncommented this part
-        // if (id == 0)
+
+        finished = true;
         return true;
     }
     return false;
@@ -151,7 +154,10 @@ bool Node::bothNodesFinished()
     {
         bool node0and1finished = finishedNodesCount01 >= 2;
         if (node0and1finished)
-            cout << "both nodes finished" << endl;
+        {
+            cout << "trans time" << endl;
+            L01->setTransTime(simTime().dbl()); // this function subtracts the start time internally
+        }
         return node0and1finished;
     }
     else if (id == 2 || id == 3)
@@ -300,12 +306,20 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
 
     // if next frame to send is within window
     int relativeInd = nextFrameSeqNum - sendingWindowStartIndex;
-    if (nextFrameSeqNum < events.size() && relativeInd < windowSize)
+    bool x = nextFrameSeqNum < events.size();
+    bool y = relativeInd < windowSize;
+    cout << nextFrameSeqNum << " " << sendingWindowStartIndex << endl;
+    cout << relativeInd << windowSize << endl;
+    cout << id << endl;
+    if (relativeInd < windowSize)
     {
+        cout << "HERE" << endl;
         if (messageToSendBack == nullptr)
             messageToSendBack = new MyMessage_Base();
-        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);                                    // send next message
-        nextFrameSeqNum++;                                                                              // move index to message after
+        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);
+        cout << "HERE" << endl; // send next message
+        if (nextFrameSeqNum < events.size() - 1)
+            nextFrameSeqNum++;                                                                          // move index to message after
         scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), new cMessage("nextFrameToSend")); // schedule a self message of type READY_TO_SEND for next frame
     }
 }
@@ -344,27 +358,39 @@ void Node::handleTimeout(cMessage *msg)
 
 void Node::handleMessage(cMessage *msg)
 {
-    if (bothNodesFinished()) // Exiting condition
+    cout << "YARAB handle message begin " << endl;
+    // Exiting condition
+    if (bothNodesFinished())
+    {
         return;
+    }
 
     messageType Type = getMessageType(msg);
     switch (Type)
     {
     // check if the received message is from the coordinator
     case COORDINATOR_MESSAGE:
+        cout << "YARAB coordinator begin" << endl;
         initializeMessages(msg);
+        cout << "YARAB coordinator end " << endl;
         break;
     case READY_TO_SEND:
         EV << "READY_TO_SEND" << endl;
+        cout << "YARAB ready begin" << endl;
         handleReadyToSend(msg);
+        cout << "YARAB ready end" << endl;
         break;
     case FRAME_ARRIVAL:
         EV << "FRAME_ARRIVAL" << endl;
+        cout << "YARAB frame arr begin" << endl;
         handleFrameArrival(msg);
+        cout << "YARAB frame arr end" << endl;
         break;
     case TIMEOUT:
         EV << "TIMEOUT" << endl;
+        cout << "YARAB timeout begin" << endl;
         handleTimeout(msg);
+        cout << "YARAB timeout end" << endl;
         break;
     }
 }
