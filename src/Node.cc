@@ -127,11 +127,14 @@ bool Node::checkEndingCondition(int indexToCheck)
 {
     if (indexToCheck >= events.size())
     {
-        if (id == 0 or id == 1)
+        if (id == 0 || id == 1)
+        {
             finishedNodesCount01++;
-        else if (id == 2 or id == 3)
+            cout << "node 0 or 1 finished" << endl;
+        }
+        else if (id == 2 || id == 3)
             finishedNodesCount23++;
-        else if (id == 4 or id == 5)
+        else if (id == 4 || id == 5)
             finishedNodesCount45++;
         // TODO: uncommented this part
         // if (id == 0)
@@ -142,11 +145,16 @@ bool Node::checkEndingCondition(int indexToCheck)
 
 bool Node::bothNodesFinished()
 {
-    if (id == 0 or id == 1)
-        return finishedNodesCount01 >= 2;
-    else if (id == 2 or id == 3)
+    if (id == 0 || id == 1)
+    {
+        bool node0and1finished = finishedNodesCount01 >= 2;
+        if (node0and1finished)
+            cout << "both nodes finished" << endl;
+        return node0and1finished;
+    }
+    else if (id == 2 || id == 3)
         return finishedNodesCount23 >= 2;
-    else if (id == 4 or id == 5)
+    else if (id == 4 || id == 5)
         return finishedNodesCount45 >= 2;
     return false;
 }
