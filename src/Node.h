@@ -16,6 +16,7 @@ private:
   int expectedFrameId;     // used to check for duplicates (should make sense in phase 2)
   int prevFrameId;         // used to check for duplicates (for phase 1 only)
   int windowSize;          // taken from ini file
+  bool firstTime;          // variable to check if the pair that won't start should start
 
   // window parameters
   // sending buffer

@@ -82,6 +82,8 @@ void Node::initialize()
         timeoutMessages.push_back(new cMessage("timeoutMessage")); // initialize timeout message
     }
     startMessage = new cMessage("startMessage"); // initialize the start message
+
+    firstTime = true;
 }
 
 void Node::initializeMessages(cMessage *msg)
@@ -282,7 +284,11 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
             return;                                        // do nothing
         // schedule
         // TODO: think about this part, should you schedule or not
-        handleReadyToSend(msg, messageToSendBack);
+        if (startTime == -1 && firstTime)
+        {
+            handleReadyToSend(msg, messageToSendBack);
+            firstTime = false;
+        }
     }
     //[0,1,2,3,4,5,|6,7,8,9,10|] 11
     // start=2
