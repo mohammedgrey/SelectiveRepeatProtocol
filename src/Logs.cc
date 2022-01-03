@@ -14,7 +14,7 @@ Logs::Logs(std::string file)
     totalTransTime = 0;
     totalTransNum = 0;
     totalCorrectMessages = 0;
-    myfile.open(filePath, std::ios_base::app);
+    myfile.open(filePath);
     finished = false;
 }
 
