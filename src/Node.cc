@@ -436,7 +436,7 @@ void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend
         else if (isDuplicated && !isDelayed)
         {
 
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + consDelay, isModified, messageToSend->getP_ack(), messageToSend->getP_id());
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, messageToSend->getP_ack(), messageToSend->getP_id());
 
             sendDelayed(messageToSend, consDelay, "peerLink$o"); // send first message now
 
@@ -450,7 +450,7 @@ void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend
         else if (isDuplicated && isDelayed)
         {
             double delay = par("delaySeconds").doubleValue();
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + consDelay + delay, isModified, messageToSend->getP_ack(), messageToSend->getP_id());
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, messageToSend->getP_ack(), messageToSend->getP_id());
             sendDelayed(messageToSend, consDelay + delay, "peerLink$o"); // send first message after delay
             MyMessage_Base *messageToSendDup = messageToSend->dup();
             sendDelayed(messageToSendDup, consDelay + delay + par("duplicationDelay").doubleValue(), "peerLink$o"); // send duplicate with delay+0.01s
@@ -460,7 +460,7 @@ void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend
         else if (!isDuplicated && isDelayed)
         {
             double delay = par("delaySeconds").doubleValue();
-            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + consDelay + delay, isModified, messageToSend->getP_ack(), messageToSend->getP_id());
+            L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + delay, isModified, messageToSend->getP_ack(), messageToSend->getP_id());
             sendDelayed(messageToSend, consDelay + delay, "peerLink$o"); // send first message after delay
             L01->incrementTransNum(1);
         }
@@ -469,7 +469,7 @@ void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend
     // if message is lost, just log it without sending
     else
     {
-        L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl() + consDelay, isModified, messageToSend->getP_ack(), messageToSend->getP_id());
+        L01->addLog(id, 0, eventIndex, messageToSend->getM_Payload(), simTime().dbl(), isModified, messageToSend->getP_ack(), messageToSend->getP_id());
         L01->incrementTransNum(1);
     }
 
