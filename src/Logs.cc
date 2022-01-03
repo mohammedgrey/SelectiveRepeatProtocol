@@ -18,7 +18,7 @@ Logs::Logs(std::string file)
 }
 
 // events: 0-> sends, 1-> received, 2-> drops, 3->timeout
-void Logs::addLog(int node, int event, int id, std::string content, double time, bool modified, bool ack, int ackNum)
+void Logs::addLog(int node, int event, int id, std::string content, double time, bool modified, bool nack, int ackNum)
 {
 
     // constructing log
@@ -29,7 +29,7 @@ void Logs::addLog(int node, int event, int id, std::string content, double time,
         log = "node" + std::to_string(node) + " sends message with id=" + std::to_string(id) + " and content= ''" + content + "'' at " + std::to_string(time);
         if (modified)
             log += " with modification, ";
-        if (ack)
+        if (!nack)
             log += "and piggybacking ACK number= " + std::to_string(ackNum);
         else
             log += "and NACK number= " + std::to_string(ackNum);
@@ -39,7 +39,7 @@ void Logs::addLog(int node, int event, int id, std::string content, double time,
         log = "node" + std::to_string(node) + " received message with id=" + std::to_string(id) + " and content= ''" + content + "'' at " + std::to_string(time);
         if (modified)
             log += " with modification,";
-        if (ack)
+        if (!nack)
             log += " and piggybacking ACK number= " + std::to_string(ackNum);
         else
             log += " and NACK number= " + std::to_string(ackNum);

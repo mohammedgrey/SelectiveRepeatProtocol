@@ -106,20 +106,6 @@ inline void constructMessage(string line, int id, bool isModified, double randMo
   if (isModified)
     payload = modifyMessage(payload, randModIndex); // modify the message if it should be
 
-  // MyMessage_Base *messageToSendBack = messageToSend;
-  // if (messageToSendBack == nullptr)
-  // {
-  //   EV << "messageToSendBack == nullptr" << endl;
-  //   cout << "messageToSendBack == nullptr" << endl;
-  //   messageToSendBack = new MyMessage_Base();
-  // }
-
-  // if (messageToSendBack == nullptr)
-  // {
-  //   EV << "I am null again" << endl;
-  //   cout << "I am null again" << endl;
-  // }
-
   // header
   messageToSend->setId(id);                      // message id
   messageToSend->setStart_Time(simTime().dbl()); // sending time
@@ -129,7 +115,6 @@ inline void constructMessage(string line, int id, bool isModified, double randMo
 
   // trailer
   messageToSend->setCRC(remainderCRC.c_str()); // put the CRC in the trailer
-  messageToSend->setP_ack(1);                  // set ack number
 }
 
 inline std::vector<std::string> split(std::string const &str, const char delim)

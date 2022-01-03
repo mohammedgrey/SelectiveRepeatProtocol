@@ -52,9 +52,10 @@ protected:
   void handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack); // For handling receiving the frame
   void handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack);     // For handling receiving ack or nck
   bool checkEndingCondition(int indexToCheck);
-  void handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack); // called when a message is ready to be sent
-  void handleFrameArrival(cMessage *msg);                                   // called when a frame is received-> checks messages and acks/nacks
-  void handleTimeout(cMessage *msg);                                        // called when a timeout message is received
+  bool bothNodesFinished();                                                           // checks if both nodes have finished
+  void handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack = nullptr); // called when a message is ready to be sent
+  void handleFrameArrival(cMessage *msg);                                             // called when a frame is received-> checks messages and acks/nacks
+  void handleTimeout(cMessage *msg);                                                  // called when a timeout message is received
 
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);

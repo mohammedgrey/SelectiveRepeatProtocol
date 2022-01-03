@@ -21,6 +21,7 @@ simple Node
         double timeoutSeconds;
         double delaySeconds;
         double consecutiveDelay;
+        double duplicationDelay;
         int windowSize;
         volatile double randNum= uniform(0,1);
     gates:
