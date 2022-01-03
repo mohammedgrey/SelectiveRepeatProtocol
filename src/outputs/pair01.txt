@@ -1,16 +1,30 @@
-node0 sends message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.010000 with modification, and piggybacking ACK number= 0
-node1 sends message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.010000and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.000000and piggybacking ACK number= 0
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.010000 and piggybacking ACK number= 0
+node1 sends message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.010000and piggybacking ACK number= 1
 node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.010000and piggybacking ACK number= 0
-node0 received message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.020000 and NACK number= 0
+node0 received message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.020000 and piggybacking ACK number= 1
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.020000and piggybacking ACK number= 1
-node1 sends message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000and piggybacking ACK number= 0
+node1 sends message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.020000and piggybacking ACK number= 1
 node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.020000 and piggybacking ACK number= 0
-node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.030000and NACK number= 0
-node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.020000and piggybacking ACK number= 0
+node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.020000and piggybacking ACK number= 2
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.020000and piggybacking ACK number= 1
 node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.030000 and piggybacking ACK number= 1
-node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.040000and NACK number= 0
-node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.060000and piggybacking ACK number= 0
-node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000 and piggybacking ACK number= 0
-node1 sends message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.030000and piggybacking ACK number= 0
-node1 sends message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.030000and piggybacking ACK number= 0
+node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.030000and piggybacking ACK number= 3
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.030000and piggybacking ACK number= 1
+node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000 and piggybacking ACK number= 1
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.030000and piggybacking ACK number= 2
+node1 sends message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.030000and piggybacking ACK number= 3
+node0 received message with id=2 and content= ''$in the violin family.$'' at 3.030000 and piggybacking ACK number= 2
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.030000and piggybacking ACK number= 3
+node1 sends message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.030000and piggybacking ACK number= 3
+node1 received message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.030000 and piggybacking ACK number= 1
+node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.040000 and piggybacking ACK number= 3
+node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.040000 and piggybacking ACK number= 1
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.040000 and piggybacking ACK number= 2
+node1 sends message with id=6 and content= ''$and, in specialized cases, by striking$'' at 3.040000and piggybacking ACK number= 6
+node0 received message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.040000 and piggybacking ACK number= 3
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.040000 and piggybacking ACK number= 3
+node1 sends message with id=7 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.040000and piggybacking ACK number= 7
+node0 received message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.040000 and piggybacking ACK number= 3
+node0 received message with id=6 and content= ''$and, in specialized cases, by striking$'' at 3.050000 and piggybacking ACK number= 6
+node0 received message with id=7 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.050000 and piggybacking ACK number= 7

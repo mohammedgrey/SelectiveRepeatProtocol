@@ -375,7 +375,7 @@ void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend
     // MODIFICATION
     double randModIndex = par("randNum").doubleValue();                                        // generate a random number 0-1 to be used for the modification
     constructMessage(events[eventIndex], eventIndex, isModified, randModIndex, messageToSend); // constructing message
-
+    messageToSend->setP_id(receivingWindowStartIndex);                                         // make sure we send the ack id correctly
     // send only if not LOST
     if (!isLost)
     {
