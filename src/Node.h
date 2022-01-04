@@ -18,7 +18,7 @@ private:
   int windowSize;          // taken from ini file
   bool firstTime;          // variable to check if the pair that won't start should start
   bool finished;           // variable to check if a specific node finished
-  int shouldSendNck;      // To check whether we should send nck in handleReadyToSend or not
+  int shouldSendNck;       // To check whether we should send nck in handleReadyToSend or not
 
   // window parameters
   // sending buffer
@@ -55,10 +55,10 @@ protected:
   void handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack); // For handling receiving the frame
   void handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack);     // For handling receiving ack or nck
   bool checkEndingCondition(int indexToCheck);
-  bool bothNodesFinished();                                                           // checks if both nodes have finished
-  void handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack = nullptr); // called when a message is ready to be sent
-  void handleFrameArrival(cMessage *msg);                                             // called when a frame is received-> checks messages and acks/nacks
-  void handleTimeout(cMessage *msg);                                                  // called when a timeout message is received
+  bool bothNodesFinished();                                                                                    // checks if both nodes have finished
+  void handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack = nullptr, bool applyErrors = true); // called when a message is ready to be sent
+  void handleFrameArrival(cMessage *msg);                                                                      // called when a frame is received-> checks messages and acks/nacks
+  void handleTimeout(cMessage *msg);                                                                           // called when a timeout message is received
 
   virtual void handleMessage(cMessage *msg);
   void sendMessage(cMessage *msg);

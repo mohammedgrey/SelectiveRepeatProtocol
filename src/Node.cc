@@ -87,7 +87,7 @@ void Node::initialize()
 
     finished = false;
 
-    shouldSendNck = false;
+    shouldSendNck = 0;
 }
 
 void Node::initializeMessages(cMessage *msg)
@@ -283,30 +283,42 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
     int receivedNck = mmsg->getP_ack();
     int receivedAckId = mmsg->getP_id();
 
-    // received nck, resend the frame we received nack for
-    if (receivedNck && receivedAckId >= sendingWindowStartIndex && receivedAckId < events.size())
+    int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
+    sendingWindowStartIndex = receivedAckId > sendingWindowStartIndex ? receivedAckId : sendingWindowStartIndex;
+
+    // shift the sending window
+    for (int i = 0; i < cancelTimeoutCount; i++)
     {
-        MyMessage_Base *messageToSendBack = new MyMessage_Base();
-        formulateAndSendMessage(receivedAckId, messageToSendBack, false);
+        cout << "Canceling timeout with index = " << i << endl;
+        cMessage *firstTimeoutEvent = timeoutMessages[0];
+        cancelEvent(firstTimeoutEvent);
+
+        timeoutMessages.erase(timeoutMessages.begin()); // pop the first message
+        timeoutMessages.push_back(firstTimeoutEvent);   // push it at the end
+    }
+
+    // received nck, resend the frame we received nack for
+    if (receivedNck && receivedAckId >= sendingWindowStartIndex)
+    {
+        if (receivedAckId < events.size())
+        {
+            MyMessage_Base *messageToSendBack = new MyMessage_Base();
+            if (receivedAckId - sendingWindowStartIndex < windowSize)
+                formulateAndSendMessage(receivedAckId, messageToSendBack, false);
+        }
+        else
+        {
+            checkEndingCondition(receivedAckId);
+            handleReadyToSend(msg, messageToSendBack, false);
+        }
     }
     else
     { // recieved ack,possible to advance the window
 
-        int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
-        sendingWindowStartIndex = receivedAckId > sendingWindowStartIndex ? receivedAckId : sendingWindowStartIndex;
+        // if (checkEndingCondition(sendingWindowStartIndex)) // end condition
+        //     return;                                        // do nothing
 
-        // shift the sending window
-        for (int i = 0; i < cancelTimeoutCount; i++)
-        {
-            cMessage *firstTimeoutEvent = timeoutMessages[0];
-            cancelEvent(firstTimeoutEvent);
-
-            timeoutMessages.erase(timeoutMessages.begin()); // pop the first message
-            timeoutMessages.push_back(firstTimeoutEvent);   // push it at the end
-        }
-
-        if (checkEndingCondition(sendingWindowStartIndex)) // end condition
-            return;                                        // do nothing
+        checkEndingCondition(sendingWindowStartIndex);
 
         // schedule
         // TODO: think about this part, should you schedule or not
@@ -324,7 +336,7 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
     // current=4
 }
 
-void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
+void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack, bool applyErrors)
 {
     cout << "************NOTICE ME***************" << sendingWindowStartIndex << endl;
     if (checkEndingCondition(sendingWindowStartIndex))
@@ -351,7 +363,7 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
         cout << "HERE" << endl;
         if (messageToSendBack == nullptr)
             messageToSendBack = new MyMessage_Base();
-        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);
+        formulateAndSendMessage(nextFrameSeqNum, messageToSendBack, applyErrors);
         cout << "HERE" << endl; // send next message
         if (nextFrameSeqNum < events.size() - 1)
         {
@@ -387,7 +399,7 @@ void Node::handleTimeout(cMessage *msg)
         if (msg == timeoutMessages[i])
         {
             MyMessage_Base *messageToSendBack = new MyMessage_Base();
-            formulateAndSendMessage(sendingWindowStartIndex + i, messageToSendBack);
+            formulateAndSendMessage(sendingWindowStartIndex + i, messageToSendBack, false);
             return;
         }
     }
@@ -541,7 +553,10 @@ Node::~Node()
     delete L23;
     delete L45;
     for (int i = 0; i < windowSize; i++)
+    {
+        cancelEvent(timeoutMessages[i]);
         delete timeoutMessages[i];
+    }
     delete startMessage;
 }
 
