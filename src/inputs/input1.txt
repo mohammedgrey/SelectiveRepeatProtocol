@@ -1,8 +1,16 @@
-0010 $An aurora, also known as the polar lights$ or aurora polaris,
-0000 is a natural light display in Earth's sky,
-0010 predominantly seen in high-latitude regions
-1010 (around the Arctic/ and Antarctic).
-0000 Auroras display dynamic patterns of brilliant lights/
-0000 that appear as curtains,
-0000 rays, spirals$
-1100 or dynamic flickers covering the entire sky$
+0000 The violin, sometimes known as a fiddle
+0010 is a wooden chordophone (string instrument)
+0100 in the violin family.
+0110 Most violins have a hollow wooden body.
+0000 It is the smallest and thus highest-pitched instrument
+0000 (soprano) in the family in regular use.
+0000 [a] The violin typically has four strings,
+0000 (some can have five$), usually tuned in perfect
+0000 fifths with notes G3, D4, A4, E5,
+0100 and is most commonly played by drawing
+0000 a bow across its strings.
+0000 It can also be played by plucking
+1001 the strings$ with the fingers (pizzicato)
+0000 and, in specialized cases, by striking
+0010 the strings with the wooden side$ of the bow
+0000 (col legno).

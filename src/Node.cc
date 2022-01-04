@@ -106,8 +106,7 @@ void Node::initializeMessages(cMessage *msg)
     {
         // TODO: add conditions for all pairs
         startTime = stod(lineReceived[3]);
-        if (id == 1 || id == 0)
-            logs[id / 2]->setStartTime(startTime);
+        logs[id / 2]->setStartTime(startTime);
         // schedule a time to start
         scheduleAt(startTime, startMessage);
     }

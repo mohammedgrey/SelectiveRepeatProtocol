@@ -236,6 +236,6 @@ node5 sends message with id=7 and content= ''$or dynamic flickers covering the e
 node4 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 2.160000 and piggybacking ACK number= 12
 node4 drops message with id=7
 node4 end of input file
-Total transmission time= 1.69481e+09
+Total transmission time= 0.16
 Total number of transmissions= 93
-The network throughput= 4.8383e-08
+The network throughput= 512.5
