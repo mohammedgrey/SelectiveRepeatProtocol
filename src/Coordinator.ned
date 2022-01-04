@@ -24,8 +24,8 @@ simple Coordinator
     gates:
         output toNode0;
         output toNode1;
-//        output toNode2;
-//        output toNode3;
-//        output toNode4;
-//        output toNode5;
+        output toNode2;
+        output toNode3;
+        output toNode4;
+        output toNode5;
 }

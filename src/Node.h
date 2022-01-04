@@ -43,6 +43,8 @@ protected:
   static Logs *L23; // pointer to logs class of pair23
   static Logs *L45; // pointer to logs class of pair45
 
+  static Logs *logs[3];
+
   // finishing check variables
   static int finishedNodesCount01; // if it equals 2, then the pair has finished
   static int finishedNodesCount23; // if it equals 2, then the pair has finished

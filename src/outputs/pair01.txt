@@ -1,5 +1,5 @@
-node0 sends message with id=0 and content= ''$An electric car is a~ automobile that is$'' at 3.000000 with modification, and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$An electric car is a~ automobile that is$'' at 3.010000 with modification, and piggybacking ACK number= 0
+node0 sends message with id=0 and content= ''$An electric gar is an automobile that is$'' at 3.000000 with modification, and piggybacking ACK number= 0
+node1 received message with id=0 and content= ''$An electric gar is an automobile that is$'' at 3.010000 with modification, and piggybacking ACK number= 0
 node1 sends message with id=0 and content= ''$/$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 3.010000and NACK number= 0
 node0 sends message with id=1 and content= ''$propelled by one or more electric motors,$'' at 3.010000and piggybacking ACK number= 0
 node0 received message with id=0 and content= ''$/$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 3.020000 and NACK number= 0
@@ -22,7 +22,7 @@ node1 sends message with id=1 and content= ''$is a natural light display in Eart
 node1 received message with id=0 and content= ''$An electric car is an automobile that is$'' at 3.040000 and piggybacking ACK number= 2
 node1 drops message with id=0
 node0 received message with id=2 and content= ''$predominantly seen in high-latitude regions$'' at 3.040000 and piggybacking ACK number= 2
-node1 sends message with id=3 and content= ''$(around"the Arctic// and Antarctic).$'' at 3.040000 with modification, and NACK number= 3
+node1 sends message with id=3 and content= ''$(around the Arctic// and ANtarctic).$'' at 3.040000 with modification, and NACK number= 3
 node1 received message with id=3 and content= ''$Compared to internal combustion engine (ICE) vehicles,$'' at 3.040000 and piggybacking ACK number= 2
 node0 sends message with id=4 and content= ''$electric cars are quieter,$'' at 3.060000and piggybacking ACK number= 3
 node0 received message with id=2 and content= ''$predominantly seen in high-latitude regions$'' at 3.050000 and piggybacking ACK number= 2
@@ -32,11 +32,11 @@ node1 drops message with id=3
 node0 received message with id=1 and content= ''$is a natural light display in Earth's sky,$'' at 3.050000 and NACK number= 3
 node0 drops message with id=1
 node0 sends message with id=3 and content= ''$Compared to internal combustion engine (ICE) vehicles,$'' at 3.050000and NACK number= 3
-node0 received message with id=3 and content= ''$(around"the Arctic// and Antarctic).$'' at 3.050000 with modification, and NACK number= 3
+node0 received message with id=3 and content= ''$(around the Arctic// and ANtarctic).$'' at 3.050000 with modification, and NACK number= 3
 node0 sends message with id=3 and content= ''$Compared to internal combustion engine (ICE) vehicles,$'' at 3.050000and NACK number= 3
 node1 sends message with id=4 and content= ''$Auroras display dynamic patterns of brilliant lights//$'' at 3.050000and NACK number= 4
 node0 sends message with id=5 and content= ''$have no exhaust emissions, and lower emissions overall.$'' at 3.050000and NACK number= 3
-node0 received message with id=3 and content= ''$(around"the Arctic// and Antarctic).$'' at 3.060000 with modification, and NACK number= 3
+node0 received message with id=3 and content= ''$(around the Arctic// and ANtarctic).$'' at 3.060000 with modification, and NACK number= 3
 node0 sends message with id=3 and content= ''$Compared to internal combustion engine (ICE) vehicles,$'' at 3.060000and NACK number= 3
 node1 received message with id=3 and content= ''$Compared to internal combustion engine (ICE) vehicles,$'' at 3.060000 and NACK number= 3
 node1 drops message with id=3
@@ -70,7 +70,7 @@ node0 drops message with id=3
 node0 sends message with id=4 and content= ''$electric cars are quieter,$'' at 3.070000and NACK number= 6
 node1 received message with id=6 and content= ''$In the United States and the European Union,$'' at 3.070000 and NACK number= 3
 node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000and piggybacking ACK number= 7
-node0 sends message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehiãles$'' at 3.070000 with modification, and NACK number= 6
+node0 sends message with id=7 and content= ''$as of 2020, the total cost of ownership ov recent electric vehicles$'' at 3.070000 with modification, and NACK number= 6
 node1 received message with id=4 and content= ''$electric cars are quieter,$'' at 3.080000 and piggybacking ACK number= 3
 node1 drops message with id=4
 node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.080000 and NACK number= 6
@@ -88,13 +88,13 @@ node1 received message with id=4 and content= ''$electric cars are quieter,$'' a
 node1 drops message with id=4
 node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.080000 and NACK number= 6
 node0 sends message with id=6 and content= ''$In the United States and the European Union,$'' at 3.080000and piggybacking ACK number= 7
-node1 sends message with id=7 and content= ''$or dynamia flickers covering the entire sky/$$'' at 3.080000 with modification, and NACK number= 7
+node1 sends message with id=7 and content= ''$or dynamic flickers covering the en4ire sky/$$'' at 3.080000 with modification, and NACK number= 7
 node1 received message with id=4 and content= ''$electric cars are quieter,$'' at 3.080000 and NACK number= 6
 node1 drops message with id=4
 node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.080000and NACK number= 7
 node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.080000 and piggybacking ACK number= 7
 node0 drops message with id=3
-node1 received message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehiãles$'' at 3.080000 with modification, and NACK number= 6
+node1 received message with id=7 and content= ''$as of 2020, the total cost of ownership ov recent electric vehicles$'' at 3.080000 with modification, and NACK number= 6
 node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.080000and NACK number= 7
 node0 sends message with id=8 and content= ''$is cheaper/$ than that of equivalent ICE cars,$'' at 3.080000and NACK number= 7
 node1 received message with id=6 and content= ''$In the United States and the European Union,$'' at 3.090000 and NACK number= 6
@@ -153,12 +153,12 @@ node0 sends message with id=9 and content= ''$due to lower fueling and maintenan
 node1 received message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehicles$'' at 3.110000 and piggybacking ACK number= 8
 node1 drops message with id=7
 node1 end of input file
-node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire óky/$$'' at 3.110000 with modification, and NACK number= 10
+node1 sends message with id=7 and content= ''$or dynamic flickers covering The entire sky/$$'' at 3.110000 with modification, and NACK number= 10
 node0 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.110000 and piggybacking ACK number= 10
 node0 drops message with id=7
 node1 received message with id=10 and content= ''$Charging an electric car can be done at a variety of charging stations;$'' at 3.110000 and piggybacking ACK number= 8
-node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$¤'' at 3.110000 with modification, and piggybacking ACK number= 11
-node0 sends message with id=11 and content= ''$these!charging stations can be installed in both houses// and public areas.$'' at 3.110000 with modification, and NACK number= 8
+node1 sends message with id=7 and content= ''$or dynamkc flickers covering the entire sky/$$'' at 3.110000 with modification, and piggybacking ACK number= 11
+node0 sends message with id=11 and content= ''$these charging qtations can be installed in both houses// and public areas.$'' at 3.110000 with modification, and NACK number= 8
 node0 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.120000 and NACK number= 10
 node0 drops message with id=7
 node0 sends message with id=10 and content= ''$Charging an electric car can be done at a variety of charging stations;$'' at 3.120000and NACK number= 8
