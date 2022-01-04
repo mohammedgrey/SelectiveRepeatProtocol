@@ -84,6 +84,10 @@ void Node::initialize()
     startMessage = new cMessage("startMessage"); // initialize the start message
 
     firstTime = true;
+
+    finished = false;
+
+    shouldSendNck = false;
 }
 
 void Node::initializeMessages(cMessage *msg)
@@ -208,6 +212,7 @@ void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBa
         // cout << "receivedSeqNum == receivingWindowStartIndex" << endl;
         if (valid) // message is correct send ack
         {
+            //[false,true,false,false,false]
             // cout << "valid" << endl;
             receivingWindow[0] = true;
             while (receivingWindow[0])
@@ -272,7 +277,7 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
     int receivedAckId = mmsg->getP_id();
 
     // received nck, resend the frame we received nack for
-    if (receivedNck && receivedAckId >= receivingWindowStartIndex)
+    if (receivedNck && receivedAckId >= sendingWindowStartIndex && receivedAckId<events.size())
     {
         MyMessage_Base *messageToSendBack = new MyMessage_Base();
         formulateAndSendMessage(receivedAckId, messageToSendBack, false);
@@ -281,7 +286,10 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
     { // recieved ack,possible to advance the window
 
         int cancelTimeoutCount = receivedAckId - sendingWindowStartIndex;
-        sendingWindowStartIndex = receivedAckId; // shift the sending window
+        sendingWindowStartIndex = receivedAckId>sendingWindowStartIndex?
+                receivedAckId:sendingWindowStartIndex;
+
+        // shift the sending window
         // for (int i = 0; i < cancelTimeoutCount; i++)
         // {
         //     cancelEvent(timeoutMessages[i]);
@@ -295,6 +303,9 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
             handleReadyToSend(msg, messageToSendBack);
             firstTime = false;
         }
+
+        // Handle sending nck the next time we call handleReadyToSend
+        shouldSendNck = messageToSendBack->getP_ack() == 1 ? true : false;
     }
     //[0,1,2,3,4,5,|6,7,8,9,10|] 11
     // start=2
@@ -303,6 +314,11 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
 
 void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
+    cout << "************NOTICE ME***************" << sendingWindowStartIndex << endl;
+    if (checkEndingCondition(sendingWindowStartIndex))
+        return;
+    if (bothNodesFinished())
+        return; // check if both nodes finished
 
     // if next frame to send is within window
     int relativeInd = nextFrameSeqNum - sendingWindowStartIndex;
@@ -311,6 +327,7 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
     cout << nextFrameSeqNum << " " << sendingWindowStartIndex << endl;
     cout << relativeInd << windowSize << endl;
     cout << id << endl;
+    ///[0,1,2,3,4,5,6|] 7
     if (relativeInd < windowSize)
     {
         cout << "HERE" << endl;
@@ -319,7 +336,9 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
         formulateAndSendMessage(nextFrameSeqNum, messageToSendBack);
         cout << "HERE" << endl; // send next message
         if (nextFrameSeqNum < events.size() - 1)
-            nextFrameSeqNum++;                                                                          // move index to message after
+        {
+            nextFrameSeqNum++; // move index to message after
+        }
         scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), new cMessage("nextFrameToSend")); // schedule a self message of type READY_TO_SEND for next frame
     }
 }
@@ -378,12 +397,14 @@ void Node::handleMessage(cMessage *msg)
         EV << "READY_TO_SEND" << endl;
         cout << "YARAB ready begin" << endl;
         handleReadyToSend(msg);
+        cancelAndDelete(msg);
         cout << "YARAB ready end" << endl;
         break;
     case FRAME_ARRIVAL:
         EV << "FRAME_ARRIVAL" << endl;
         cout << "YARAB frame arr begin" << endl;
         handleFrameArrival(msg);
+        cancelAndDelete(msg);
         cout << "YARAB frame arr end" << endl;
         break;
     case TIMEOUT:
@@ -416,6 +437,11 @@ void Node::formulateAndSendMessage(int eventIndex, MyMessage_Base *messageToSend
     double randModIndex = par("randNum").doubleValue();                                        // generate a random number 0-1 to be used for the modification
     constructMessage(events[eventIndex], eventIndex, isModified, randModIndex, messageToSend); // constructing message
     messageToSend->setP_id(receivingWindowStartIndex);                                         // make sure we send the ack id correctly
+    if (shouldSendNck)
+    {
+        messageToSend->setP_ack(1);
+        shouldSendNck = false;
+    }
     // send only if not LOST
     if (!isLost)
     {

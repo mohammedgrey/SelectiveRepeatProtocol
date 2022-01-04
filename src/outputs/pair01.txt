@@ -1,313 +1,34 @@
-node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.000000and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.010000 and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.010000 and piggybacking ACK number= 0
-node1 drops message with id=0
-node1 sends message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.010000and NACK number= 1
+node0 sends message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 0
+node1 received message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.010000 with modification, and piggybacking ACK number= 0
+node1 sends message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.010000and NACK number= 0
 node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.010000and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.020000 and piggybacking ACK number= 0
-node1 drops message with id=0
-node0 received message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.020000 and NACK number= 1
-node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.020000and piggybacking ACK number= 1
-node1 sends message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.020000and piggybacking ACK number= 1
+node1 received message with id=0 and content= ''$A flower, sometimes know~ as a bloom or blossom$'' at 3.020000 with modification, and piggybacking ACK number= 0
+node0 received message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.020000 and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.020000and piggybacking ACK number= 1
+node1 sends message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.020000and NACK number= 0
 node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.020000 and piggybacking ACK number= 0
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.020000and piggybacking ACK number= 1
-node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.030000 and piggybacking ACK number= 1
-node1 drops message with id=1
-node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000 and piggybacking ACK number= 1
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000 and piggybacking ACK number= 1
+node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000 and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000and piggybacking ACK number= 2
 node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.030000and piggybacking ACK number= 2
-node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.030000 and piggybacking ACK number= 1
-node0 sends message with id=3 and content= ''$The bioloeical function of a flower is to facilitate reproduction,$'' at 3.030000 with modification, and piggybacking ACK number= 2
-node0 received message with id=2 and content= ''$in the violin family.$'' at 3.040000 and piggybacking ACK number= 2
-node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.040000and piggybacking ACK number= 3
-node1 received message with id=3 and content= ''$The bioloeical function of a flower is to facilitate reproduction,$'' at 3.040000 with modification, and piggybacking ACK number= 2
-node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.040000and piggybacking ACK number= 3
-node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.050000 and piggybacking ACK number= 3
-node1 sends message with id=4 and content= ''$It is the smallest and thus highest-pitched instrumeît$'' at 3.050000 with modification, and piggybacking ACK number= 3
-node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.050000 and piggybacking ACK number= 3
-node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.050000and piggybacking ACK number= 4
-node0 received message with id=4 and content= ''$It is the smallest and thus highest-pitched instrumeît$'' at 3.060000 with modification, and piggybacking ACK number= 3
-node1 sends message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.060000and piggybacking ACK number= 3
-node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.060000 and piggybacking ACK number= 4
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.060000and piggybacking ACK number= 4
-node0 received message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.070000 and piggybacking ACK number= 3
-node1 sends message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.070000and piggybacking ACK number= 3
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.070000 and piggybacking ACK number= 4
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.070000and piggybacking ACK number= 4
-node0 received message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.080000 and piggybacking ACK number= 3
-node1 sends message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.080000and piggybacking ACK number= 3
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.080000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.080000and piggybacking ACK number= 4
-node0 received message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.090000 and piggybacking ACK number= 3
-node1 sends message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.090000and piggybacking ACK number= 3
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and piggybacking ACK number= 4
-node0 received message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.100000 and piggybacking ACK number= 3
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.190000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.190000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.200000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.200000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.210000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.210000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.220000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.220000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.230000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.230000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.240000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.240000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.250000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.250000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.260000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.260000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.270000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.270000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.280000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.280000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.290000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.290000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.300000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.300000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.310000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.310000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.320000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.320000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.330000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.330000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.340000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.340000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.350000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.350000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.360000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.360000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.370000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.370000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.380000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.380000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.390000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.390000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.400000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.400000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.410000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.410000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.420000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.420000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.430000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.430000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.440000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.440000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.450000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.450000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.460000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.460000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.470000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.470000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.480000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.480000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.490000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.490000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.500000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.500000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.510000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.510000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.520000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.520000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.530000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.530000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.540000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.540000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.550000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.550000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.560000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.560000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.570000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.570000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.580000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.580000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.590000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.590000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.600000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.600000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.610000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.610000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.620000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.620000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.630000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.630000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.640000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.640000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.650000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.650000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.660000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.660000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.670000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.670000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.680000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.680000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.690000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.690000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.700000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.700000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.710000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.710000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.720000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.720000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.730000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.730000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.740000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.740000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.750000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.750000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.760000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.760000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.770000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.770000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.780000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.780000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.790000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.790000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.800000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.800000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.810000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.810000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.820000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.820000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.830000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.830000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.840000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.840000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.850000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.850000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.860000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.860000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.870000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.870000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.880000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.880000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.890000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.890000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.900000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.900000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.910000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.910000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.920000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.920000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.930000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.930000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.940000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.940000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.950000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.950000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.960000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.960000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.970000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.970000and piggybacking ACK number= 4
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.980000 and piggybacking ACK number= 4
-node1 drops message with id=6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.980000and piggybacking ACK number= 4
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.030000and piggybacking ACK number= 2
+node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.040000 and NACK number= 0
+node0 drops message with id=1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.040000and piggybacking ACK number= 2
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.040000 and piggybacking ACK number= 2
+node1 drops message with id=0
+node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.040000and NACK number= 2
+node1 received message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.040000 and piggybacking ACK number= 2
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.060000and piggybacking ACK number= 2
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.050000 and piggybacking ACK number= 2
+node1 drops message with id=0
+node1 sends message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.050000and NACK number= 2
+node0 received message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.060000 and NACK number= 2
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000and piggybacking ACK number= 2
+node1 sends message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.060000and piggybacking ACK number= 2
+node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.070000 and piggybacking ACK number= 2
+node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000 and piggybacking ACK number= 2
+node0 received message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.070000 and piggybacking ACK number= 2
+node1 sends message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.070000and piggybacking ACK number= 5
+node0 received message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.080000 and piggybacking ACK number= 5

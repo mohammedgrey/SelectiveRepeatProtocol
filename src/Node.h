@@ -18,6 +18,7 @@ private:
   int windowSize;          // taken from ini file
   bool firstTime;          // variable to check if the pair that won't start should start
   bool finished;           // variable to check if a specific node finished
+  bool shouldSendNck;      // To check whether we should send nck in handleReadyToSend or not
 
   // window parameters
   // sending buffer
