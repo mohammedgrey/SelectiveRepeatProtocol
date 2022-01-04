@@ -198,6 +198,9 @@ void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBa
     // cout << "receivedSeqNum= " << receivedSeqNum << endl;
 
     // check for duplicate messages
+    cout << "NODE " << id << endl;
+    cout << "Received Sequence Number  = " << receivedSeqNum << endl;
+    cout << "receivingWindowStartIndex  = "  << receivingWindowStartIndex << endl;
     if (receivedSeqNum < receivingWindowStartIndex || receivingWindow[receivedSeqNum - receivingWindowStartIndex])
     {
         // drop message
@@ -298,7 +301,7 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
             return;                                        // do nothing
         // schedule
         // TODO: think about this part, should you schedule or not
-        if (startTime == -1 && firstTime)
+        if ((startTime == -1 && firstTime) || finished)
         {
             handleReadyToSend(msg, messageToSendBack);
             firstTime = false;
@@ -322,12 +325,14 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
 
     // if next frame to send is within window
     int relativeInd = nextFrameSeqNum - sendingWindowStartIndex;
-    bool x = nextFrameSeqNum < events.size();
-    bool y = relativeInd < windowSize;
+
+    cout << "NODE " << id << endl;
+    cout << "nextFrameSeqNum" << " " << "sendingWindowStartIndex" << endl;
     cout << nextFrameSeqNum << " " << sendingWindowStartIndex << endl;
-    cout << relativeInd << windowSize << endl;
-    cout << id << endl;
-    ///[0,1,2,3,4,5,6|] 7
+    cout << "RelativeInd:" << " " <<  "windowSize" << endl;
+    cout << relativeInd << " " <<  windowSize << endl;
+    cout << "Event Size: " << events.size() << endl;
+
     if (relativeInd < windowSize)
     {
         cout << "HERE" << endl;
@@ -337,9 +342,9 @@ void Node::handleReadyToSend(cMessage *msg, MyMessage_Base *messageToSendBack)
         cout << "HERE" << endl; // send next message
         if (nextFrameSeqNum < events.size() - 1)
         {
-            nextFrameSeqNum++; // move index to message after
+            nextFrameSeqNum++; // move index to message after      
+            scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), new cMessage("nextFrameToSend")); // schedule a self message of type READY_TO_SEND for next frame
         }
-        scheduleAt(simTime() + par("consecutiveDelay").doubleValue(), new cMessage("nextFrameToSend")); // schedule a self message of type READY_TO_SEND for next frame
     }
 }
 
@@ -377,7 +382,7 @@ void Node::handleTimeout(cMessage *msg)
 
 void Node::handleMessage(cMessage *msg)
 {
-    cout << "YARAB handle message begin " << endl;
+    cout << "NODE " << id << " Handle Message" << endl;
     // Exiting condition
     if (bothNodesFinished())
     {
