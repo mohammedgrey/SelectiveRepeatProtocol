@@ -287,6 +287,72 @@ void Node::handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBa
     //[0   |,1    ,2 |     ,3   ,4    ]
 }
 
+void Node::handleReceivingMessageHamming(cMessage *msg, MyMessage_Base *messageToSendBack)
+{
+    MyMessage_Base *mmsg;
+    try
+    {
+        mmsg = check_and_cast<MyMessage_Base *>(msg);
+        // valid= 1->ack, 0->nck
+    }
+    catch (...)
+    {
+        cout << "Casting error handleReceivingMessage" << endl;
+    }
+    string binaryPayload = getBinaryStringFromPayLoad(mmsg->getM_Payload());
+    int r = 0;
+    int n = getNewLength(binaryPayload, r);
+    string msgWithParity = getMsgWithParity(binaryPayload, n, r);
+   // bool valid = validHamming(msgWithParity, n);
+    int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
+    cout<<"VAAALIIIDD"<<valid<<endl;
+    int receivedSeqNum = mmsg->getId();
+
+    // received message log
+    logs[id / 2]->addLog(id, 1, receivedSeqNum, mmsg->getM_Payload(), simTime().dbl(), !valid, mmsg->getP_ack(), mmsg->getP_id());
+    if(!valid)
+    {
+        int errorPosition=0;
+        string correctedString = doHamming(mmsg->getM_Payload(), errorPosition);
+        //TODO: call hamming logs
+        logs[id / 2]->addHammingLog(errorPosition, correctedString);
+    }
+
+    // check for duplicate messages
+    if (receivedSeqNum < receivingWindowStartIndex || receivingWindow[receivedSeqNum - receivingWindowStartIndex])
+    {
+        // drop message
+        logs[id / 2]->addLog(id, 2, receivedSeqNum, "", simTime().dbl(), 0, 0, 0);
+        // send NACK on the first message in the receiving window
+        //        messageToSendBack->setP_ack(1);
+        shouldSendNck = 1;
+    }
+
+    // if I received the expected frame
+    else if (receivedSeqNum == receivingWindowStartIndex) // potential ack if the message is not modified
+    {
+
+
+            // cout << "valid" << endl;
+            receivingWindow[0] = true;
+            while (receivingWindow[0])
+            {
+                receivingWindow.erase(receivingWindow.begin()); // pop
+                receivingWindow.push_back(false);               // push
+                receivingWindowStartIndex++;
+            }
+            //            messageToSendBack->setP_ack(0); // ack
+            shouldSendNck = 0;
+    }
+
+    // if I received a frame within the window
+    else
+    {
+            receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
+            shouldSendNck = 1;
+    }
+}
+
 void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
 {
     MyMessage_Base *mmsg;
@@ -398,7 +464,14 @@ void Node::handleFrameArrival(cMessage *msg)
 
     MyMessage_Base *messageToSendBack = new MyMessage_Base();
     // sets the ack and nck for the message to send back along with ack ID
-    handleReceivingMessage(msg, messageToSendBack);
+    if(par("useHammingCorrection").intValue() == 0)
+    {
+        handleReceivingMessage(msg, messageToSendBack);
+    }
+    else
+    {
+        handleReceivingMessageHamming(msg, messageToSendBack);
+    }
     // sets the payload, crc, message ID of the message to send back and sends the message
     handleReceivingAck(msg, messageToSendBack);
 

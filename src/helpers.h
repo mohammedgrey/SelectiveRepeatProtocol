@@ -10,6 +10,7 @@
 #include <cstring>
 #include <map>
 #include "utils/CRC.h"
+#include "utils/Hamming.h"
 #include "MyMessage_m.h"
 #include <stdlib.h>
 #include <sstream>
@@ -34,6 +35,7 @@ inline string getBasePath()
   basePath["DESKTOP-SP2J27C"] = "C:/Users/fatem/OneDrive/Desktop/omnetpp-5.6.2/samples/SelectiveRepeatProtocol/src";
   basePath["DESKTOP-LA84EMV"] = "C:/omnetpp-5.7/samples/SelectiveRepeatProtocol/src";
   basePath["DESKTOP-8MLH3Q6"] = "E:/Uni Stuff/Senior II Standing/Computer Networks I/Project/Project-2021-Student/SelectiveRepeatProtocol/src";
+  basePath["DESKTOP-M4PE1CR"] = "E:/UniSubjects/Fall2021/Networks/SelectiveRepeatProtocol/src";
   return basePath[getenv("HOSTNAME")];
 }
 
