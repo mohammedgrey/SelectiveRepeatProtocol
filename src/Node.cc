@@ -340,10 +340,12 @@ void Node::handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack)
 
         // schedule
         // TODO: think about this part, should you schedule or not
-        if ((startTime == -1 && firstTime) || finished)
+        if ((startTime == -1 && firstTime))
         {
             handleReadyToSend(msg, messageToSendBack);
             firstTime = false;
+        } else if (finished) {
+            handleReadyToSend(msg, messageToSendBack, false);
         }
 
         // Handle sending nck the next time we call handleReadyToSend
