@@ -42,10 +42,10 @@ node2 received message with id=4 and content= ''$It is considered// the national
 node2 sends message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 7.090000and piggybacking ACK number= 5
 node3 received message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 7.100000 and piggybacking ACK number= 5
 node3 end of input file
-node3 sends message with id=4 and content= ''$It is considered// t`e national flower of Japan.$'' at 7.100000 with modification, and piggybacking ACK number= 8
-node2 received message with id=4 and content= ''$It is considered// t`e national flower of Japan.$'' at 7.110000 with modification, and piggybacking ACK number= 8
+node3 sends message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 7.100000and piggybacking ACK number= 8
+node2 received message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 7.110000 and piggybacking ACK number= 8
 node2 drops message with id=4
 node2 end of input file
 Total transmission time= 0.11
 Total number of transmissions= 22
-The network throughput= 145.455
+The network throughput= 154.545

@@ -148,7 +148,7 @@ node4 drops message with id=7
 node4 sends message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehicles$'' at 2.110000and NACK number= 8
 node5 received message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehicles$'' at 2.110000 and piggybacking ACK number= 8
 node5 end of input file
-node5 sends message with id=7 and content= ''$or dynamic fligkers covering the entire sky/$$'' at 2.110000 with modification, and piggybacking ACK number= 9
+node5 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 2.110000and piggybacking ACK number= 9
 node5 received message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehicles$'' at 2.110000 and NACK number= 8
 node5 drops message with id=7
 node5 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 2.110000and NACK number= 9
@@ -167,6 +167,8 @@ node5 sends message with id=7 and content= ''$or dynamic flickers covering the e
 node5 received message with id=7 and content= ''$as of 2020, the total cost of ownership of recent electric vehicles$'' at 2.120000 and NACK number= 8
 node5 drops message with id=7
 node5 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 2.120000and NACK number= 10
+node4 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 2.120000 and piggybacking ACK number= 9
+node4 drops message with id=7
 node4 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 2.120000 and NACK number= 9
 node4 drops message with id=7
 node4 sends message with id=9 and content= ''$due to lower fueling and maintenance costs/$/$.$'' at 2.120000and NACK number= 8
@@ -238,4 +240,4 @@ node4 drops message with id=7
 node4 end of input file
 Total transmission time= 0.16
 Total number of transmissions= 93
-The network throughput= 512.5
+The network throughput= 518.75

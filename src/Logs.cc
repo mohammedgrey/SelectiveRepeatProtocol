@@ -87,9 +87,6 @@ void Logs::setTransTime(double t)
     if (finished)
         return;
 
-    cout << "HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE " << totalCorrectMessages << endl;
-    cout << "HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE " << totalTransNum << endl;
-
     totalTransTime = t - startTime;
 
     double throughput = totalCorrectMessages / totalTransTime;
