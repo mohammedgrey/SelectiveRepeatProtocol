@@ -1,0 +1,182 @@
+node0 sends message with id=0 and content= ''$A flower, somepimes known as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 0
+node1 received message with id=0 and content= ''$A flower, somepimes known as a bloom or blossom$'' at 3.010000 with modification, and piggybacking ACK number= 0
+node1 sends message with id=0 and content= ''$/$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 3.010000and NACK number= 0
+node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.010000and piggybacking ACK number= 0
+node1 received message with id=0 and content= ''$A flower, somepimes known as a bloom or blossom$'' at 3.020000 with modification, and piggybacking ACK number= 0
+node0 received message with id=0 and content= ''$/$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 3.020000 and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.020000and piggybacking ACK number= 1
+node1 sends message with id=1 and content= ''$is a natural light display in Earth's sky,$'' at 3.020000and NACK number= 0
+node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.020000 and piggybacking ACK number= 0
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.020000and piggybacking ACK number= 1
+node0 received message with id=0 and content= ''$/$An aurora, also known as the polar lights/$ or aurora polaris,$'' at 3.030000 and NACK number= 0
+node0 drops message with id=0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000and NACK number= 1
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000 and piggybacking ACK number= 1
+node0 received message with id=1 and content= ''$is a natural light display in Earth's sky,$'' at 3.030000 and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000and piggybacking ACK number= 2
+node1 sends message with id=2 and content= ''$predominantly seen in high-latitude regions$'' at 3.030000and piggybacking ACK number= 2
+node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.030000and piggybacking ACK number= 2
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.040000 and NACK number= 1
+node1 drops message with id=0
+node1 sends message with id=1 and content= ''$is a natural light display in Earth's sky,$'' at 3.040000and NACK number= 2
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.040000 and piggybacking ACK number= 2
+node1 drops message with id=0
+node0 received message with id=2 and content= ''$predominantly seen in high-latitude regions$'' at 3.040000 and piggybacking ACK number= 2
+node1 sends message with id=3 and content= ''$(around the Arctic// and ANtarctic).$'' at 3.040000 with modification, and NACK number= 2
+node1 received message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.040000 and piggybacking ACK number= 2
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.060000and piggybacking ACK number= 3
+node0 received message with id=2 and content= ''$predominantly seen in high-latitude regions$'' at 3.050000 and piggybacking ACK number= 2
+node0 drops message with id=2
+node0 received message with id=1 and content= ''$is a natural light display in Earth's sky,$'' at 3.050000 and NACK number= 2
+node0 drops message with id=1
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.050000and NACK number= 3
+node0 received message with id=3 and content= ''$(around the Arctic// and ANtarctic).$'' at 3.050000 with modification, and NACK number= 2
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.050000and NACK number= 3
+node1 sends message with id=4 and content= ''$Auroras display dynamic patterns of brilliant lights//$'' at 3.050000and NACK number= 2
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.050000and NACK number= 3
+node0 received message with id=3 and content= ''$(around the Arctic// and ANtarctic).$'' at 3.060000 with modification, and NACK number= 2
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000and NACK number= 3
+node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000 and NACK number= 3
+node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.060000and piggybacking ACK number= 4
+node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000 and NACK number= 3
+node1 drops message with id=2
+node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.060000and NACK number= 4
+node0 received message with id=4 and content= ''$Auroras display dynamic patterns of brilliant lights//$'' at 3.060000 and NACK number= 2
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000and NACK number= 3
+node1 sends message with id=5 and content= ''$that appear as curtains,$'' at 3.080000and NACK number= 4
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.060000 and NACK number= 3
+node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.060000and NACK number= 4
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.060000and NACK number= 3
+node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.070000 and piggybacking ACK number= 3
+node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000 and NACK number= 3
+node1 drops message with id=2
+node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000and NACK number= 6
+node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000 and piggybacking ACK number= 4
+node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000 and NACK number= 4
+node0 drops message with id=3
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.070000and NACK number= 5
+node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000 and NACK number= 3
+node1 drops message with id=2
+node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000and NACK number= 6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.070000and NACK number= 6
+node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000 and NACK number= 4
+node0 drops message with id=3
+node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.070000and NACK number= 5
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.070000 and NACK number= 3
+node1 sends message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.070000and piggybacking ACK number= 7
+node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.080000 and NACK number= 6
+node0 drops message with id=3
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.080000and NACK number= 5
+node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.080000 and NACK number= 5
+node1 drops message with id=4
+node1 sends message with id=5 and content= ''$that appear as curtains,$'' at 3.080000and NACK number= 7
+node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.080000 and NACK number= 6
+node0 drops message with id=3
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.080000and NACK number= 5
+node1 sends message with id=7 and content= ''$or dynamic fligkers covering the entire sky/$$'' at 3.080000 with modification, and NACK number= 7
+node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.080000 and NACK number= 5
+node1 drops message with id=4
+node1 sends message with id=5 and content= ''$that appear as curtains,$'' at 3.080000and NACK number= 7
+node0 received message with id=3 and content= ''$(around the Arctic// and Antarctic).$'' at 3.080000 and piggybacking ACK number= 7
+node0 drops message with id=3
+node0 end of input file
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.080000and NACK number= 5
+node0 received message with id=5 and content= ''$that appear as curtains,$'' at 3.090000 and NACK number= 4
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and piggybacking ACK number= 6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000 and NACK number= 5
+node1 drops message with id=6
+node1 sends message with id=5 and content= ''$that appear as curtains,$'' at 3.090000and NACK number= 7
+node0 received message with id=5 and content= ''$that appear as curtains,$'' at 3.090000 and NACK number= 7
+node0 drops message with id=5
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and NACK number= 6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000 and NACK number= 5
+node1 drops message with id=6
+node1 sends message with id=5 and content= ''$that appear as curtains,$'' at 3.090000and NACK number= 7
+node0 received message with id=7 and content= ''$or dynamic fligkers covering the entire sky/$$'' at 3.090000 with modification, and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and NACK number= 6
+node0 received message with id=5 and content= ''$that appear as curtains,$'' at 3.090000 and NACK number= 7
+node0 drops message with id=5
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and NACK number= 6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000 and NACK number= 5
+node1 drops message with id=6
+node1 sends message with id=5 and content= ''$that appear as curtains,$'' at 3.090000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and piggybacking ACK number= 6
+node1 drops message with id=6
+node0 received message with id=5 and content= ''$that appear as curtains,$'' at 3.100000 and NACK number= 7
+node0 drops message with id=5
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and NACK number= 6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and NACK number= 6
+node1 drops message with id=6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.100000and NACK number= 7
+node0 received message with id=5 and content= ''$that appear as curtains,$'' at 3.100000 and NACK number= 7
+node0 drops message with id=5
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and NACK number= 6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and NACK number= 6
+node1 drops message with id=6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.100000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and NACK number= 6
+node1 drops message with id=6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.100000and NACK number= 7
+node0 received message with id=5 and content= ''$that appear as curtains,$'' at 3.100000 and NACK number= 7
+node0 drops message with id=5
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and NACK number= 6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and NACK number= 6
+node1 drops message with id=6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.110000and NACK number= 7
+node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.110000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000and piggybacking ACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and NACK number= 6
+node1 drops message with id=6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.110000and NACK number= 7
+node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.110000 and NACK number= 7
+node0 drops message with id=6
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000and NACK number= 7
+node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.110000 and NACK number= 7
+node0 drops message with id=6
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and NACK number= 6
+node1 drops message with id=6
+node1 sends message with id=6 and content= ''$rays, spirals/$$'' at 3.110000and NACK number= 7
+node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.120000 and NACK number= 7
+node0 drops message with id=6
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000 and piggybacking ACK number= 7
+node1 drops message with id=6
+node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.120000 and NACK number= 7
+node0 drops message with id=6
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000 and NACK number= 7
+node1 drops message with id=6
+node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.120000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000 and NACK number= 7
+node1 drops message with id=6
+node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.120000and NACK number= 7
+node0 received message with id=6 and content= ''$rays, spirals/$$'' at 3.120000 and NACK number= 7
+node0 drops message with id=6
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000 and NACK number= 7
+node1 drops message with id=6
+node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.130000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000 and NACK number= 7
+node1 drops message with id=6
+node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.130000and NACK number= 7
+node0 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.130000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and piggybacking ACK number= 8
+node0 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.130000 and NACK number= 7
+node0 drops message with id=7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and NACK number= 8
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000 and NACK number= 7
+node1 drops message with id=6
+node1 sends message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.130000and NACK number= 7
+node0 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.140000 and NACK number= 7
+node0 drops message with id=7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000and NACK number= 8
+node0 received message with id=7 and content= ''$or dynamic flickers covering the entire sky/$$'' at 3.140000 and NACK number= 7
+node0 drops message with id=7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000and NACK number= 8
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000 and piggybacking ACK number= 8
+node1 drops message with id=6
+node1 end of input file
+Total transmission time= 0.14
+Total number of transmissions= 71
+The network throughput= 442.857
