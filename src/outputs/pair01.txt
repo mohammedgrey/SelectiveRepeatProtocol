@@ -1,122 +1,176 @@
-node0 sends message with id=0 and content= ''$A flower, somatimes known as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$A flower, somatimes known as a bloom or blossom$'' at 3.010000 and piggybacking ACK number= 0
-node1 sends message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.010000and piggybacking ACK number= 1
+node0 sends message with id=0 and content= ''$A flower, somepimes known as a bloom or blossom$'' at 3.000000 with modification, and piggybacking ACK number= 0
+node1 received message with id=0 and content= ''$A flower, somepimes known as a bloom or blossom$'' at 3.010000 with modification, and piggybacking ACK number= 0
+node1 sends message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.010000and NACK number= 0
 node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.010000and piggybacking ACK number= 0
-node1 received message with id=0 and content= ''$A flower, somatimes known as a bloom or blossom$'' at 3.020000 and piggybacking ACK number= 0
-node1 drops message with id=0
-node0 received message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.020000 and piggybacking ACK number= 1
-node1 sends message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.020000and NACK number= 1
+node1 received message with id=0 and content= ''$A flower, somepimes known as a bloom or blossom$'' at 3.020000 with modification, and piggybacking ACK number= 0
+node0 received message with id=0 and content= ''$The violin, sometimes known as a fiddle$'' at 3.020000 and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.020000and piggybacking ACK number= 1
+node1 sends message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.020000and NACK number= 0
 node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.020000 and piggybacking ACK number= 0
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.020000and piggybacking ACK number= 1
-node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000 and NACK number= 1
-node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.030000and piggybacking ACK number= 2
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000 and piggybacking ACK number= 1
+node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.030000 and NACK number= 0
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.030000and piggybacking ACK number= 2
 node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.030000and piggybacking ACK number= 2
 node0 sends message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.030000and piggybacking ACK number= 2
-node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.040000 and NACK number= 1
+node0 received message with id=1 and content= ''$is a wooden chordophone (string instrument)$'' at 3.040000 and NACK number= 0
 node0 drops message with id=1
-node0 sends message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.040000and NACK number= 2
-node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.040000 and piggybacking ACK number= 2
-node1 drops message with id=1
+node0 sends message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.040000and NACK number= 2
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.040000 and piggybacking ACK number= 2
+node1 drops message with id=0
 node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.040000and NACK number= 2
 node1 received message with id=3 and content= ''$The biological function of a flower is to facilitate reproduction,$'' at 3.040000 and piggybacking ACK number= 2
 node0 sends message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.060000and NACK number= 2
-node1 received message with id=1 and content= ''$is the reproductive/$ structure found in flowering plants$'' at 3.050000 and NACK number= 2
-node1 drops message with id=1
+node1 received message with id=0 and content= ''$A flower, sometimes known as a bloom or blossom$'' at 3.050000 and NACK number= 2
+node1 drops message with id=0
 node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.050000and NACK number= 2
 node1 sends message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.050000and NACK number= 2
-node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.050000and NACK number= 2
 node0 received message with id=2 and content= ''$in the violin family.$'' at 3.060000 and NACK number= 2
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000and piggybacking ACK number= 3
 node0 received message with id=4 and content= ''$It is the smallest and thus highest-pitched instrument$'' at 3.060000 and NACK number= 2
-node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000and piggybacking ACK number= 3
+node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.060000and NACK number= 3
 node1 sends message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.060000and NACK number= 2
-node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.060000 and NACK number= 2
-node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.060000and NACK number= 2
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.060000and piggybacking ACK number= 3
 node1 received message with id=4 and content= ''$usually by providing a mechanism for the union of sperm with eggs.$'' at 3.070000 and NACK number= 2
 node1 sends message with id=2 and content= ''$in the violin family.$'' at 3.070000and NACK number= 2
 node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000 and piggybacking ACK number= 3
-node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000 and piggybacking ACK number= 3
+node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000 and NACK number= 3
 node1 drops message with id=2
+node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.070000and NACK number= 5
 node0 received message with id=5 and content= ''$(soprano) in the family in regular use.$'' at 3.070000 and NACK number= 2
-node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000and piggybacking ACK number= 3
-node1 sends message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.070000and NACK number= 6
-node0 received message with id=2 and content= ''$in the violin family.$'' at 3.070000 and NACK number= 2
-node0 drops message with id=2
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.070000and NACK number= 3
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.070000 and piggybacking ACK number= 3
+node1 sends message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.070000and NACK number= 5
 node0 received message with id=2 and content= ''$in the violin family.$'' at 3.080000 and NACK number= 2
 node0 drops message with id=2
 node0 sends message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.080000and NACK number= 3
-node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.080000 and piggybacking ACK number= 3
-node1 drops message with id=2
-node0 received message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.080000 and NACK number= 6
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.080000and NACK number= 3
-node1 sends message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.080000and NACK number= 7
+node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.080000 and NACK number= 5
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.080000and piggybacking ACK number= 6
 node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.080000 and NACK number= 3
 node1 drops message with id=2
-node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.080000and NACK number= 7
+node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.080000and NACK number= 5
+node0 received message with id=6 and content= ''$[a] The violin typically has four strings,$'' at 3.080000 and NACK number= 5
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.080000and piggybacking ACK number= 7
+node1 sends message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.080000and NACK number= 5
 node1 received message with id=2 and content= ''$(plants of the division Magnoliophyta, also called// angiosperms/$).$'' at 3.090000 and NACK number= 3
 node1 drops message with id=2
-node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.090000and NACK number= 7
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000 and NACK number= 3
-node1 drops message with id=6
-node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.090000and NACK number= 7
-node0 received message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.090000 and NACK number= 7
-node0 end of input file
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and NACK number= 3
-node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.090000 and NACK number= 7
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.090000and piggybacking ACK number= 8
-node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.100000 and NACK number= 7
+node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.090000and NACK number= 5
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.090000 and piggybacking ACK number= 6
+node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.090000 and NACK number= 5
 node0 drops message with id=3
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and NACK number= 8
-node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.100000 and NACK number= 7
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.090000and NACK number= 7
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.090000 and piggybacking ACK number= 7
+node1 drops message with id=5
+node0 received message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.090000 and NACK number= 5
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.090000and piggybacking ACK number= 8
+node1 sends message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.090000and NACK number= 6
+node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.100000 and NACK number= 5
 node0 drops message with id=3
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and NACK number= 8
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and NACK number= 3
-node1 drops message with id=6
-node1 sends message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.100000and NACK number= 7
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000 and piggybacking ACK number= 8
-node1 drops message with id=6
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and NACK number= 8
-node1 drops message with id=6
-node1 sends message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.110000and NACK number= 7
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and NACK number= 8
-node1 drops message with id=6
-node1 sends message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.110000and NACK number= 7
-node0 received message with id=3 and content= ''$Most violins have a hollow wooden body.$'' at 3.110000 and NACK number= 7
-node0 drops message with id=3
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000and NACK number= 8
-node0 received message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.120000 and NACK number= 7
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000and piggybacking ACK number= 9
-node0 received message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.120000 and NACK number= 7
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.100000and NACK number= 8
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.100000 and NACK number= 7
+node1 drops message with id=5
+node1 sends message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.100000and NACK number= 6
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.100000 and piggybacking ACK number= 8
+node1 drops message with id=5
+node0 received message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.100000 and NACK number= 6
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.100000and piggybacking ACK number= 9
+node1 sends message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.100000and NACK number= 6
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.110000 and NACK number= 8
+node1 drops message with id=5
+node1 sends message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.110000and NACK number= 6
+node0 received message with id=7 and content= ''$(some can have five/$), usually tuned in perfect$'' at 3.110000 and NACK number= 6
+node0 drops message with id=7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000and NACK number= 9
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.110000 and piggybacking ACK number= 9
+node1 sends message with id=10 and content= ''$a bow across its strings.$'' at 3.110000and piggybacking ACK number= 7
+node0 received message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.120000 and NACK number= 6
 node0 drops message with id=8
 node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000and NACK number= 9
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000 and NACK number= 8
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.120000 and NACK number= 9
 node1 drops message with id=6
-node1 sends message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.120000and NACK number= 7
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000 and piggybacking ACK number= 9
-node1 drops message with id=6
+node1 sends message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.120000and NACK number= 7
+node0 received message with id=10 and content= ''$a bow across its strings.$'' at 3.120000 and piggybacking ACK number= 7
+node0 end of input file
+node0 sends message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.120000and NACK number= 9
+node1 sends message with id=11 and content= ''$It can also be played by plucking$'' at 3.120000and NACK number= 7
 node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000 and NACK number= 9
 node1 drops message with id=6
 node1 sends message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.130000and NACK number= 7
-node0 received message with id=8 and content= ''$fifths with notes G3, D4, A4, E5,$'' at 3.130000 and NACK number= 7
-node0 drops message with id=8
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and NACK number= 9
+node0 received message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.130000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and piggybacking ACK number= 11
+node1 received message with id=5 and content= ''$Flowers may facilitate outcrossing/$$'' at 3.130000 and NACK number= 9
+node1 drops message with id=5
+node1 sends message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.130000and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and piggybacking ACK number= 11
+node0 received message with id=11 and content= ''$It can also be played by plucking$'' at 3.130000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.130000and piggybacking ACK number= 12
+node1 sends message with id=12 and content= ''$the strings/$ wit` the fingers (pizzicato)$'' at 3.150000 with modification, and NACK number= 7
 node0 received message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.140000 and NACK number= 7
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000and piggybacking ACK number= 10
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000 and NACK number= 9
-node1 drops message with id=6
-node1 sends message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.140000and NACK number= 7
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000 and piggybacking ACK number= 10
-node1 drops message with id=6
-node0 received message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.150000 and NACK number= 7
 node0 drops message with id=9
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000and NACK number= 10
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000 and NACK number= 10
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000and NACK number= 12
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000 and piggybacking ACK number= 11
 node1 drops message with id=6
-node1 sends message with id=10 and content= ''$a bow across its strings.$'' at 3.160000and NACK number= 7
-node0 received message with id=10 and content= ''$a bow across its strings.$'' at 3.170000 and NACK number= 7
-node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000and piggybacking ACK number= 11
-node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000 and piggybacking ACK number= 11
+node0 received message with id=9 and content= ''$and is most commonly played by drawing$'' at 3.140000 and NACK number= 7
+node0 drops message with id=9
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000and NACK number= 12
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000 and piggybacking ACK number= 11
 node1 drops message with id=6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.140000 and piggybacking ACK number= 12
+node1 drops message with id=6
+node1 sends message with id=13 and content= ''$and, in specialized cases, by striking$'' at 3.140000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000 and NACK number= 12
+node1 drops message with id=6
+node1 sends message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.150000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000 and NACK number= 12
+node1 drops message with id=6
+node1 sends message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.150000and NACK number= 7
+node0 received message with id=13 and content= ''$and, in specialized cases, by striking$'' at 3.150000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.150000and NACK number= 12
+node1 sends message with id=14 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.150000and NACK number= 7
+node0 received message with id=12 and content= ''$the strings/$ wit` the fingers (pizzicato)$'' at 3.160000 with modification, and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000and NACK number= 12
+node0 received message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.160000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000and piggybacking ACK number= 14
+node0 received message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.160000 and NACK number= 7
+node0 drops message with id=12
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000and NACK number= 14
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000 and NACK number= 12
+node1 drops message with id=6
+node1 sends message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.160000and NACK number= 7
+node0 received message with id=14 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.160000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.160000and piggybacking ACK number= 15
+node1 sends message with id=15 and content= ''$(col legno).$'' at 3.160000and NACK number= 7
+node0 received message with id=14 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.170000 and NACK number= 7
+node0 drops message with id=14
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000and NACK number= 15
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000 and NACK number= 12
+node1 drops message with id=6
+node1 sends message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.170000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000 and piggybacking ACK number= 14
+node1 drops message with id=6
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000 and NACK number= 14
+node1 drops message with id=6
+node1 sends message with id=14 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.170000and NACK number= 7
+node0 received message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.170000 and NACK number= 7
+node0 drops message with id=12
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000and NACK number= 15
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000 and piggybacking ACK number= 15
+node1 drops message with id=6
+node0 received message with id=15 and content= ''$(col legno).$'' at 3.170000 and NACK number= 7
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.170000and piggybacking ACK number= 16
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000 and NACK number= 15
+node1 drops message with id=6
+node1 sends message with id=15 and content= ''$(col legno).$'' at 3.180000and NACK number= 7
+node0 received message with id=12 and content= ''$the strings/$ with the fingers (pizzicato)$'' at 3.180000 and NACK number= 7
+node0 drops message with id=12
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000and NACK number= 16
+node0 received message with id=14 and content= ''$the strings with the wooden side/$ of the bow$'' at 3.180000 and NACK number= 7
+node0 drops message with id=14
+node0 sends message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000and NACK number= 16
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000 and NACK number= 15
+node1 drops message with id=6
+node1 sends message with id=15 and content= ''$(col legno).$'' at 3.180000and NACK number= 7
+node1 received message with id=6 and content= ''$(fusion of sperm and eggs from different individuals in a population)$'' at 3.180000 and piggybacking ACK number= 16
+node1 drops message with id=6
+node1 end of input file
+Total transmission time= 0.18
+Total number of transmissions= 72
+The network throughput= 350

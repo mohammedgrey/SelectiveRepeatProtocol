@@ -299,7 +299,13 @@ void Node::handleReceivingMessageHamming(cMessage *msg, MyMessage_Base *messageT
     {
         cout << "Casting error handleReceivingMessage" << endl;
     }
-    int valid = validHamming(mmsg->getM_Payload());
+    string binaryPayload = getBinaryStringFromPayLoad(mmsg->getM_Payload());
+    int r = 0;
+    int n = getNewLength(binaryPayload, r);
+    string msgWithParity = getMsgWithParity(binaryPayload, n, r);
+   // bool valid = validHamming(msgWithParity, n);
+    int valid = validCRC(mmsg->getM_Payload(), mmsg->getCRC());
+    cout<<"VAAALIIIDD"<<valid<<endl;
     int receivedSeqNum = mmsg->getId();
 
     // received message log
@@ -309,6 +315,7 @@ void Node::handleReceivingMessageHamming(cMessage *msg, MyMessage_Base *messageT
         int errorPosition=0;
         string correctedString = doHamming(mmsg->getM_Payload(), errorPosition);
         //TODO: call hamming logs
+        logs[id / 2]->addHammingLog(errorPosition, correctedString);
     }
 
     // check for duplicate messages
@@ -342,6 +349,7 @@ void Node::handleReceivingMessageHamming(cMessage *msg, MyMessage_Base *messageT
     else
     {
             receivingWindow[receivedSeqNum - receivingWindowStartIndex] = true;
+            shouldSendNck = 1;
     }
 }
 

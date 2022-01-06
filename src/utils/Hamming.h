@@ -10,6 +10,18 @@
 
 using namespace std;
 
+inline string BinaryStringToText(string binaryString) {
+    string text = "";
+    stringstream sstream(binaryString);
+    while (sstream.good())
+    {
+        bitset<8> bits;
+        sstream >> bits;
+        text += char(bits.to_ulong());
+    }
+    return text;
+}
+
 inline string getBinaryStringFromPayLoad(string payload)
 {
     string binaryString = "";
@@ -33,9 +45,7 @@ return n;
 
 // ------------------------------------ Calculating Parities ------------------------------------------------- //
 
-inline string getMsgWithParity(string binaryPayLoad){
-int r=0;
-int n = getNewLength(binaryPayLoad, r);
+inline string getMsgWithParity(string binaryPayload, int n, int r){
 int msgWithParity[n+1];
 std::stringstream msg;
 int payLoadIndex=0;
@@ -45,13 +55,13 @@ msgWithParity[parityPos]=-1;
 }
 for(int i=1; i<=n; i++){ //Copy pay load bits to the non-parity places in the array
 if(msgWithParity[i]!=-1){
-    msgWithParity[i]=(int)binaryPayLoad[payLoadIndex]-48;
+    msgWithParity[i]=(int)binaryPayload[payLoadIndex]-48;
     payLoadIndex++;
 }
 }
  for(int i=0; i<=n; i++){ //Calculate value of each parity bit
    int counter=0;
-  // int parityPos=pow(2,i);
+   int parityPos=pow(2,i);
   if(msgWithParity[i]==-1) //indicates a parity
   {
     if(i==1){ //Special case for the first parity (2^0)
@@ -78,6 +88,7 @@ if(msgWithParity[i]!=-1){
        j++;
        if(counter%i == 0){
            j+=i;
+           //j+=1;
        }
     }
     if(parity%2==0){ //even number of ones
@@ -97,12 +108,8 @@ return msg.str();
 
 // --------------------------------- Responsible for detection only -----------------------------//
 
-inline bool validHamming(string payLoad){
+inline bool validHamming(string msgWithParity, int n){
 int r=0;
-int R=0;
-string binaryPayload = getBinaryStringFromPayLoad(payLoad);
-string msgWithParity = getMsgWithParity(binaryPayload);
-int n = getNewLength(binaryPayload,R);
 int msgArr[n+1];
 int countCorrectParity=0;
 int index=0;
@@ -111,7 +118,7 @@ for(int i=1; i<=n; i++){
     index++;
 }
 for(int i=0; i<=n; i++){
-  //int parityPos=pow(2,r);
+  int parityPos=pow(2,r);
   int counter=0;
   if(i==pow(2,r)) //indicates a parity
   {
@@ -148,14 +155,9 @@ return true;
 }
 return false;
 }
-
 // ----------------------------------- Responsible for detection AND correction ------------------------------ //
 
-inline string doHamming(string payLoad, int &errIndex){
-int R=0;
-string binaryPayload = getBinaryStringFromPayLoad(payLoad);
-string msgWithParity = getMsgWithParity(binaryPayload);
-int n = getNewLength(binaryPayload,R);
+inline string doHamming(string msgWithParity, int n){
 std::stringstream msg;
 int r=0;
 int msgArr[n+1];
@@ -166,7 +168,7 @@ for(int i=1; i<=n; i++){
     index++;
 }
 for(int i=0; i<=n; i++){
- // int parityPos=pow(2,r);
+  int parityPos=pow(2,r);
   int counter=0;
   if(i==pow(2,r)) //indicates a parity
   {
@@ -199,10 +201,10 @@ for(int i=0; i<=n; i++){
  }
 }
 msgArr[indexToCorrect]=!msgArr[indexToCorrect]; //modify the errored bit
-errIndex=indexToCorrect;
 for(int i=1;i<=n;i++){
 msg << msgArr[i];
 }
-return msg.str();
+string s = BinaryStringToText(msg.str());
+return s;
 }
 #endif

@@ -110,7 +110,7 @@ void Logs::setTransTime(double t)
 
 void Logs::addHammingLog(int errorPos, std::string correctedString)
 {
-    std::string log = "Hamming code detected error at bit position = " + errorPos + " . The corrected string is: " + correctedString;
+    std::string log = "Hamming code detected error at bit position = " + std::to_string(errorPos) + " . The corrected string is: " + correctedString;
     // printing log to console
     cout << log << endl;
     // adding log to output file
