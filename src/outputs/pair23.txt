@@ -11,41 +11,40 @@ node3 sends message with id=2 and content= ''$They generally refer to /$ ornamen
 node2 sends message with id=3 and content= ''$Holmes is known for his proficiency with observation,$'' at 7.030000and piggybacking ACK number= 0
 node2 received message with id=0 and content= ''$A cherry blossom is a flower of many trees of genus/$ Prunus or Prunus subg.$'' at 7.040000 and piggybacking ACK number= 1
 node2 received message with id=2 and content= ''$They generally refer to /$ ornamental cherry trees,$'' at 7.040000 and NACK number= 2
-node2 sends message with id=2 and content= ''$Referring to himself as a// "consulting detective" in the stories,$'' at 7.040000and NACK number= 1
+node2 sends message with id=2 and content= ''$Referring to himself as a// "consulting detective" in the stories,$'' at 7.040000and piggybacking ACK number= 1
 node3 sends message with id=3 and content= ''$not to be confused with cherry trees that// produce fruit for eating.$'' at 7.040000and NACK number= 2
 node3 received message with id=3 and content= ''$Holmes is known for his proficiency with observation,$'' at 7.040000 and piggybacking ACK number= 0
-node2 sends message with id=4 and content= ''$deduction, forensic science,$'' at 7.040000and NACK number= 1
+node2 sends message with id=4 and content= ''$deduction, forensic science,$'' at 7.040000and piggybacking ACK number= 1
 node2 received message with id=1 and content= ''$They are also known as Japanese cherry and Sakura$'' at 7.050000 and piggybacking ACK number= 1
-node3 received message with id=2 and content= ''$Referring to himself as a// "consulting detective" in the stories,$'' at 7.050000 and NACK number= 1
-node3 sends message with id=1 and content= ''$They are also known as Japanese cherry and Sakura$'' at 7.050000and piggybacking ACK number= 4
+node3 received message with id=2 and content= ''$Referring to himself as a// "consulting detective" in the stories,$'' at 7.050000 and piggybacking ACK number= 1
 node2 received message with id=3 and content= ''$not to be confused with cherry trees that// produce fruit for eating.$'' at 7.050000 and NACK number= 2
 node2 sends message with id=2 and content= ''$Referring to himself as a// "consulting detective" in the stories,$'' at 7.050000and piggybacking ACK number= 4
-node3 sends message with id=4 and content= ''$It is consifered// the national flower of Japan.$'' at 7.050000 with modification, and piggybacking ACK number= 4
-node3 received message with id=4 and content= ''$deduction, forensic science,$'' at 7.050000 and NACK number= 1
-node3 sends message with id=1 and content= ''$They are also known as Japanese cherry and Sakura$'' at 7.050000and piggybacking ACK number= 5
+node3 sends message with id=4 and content= ''$It is conqidered// the national flower of Japan.$'' at 7.050000 with modification, and piggybacking ACK number= 4
+node3 received message with id=4 and content= ''$deduction, forensic science,$'' at 7.050000 and piggybacking ACK number= 1
 node2 sends message with id=5 and content= ''$and// logical reasoning/$ that borders on the fantastic,$'' at 7.050000and piggybacking ACK number= 4
 node2 received message with id=1 and content= ''$They are also known as Japanese cherry and Sakura$'' at 7.060000 and piggybacking ACK number= 1
 node2 drops message with id=1
-node2 received message with id=1 and content= ''$They are also known as Japanese cherry and Sakura$'' at 7.060000 and piggybacking ACK number= 4
-node2 drops message with id=1
 node3 received message with id=2 and content= ''$Referring to himself as a// "consulting detective" in the stories,$'' at 7.060000 and piggybacking ACK number= 4
 node3 drops message with id=2
-node2 received message with id=4 and content= ''$It is consifered// the national flower of Japan.$'' at 7.060000 with modification, and piggybacking ACK number= 4
-node2 received message with id=1 and content= ''$They are also known as Japanese cherry and Sakura$'' at 7.060000 and piggybacking ACK number= 5
-node2 drops message with id=1
+node2 received message with id=4 and content= ''$It is conqidered// the national flower of Japan.$'' at 7.060000 and piggybacking ACK number= 4
 node3 received message with id=5 and content= ''$and// logical reasoning/$ that borders on the fantastic,$'' at 7.060000 and piggybacking ACK number= 4
-node2 sends message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 7.060000and NACK number= 4
-node2 sends message with id=7 and content= ''$including Scotland Yard.$'' at 7.070000and NACK number= 4
-node3 received message with id=7 and content= ''$including Scotland Yard.$'' at 7.080000 and NACK number= 4
-node3 sends message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 7.080000and NACK number= 6
-node2 received message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 7.090000 and NACK number= 6
-node2 sends message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 7.090000and piggybacking ACK number= 5
-node3 received message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 7.100000 and piggybacking ACK number= 5
+node2 sends message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 7.060000and piggybacking ACK number= 5
+node2 sends message with id=7 and content= ''$including Scotland Yard.$'' at 7.070000and piggybacking ACK number= 5
+node3 received message with id=7 and content= ''$including Scotland Yard.$'' at 7.080000 and piggybacking ACK number= 5
 node3 end of input file
-node3 sends message with id=4 and content= ''$It is considered// the national Flower of Japan.$'' at 7.100000 with modification, and piggybacking ACK number= 8
-node2 received message with id=4 and content= ''$It is considered// the national Flower of Japan.$'' at 7.110000 with modification, and piggybacking ACK number= 8
+node3 sends message with id=4 and content= ''$It is conqidered// the national flower of Japan.$'' at 7.080000 with modification, and piggybacking ACK number= 6
+node2 received message with id=4 and content= ''$It is conqidered// the national flower of Japan.$'' at 7.090000 and piggybacking ACK number= 6
+node2 drops message with id=4
+node2 sends message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 12.060000and NACK number= 5
+node2 sends message with id=7 and content= ''$including Scotland Yard.$'' at 12.070000and NACK number= 5
+node3 received message with id=6 and content= ''$which he employs when investigating cases for a wide variety of clients,$'' at 12.070000 and NACK number= 5
+node3 sends message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 12.070000and piggybacking ACK number= 8
+node3 received message with id=7 and content= ''$including Scotland Yard.$'' at 12.080000 and NACK number= 5
+node3 drops message with id=7
+node3 sends message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 12.080000and NACK number= 8
+node2 received message with id=4 and content= ''$It is considered// the national flower of Japan.$'' at 12.080000 and piggybacking ACK number= 8
 node2 drops message with id=4
 node2 end of input file
-Total transmission time= 7.11
+Total transmission time= 12.08
 Total number of transmissions= 22
-The network throughput= 2.25035
+The network throughput= 1.3245

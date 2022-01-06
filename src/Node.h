@@ -55,6 +55,7 @@ protected:
   void initializeMessages(cMessage *msg);                                        // fills events vector with messages from input file
   messageType getMessageType(cMessage *msg);                                     // returns the type of the given message
   void handleReceivingMessage(cMessage *msg, MyMessage_Base *messageToSendBack); // For handling receiving the frame
+  void handleReceivingMessageHamming(cMessage *msg, MyMessage_Base *messageToSendBack); // For handling receiving the frame (in case of hamming)
   void handleReceivingAck(cMessage *msg, MyMessage_Base *messageToSendBack);     // For handling receiving ack or nck
   bool checkEndingCondition(int indexToCheck);
   bool bothNodesFinished();                                                                                    // checks if both nodes have finished

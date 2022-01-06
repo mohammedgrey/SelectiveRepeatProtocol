@@ -23,6 +23,7 @@ simple Node
         double consecutiveDelay;
         double duplicationDelay;
         int windowSize;
+        int useHammingCorrection;
         volatile double randNum= uniform(0,1);
     gates:
         inout peerLink;
