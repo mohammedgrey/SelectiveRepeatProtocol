@@ -34,6 +34,7 @@ public:
     void incrementTransNum(int n);
     void incrementCorrectMessages(int n);
     void setTransTime(double t);
+    void addHammingLog(int errorPos, std::string correctedString); // log for hamming correction
     virtual ~Logs();
 };
 
